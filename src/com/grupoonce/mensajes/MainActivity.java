@@ -1,16 +1,47 @@
 package com.grupoonce.mensajes;
 
+import com.grupoonce.mensajes.Helpers.ViewConstructor;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		//Remove title bar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+		//Remove notification bar
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
+		// Creating a new RelativeLayout
+        LinearLayout relativeLayout = new LinearLayout(this);
+        relativeLayout.setOrientation(LinearLayout.VERTICAL);
+        // Defining the RelativeLayout layout parameters.
+        // fill its parent
+        /*RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);*/
+        
+        LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(
+        		LinearLayout.LayoutParams.MATCH_PARENT,
+        		LinearLayout.LayoutParams.MATCH_PARENT);
+        
+        LinearLayout header = ViewConstructor.ContructHeader(this);
+        LinearLayout body = SessionViewConstructor.ContructSessionBody(this);
+
+        relativeLayout.addView(header);
+        relativeLayout.addView(body);
+
+        // Setting the RelativeLayout as the content view
+        setContentView(relativeLayout, rlp);
 	}
 
 	@Override

@@ -16,5 +16,12 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance.Holo.Small">
+    	<item name="android:textColor">@color/switch_text</item>
+	</style>
 
+    <color name="orange_g11"> #e5b84b </color>
+    <color name="black_g11"> #e5b84b </color>
+    <color name="gray_g11"> #dedede </color>
 </resources>
