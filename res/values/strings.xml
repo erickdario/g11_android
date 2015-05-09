@@ -8,5 +8,22 @@
     <string name="sign_up">Registrarse</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
+    <string name="company_name">Nombre de la compañia</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+
+    <string-array name="states_array">
+        <item>Monterrey</item>
+        <item>Guadalajara</item>
+        <item>Queretaro</item>
+    </string-array>
+
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="title_activity_faq">FaqActivity</string>
+    <string name="faq">Preguntas fecuentes</string>
+    <string name="services">Servicios</string>
+    <string name="chat">Chat con un asesor</string>
+    <string name="sign_out">Cerrar sesión</string>
+    <string name="welcome">!Bienvenido!</string>
+    <string name="title_main_menu">Estamos para servirte</string>
 
 </resources>

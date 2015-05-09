@@ -22,6 +22,8 @@
 	</style>
 
     <color name="orange_g11"> #e5b84b </color>
-    <color name="black_g11"> #e5b84b </color>
+    <color name="orange_pressed_g11"> #e0b040 </color>
+    <color name="black_g11"> #343434 </color>
     <color name="gray_g11"> #dedede </color>
+    <color name="gray_pressed_g11"> #d0d0d0 </color>
 </resources>

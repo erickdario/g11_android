@@ -1,6 +1,6 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.mensajes.Helpers.SessionViewConstructor;
+import com.grupoonce.mensajes.Helpers.MainMenuViewConstructor;
 import com.grupoonce.mensajes.Helpers.SharedViewConstructor;
 
 import android.app.Activity;
@@ -11,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-public class MainActivity extends Activity {
+public class MainMenuActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +32,17 @@ public class MainActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT);
 
 		LinearLayout header = SharedViewConstructor.ContructHeader(this);
-		LinearLayout body = SessionViewConstructor.ContructSessionBody(this);
-
+		LinearLayout body = MainMenuViewConstructor.ContructMainMenuBody(this);
 		linearLayout.addView(header);
 		linearLayout.addView(body);
 
-		// Setting the RelativeLayout as the content view
 		setContentView(linearLayout, rlp);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.main_menu, menu);
 		return true;
 	}
 
