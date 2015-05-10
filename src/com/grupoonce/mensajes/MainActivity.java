@@ -1,7 +1,5 @@
 package com.grupoonce.mensajes;
 
-import com.firebase.client.AuthData;
-import com.firebase.client.Firebase;
 import com.grupoonce.mensajes.Helpers.SessionViewConstructor;
 import com.grupoonce.mensajes.Helpers.SharedViewConstructor;
 
@@ -16,21 +14,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		Firebase.setAndroidContext(this);
-		//Firebase myFirebaseRef = new Firebase("https://glaring-heat-1751.firebaseio.com");
-		
-		Firebase ref = new Firebase("https://glaring-heat-1751.firebaseio.com");
-		ref.addAuthStateListener(new Firebase.AuthStateListener() {
-		    @Override
-		    public void onAuthStateChanged(AuthData authData) {
-		        if (authData != null) {
-		            // user is logged in
-		        } else {
-		            // user is not logged in
-		        }
-		    }
-		});
 
 		LinearLayout linearLayout = new LinearLayout(this);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);

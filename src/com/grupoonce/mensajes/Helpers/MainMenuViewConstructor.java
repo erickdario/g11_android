@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.FaqActivity;
 import com.grupoonce.mensajes.ServicesActivity;
 import com.grupoonce.mensajes.ChatActivity;
@@ -89,6 +90,7 @@ public class MainMenuViewConstructor {
 		signOut.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				main.finish();
+				FirebaseManager.ref.unauth();
 			}
 		});
 

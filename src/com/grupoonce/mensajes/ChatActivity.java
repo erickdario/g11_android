@@ -1,7 +1,5 @@
 package com.grupoonce.mensajes;
 
-import com.firebase.client.AuthData;
-import com.firebase.client.Firebase;
 import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
 
 import android.app.Activity;
@@ -15,8 +13,6 @@ public class ChatActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
 
 		LinearLayout linearLayout = new LinearLayout(this);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
