@@ -1,5 +1,6 @@
 package com.grupoonce.mensajes.Helpers;
 
+import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.MainActivity;
 import com.grupoonce.mensajes.MainMenuActivity;
 import com.grupoonce.mensajes.R;
@@ -88,11 +89,11 @@ public class SessionViewConstructor {
 		viewLogin.setLayoutParams(new LinearLayout.LayoutParams(
 				(int) (size.x * 0.80), (int) (size.y * 0.85)));
 
-		EditText email = ContructSessionEditText(main, R.string.email,
+		final EditText email = ContructSessionEditText(main, R.string.email,
 				InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
 
-		EditText password = ContructSessionEditText(main, R.string.password,
-				InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		final EditText password = ContructSessionEditText(main,
+				R.string.password, InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
 		LinearLayout.LayoutParams btnLayoutParams = new LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -107,9 +108,10 @@ public class SessionViewConstructor {
 		// Set click listener for button
 		loginBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(main, MainMenuActivity.class);
-				intent.putExtra("user", "dario");
-				main.startActivity(intent);
+				FirebaseManager.main = main;
+				FirebaseManager.ref.authWithPassword(
+						email.getText().toString(), password.getText()
+								.toString(), FirebaseManager.authResultHandler);
 			}
 		});
 
