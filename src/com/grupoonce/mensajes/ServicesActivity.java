@@ -1,6 +1,6 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.mensajes.Helpers.MainMenuViewConstructor;
+import com.grupoonce.mensajes.Helpers.ServicesViewConstructor;
 import com.grupoonce.mensajes.Helpers.SharedViewConstructor;
 
 import android.app.Activity;
@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
-public class MainMenuActivity extends Activity {
+public class ServicesActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class MainMenuActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT);
 
 		LinearLayout header = SharedViewConstructor.ConstructHeader(this);
-		LinearLayout body = MainMenuViewConstructor.ConstructBody(this);
+		LinearLayout body = ServicesViewConstructor.ContructBody(this);
 		linearLayout.addView(header);
 		linearLayout.addView(body);
 
@@ -33,7 +33,7 @@ public class MainMenuActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main_menu, menu);
+		getMenuInflater().inflate(R.menu.services, menu);
 		return true;
 	}
 

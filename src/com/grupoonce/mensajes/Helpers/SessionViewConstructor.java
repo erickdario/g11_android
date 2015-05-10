@@ -26,11 +26,12 @@ import android.widget.Switch;
 public class SessionViewConstructor {
 
 	@SuppressLint("NewApi")
-	public static LinearLayout ContructSessionBody(MainActivity main) {
+	public static LinearLayout ContructBody(MainActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
 
 		LinearLayout view = SharedViewConstructor.ConstructBackground(main,
-				size, LinearLayout.LayoutParams.MATCH_PARENT);
+				size, LinearLayout.LayoutParams.MATCH_PARENT,
+				(int) (size.y * 0.89));
 
 		final LinearLayout viewLogin = ConstructLoginView(main, size);
 		final LinearLayout viewSignup = ConstructSignup(main, size);
@@ -98,8 +99,8 @@ public class SessionViewConstructor {
 		btnLayoutParams.setMargins((int) (size.x * 0.4), (int) (size.y * 0.4),
 				0, 0);
 
-		final Button loginBtn = SharedViewConstructor.ConstructOrangeButton(
-				main, size, R.string.log_in, (int) (size.x * 0.4),
+		final Button loginBtn = SharedViewConstructor.ConstructButton(main,
+				size, R.string.log_in, (int) (size.x * 0.4),
 				(int) (size.y * 0.4), LayoutParams.WRAP_CONTENT,
 				R.drawable.session_btn_text, R.drawable.session_button);
 
@@ -136,10 +137,10 @@ public class SessionViewConstructor {
 				R.string.confirm_password,
 				InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-		final Button signUp = SharedViewConstructor.ConstructOrangeButton(main,
-				size, R.string.sign_up, (int) (size.x * 0.38),
-				(int) (size.y * 0.09), LayoutParams.WRAP_CONTENT,
-				R.drawable.session_btn_text, R.drawable.session_button);
+		final Button signUp = SharedViewConstructor.ConstructButton(main, size,
+				R.string.sign_up, (int) (size.x * 0.38), (int) (size.y * 0.09),
+				LayoutParams.WRAP_CONTENT, R.drawable.session_btn_text,
+				R.drawable.session_button);
 
 		// Set click listener for button
 		signUp.setOnClickListener(new OnClickListener() {

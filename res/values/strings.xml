@@ -16,6 +16,22 @@
         <item>Guadalajara</item>
         <item>Queretaro</item>
     </string-array>
+    <string-array name="faq_array">
+        <item>¿En qué horario puedo usar el chat con un asesor en la app?</item>
+        <item>R: El servicio está disponible desde las 9:00am hasta las 8:00pm.</item>
+        <item>¿Tiene algún costo extra el servicio al cliente por chat?</item>
+        <item>R: El servicio no tiene ningún costo extra, es completamente gratuito.</item>
+        <item>¿Cómo puedo acceder a las redes sociales de Grupo Once?</item>
+        <item>R: Los botones superiores te llevan directamente a las redes sociales.</item>
+    </string-array>
+    <string-array name="services_array">
+        <item>Reportes estratégicos para la alta dirección</item>
+        <item>Seguimiento a interacciones y requerimientos</item>
+        <item>Procesos escalables a niveles administrativos</item>
+        <item>Administración de relaciones con el cliente (CRM)</item>
+        <item>Administración de canales de cobranza</item>
+        <item>Administración de canales de venta</item>
+    </string-array>
 
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="title_activity_faq">FaqActivity</string>
@@ -25,5 +41,8 @@
     <string name="sign_out">Cerrar sesión</string>
     <string name="welcome">!Bienvenido!</string>
     <string name="title_main_menu">Estamos para servirte</string>
+    <string name="title_activity_services">ServicesActivity</string>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="chat_input_holder">Escribe tu consulta</string>
 
 </resources>

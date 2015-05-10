@@ -17,8 +17,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.LinearLayout;
@@ -29,7 +32,7 @@ import android.widget.LinearLayout;
  */
 public class SharedViewConstructor {
 
-	public static LinearLayout ContructHeader(final Activity main) {
+	public static LinearLayout ConstructHeader(final Activity main) {
 
 		// Create LinearLayout
 		LinearLayout view = new LinearLayout(main);
@@ -53,7 +56,6 @@ public class SharedViewConstructor {
 				(int) (size.y * 0.07), (int) (size.y * 0.07),
 				"http://www.youtube.com/user/grupo11ONCE");
 
-		// Add button to LinearLayout
 		iconsView.addView(btnFacebook);
 		iconsView.addView(btnTwitter);
 		iconsView.addView(btnYoutube);
@@ -79,11 +81,10 @@ public class SharedViewConstructor {
 	}
 
 	public static LinearLayout ConstructBackground(Activity main, Point size,
-			int width) {
+			int width, int height) {
 		LinearLayout view = new LinearLayout(main);
 		view.setOrientation(LinearLayout.VERTICAL);
-		view.setLayoutParams(new LinearLayout.LayoutParams(width,
-				(int) (size.y * 0.89)));
+		view.setLayoutParams(new LinearLayout.LayoutParams(width, height));
 		view.setGravity(Gravity.CENTER_HORIZONTAL);
 		view.setBackgroundColor(main.getResources().getColor(R.color.gray_g11));
 
@@ -91,7 +92,7 @@ public class SharedViewConstructor {
 	}
 
 	@SuppressLint("NewApi")
-	public static Button ConstructOrangeButton(Activity main, Point size,
+	public static Button ConstructButton(Activity main, Point size,
 			int stringId, int marginX, int marginY, int width,
 			int drawableText, int drawableButton) {
 		LinearLayout.LayoutParams btnLayoutParams = new LayoutParams(width,
@@ -106,6 +107,47 @@ public class SharedViewConstructor {
 				drawableButton, null));
 
 		return sessionBtn;
+	}
+
+	public static TextView ConstructTextView(Activity main,
+			LayoutParams layout, int size, String text, Boolean bold, int color) {
+		TextView textView = new TextView(main);
+		textView.setLayoutParams(layout);
+		textView.setText(text);
+		textView.setTextSize(size);
+		textView.setGravity(Gravity.START);
+		if (bold) {
+			textView.setTypeface(null, Typeface.BOLD);
+		}
+		textView.setTextColor(color);
+
+		return textView;
+	}
+
+	public static ScrollView ContructScrollView(Activity main, int width,
+			Point size) {
+		ScrollView scrollView = new ScrollView(main);
+		scrollView.setBackgroundColor(main.getResources().getColor(
+				android.R.color.transparent));
+		scrollView.setLayoutParams(new LayoutParams(width,
+				(int) (size.y * 0.69)));
+		
+		return scrollView;
+	}
+	
+	@SuppressLint("NewApi")
+	public static ImageButton ContructImageButton(Activity main, int resource, Point size, float side){
+		ImageButton imageBtn = new ImageButton(main);
+		
+		imageBtn.setImageDrawable(main.getResources().getDrawable(resource,
+				null));
+		imageBtn.setAdjustViewBounds(true);
+		imageBtn.setBackgroundColor(Color.TRANSPARENT);
+		imageBtn.setScaleType(ScaleType.CENTER_CROP);
+		imageBtn.setLayoutParams(new LinearLayout.LayoutParams(
+				(int) (size.y * side), (int) (size.y * side)));
+		
+		return imageBtn;
 	}
 
 	@SuppressLint("NewApi")

@@ -1,13 +1,12 @@
 package com.grupoonce.mensajes;
 
+import com.grupoonce.mensajes.Helpers.FaqViewConstructor;
 import com.grupoonce.mensajes.Helpers.SharedViewConstructor;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 public class FaqActivity extends Activity {
@@ -15,14 +14,7 @@ public class FaqActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Remove title bar
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		// Remove notification bar
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-		// Creating a new RelativeLayout
 		LinearLayout linearLayout = new LinearLayout(this);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -30,10 +22,10 @@ public class FaqActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT);
 
-		LinearLayout header = SharedViewConstructor.ContructHeader(this);
-		//LinearLayout body = MainMenuViewConstructor.ContructSessionBody(this);
+		LinearLayout header = SharedViewConstructor.ConstructHeader(this);
+		LinearLayout body = FaqViewConstructor.ContructBody(this);
 		linearLayout.addView(header);
-		//linearLayout.addView(body);
+		linearLayout.addView(body);
 
 		setContentView(linearLayout, rlp);
 	}
