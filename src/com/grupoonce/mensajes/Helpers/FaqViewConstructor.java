@@ -6,7 +6,6 @@ package com.grupoonce.mensajes.Helpers;
 import com.grupoonce.mensajes.FaqActivity;
 import com.grupoonce.mensajes.R;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.widget.LinearLayout;
@@ -20,7 +19,6 @@ import android.widget.LinearLayout.LayoutParams;
  */
 public class FaqViewConstructor {
 
-	@SuppressLint("NewApi")
 	public static LinearLayout ContructBody(final FaqActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
 

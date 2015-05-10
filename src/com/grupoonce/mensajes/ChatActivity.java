@@ -13,7 +13,7 @@ public class ChatActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		LinearLayout linearLayout = new LinearLayout(this);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -23,10 +23,9 @@ public class ChatActivity extends Activity {
 
 		LinearLayout chatBody = ChatViewConstructor.ContructConversation(this);
 		LinearLayout chatInput = ChatViewConstructor.ContructInputChat(this);
-		
 		linearLayout.addView(chatBody);
 		linearLayout.addView(chatInput);
-		
+
 		setContentView(linearLayout, rlp);
 	}
 
