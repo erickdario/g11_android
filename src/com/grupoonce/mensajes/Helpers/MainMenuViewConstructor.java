@@ -1,6 +1,5 @@
 package com.grupoonce.mensajes.Helpers;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -20,9 +19,11 @@ import com.grupoonce.mensajes.R;
 
 public class MainMenuViewConstructor {
 
-	@SuppressLint("NewApi")
 	public static LinearLayout ConstructBody(final MainMenuActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
+		
+		Intent intent = main.getIntent();
+		final String sessionId = intent.getStringExtra("sessionId");
 
 		LinearLayout view = SharedViewConstructor.ConstructBackground(main,
 				size, LinearLayout.LayoutParams.MATCH_PARENT,
@@ -77,6 +78,7 @@ public class MainMenuViewConstructor {
 		chat.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(main, ChatActivity.class);
+				intent.putExtra("sessionId", sessionId);
 				main.startActivity(intent);
 			}
 		});

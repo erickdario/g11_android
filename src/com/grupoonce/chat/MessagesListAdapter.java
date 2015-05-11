@@ -47,7 +47,7 @@ public class MessagesListAdapter extends BaseAdapter {
 		LayoutInflater mInflater = (LayoutInflater) context
 				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-		if (messagesItems.get(position).getLocal()) {
+		if (messagesItems.get(position).getSender().equals("client")) {
 			convertView = mInflater.inflate(R.layout.item_msg_right, null);
 		} else {
 			convertView = mInflater.inflate(R.layout.item_msg_left, null);
@@ -55,7 +55,7 @@ public class MessagesListAdapter extends BaseAdapter {
 
 		TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
 		TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
-		txtMsg.setText(m.getMessage());
+		txtMsg.setText(m.getText());
 		lblFrom.setText(m.getDate() + " - " + m.getTime());
 
 		return convertView;

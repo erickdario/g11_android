@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.grupoonce.mensajes.MainMenuActivity;
+import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
 
 public class FirebaseManager {
 
@@ -20,7 +24,7 @@ public class FirebaseManager {
 		public void onAuthenticated(AuthData authData) {
 			// Authenticated successfully with payload authData
 			Intent intent = new Intent(main, MainMenuActivity.class);
-			intent.putExtra("user", "dario");
+			intent.putExtra("sessionId", authData.getUid());
 			main.startActivity(intent);
 		}
 
@@ -46,6 +50,72 @@ public class FirebaseManager {
 		}
 	};
 	public static Activity main;
+
+	public static void FindConversation(final String userId) {
+		Firebase usersRef = ref.child("users").child(userId);
+
+		usersRef.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot snapshot) {
+				@SuppressWarnings("unchecked")
+				Map<String, Object> user = (Map<String, Object>) snapshot
+						.getValue();
+				ChatViewConstructor.conversationRef = new Firebase(
+						"https://glaring-heat-1751.firebaseio.com/messages/"
+								+ user.get("city") + "_"
+								+ user.get("companysName"));
+
+				ChatViewConstructor.conversationRef.addChildEventListener(new ChildEventListener() {
+					@Override
+					public void onChildAdded(DataSnapshot msgSnapshot,
+							String previousChild) {
+						@SuppressWarnings("unchecked")
+						Map<String, Object> msg = (Map<String, Object>) msgSnapshot
+								.getValue();
+						System.out.println("value " + msgSnapshot.getValue());
+						ChatViewConstructor.listMessages.add(new Msg(msg.get(
+								"text").toString(), msg.get("sender")
+								.toString(), "" + msg.get("time"), msg.get(
+								"date").toString()));
+						ChatViewConstructor.adapter.notifyDataSetChanged();
+						ChatViewConstructor.listMsg
+								.setSelection(ChatViewConstructor.listMsg
+										.getCount() - 1);
+					}
+
+					@Override
+					public void onCancelled(FirebaseError arg0) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onChildChanged(DataSnapshot arg0, String arg1) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onChildMoved(DataSnapshot arg0, String arg1) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onChildRemoved(DataSnapshot arg0) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+			}
+
+			@Override
+			public void onCancelled(FirebaseError firebaseError) {
+				System.out.println("The read failed: "
+						+ firebaseError.getMessage());
+			}
+		});
+	}
 
 	public static void CreateUser(final String userName, final String city,
 			String password, final String companysName) {

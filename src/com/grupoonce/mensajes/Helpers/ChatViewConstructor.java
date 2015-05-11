@@ -1,12 +1,17 @@
 package com.grupoonce.mensajes.Helpers;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
+import com.firebase.client.Firebase;
+import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.chat.MessagesListAdapter;
 import com.grupoonce.chat.Msg;
 import com.grupoonce.mensajes.ChatActivity;
 import com.grupoonce.mensajes.R;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.view.Gravity;
@@ -20,9 +25,10 @@ import android.widget.LinearLayout.LayoutParams;
 
 public class ChatViewConstructor {
 
-	static ArrayList<Msg> listMessages;
-	static MessagesListAdapter adapter;
-	static ListView listMsg;
+	public static ArrayList<Msg> listMessages;
+	public static MessagesListAdapter adapter;
+	public static ListView listMsg;
+	public static Firebase conversationRef;
 
 	public static LinearLayout ContructConversation(ChatActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
@@ -34,12 +40,14 @@ public class ChatViewConstructor {
 		listMsg = new ListView(main);
 		listMessages = new ArrayList<Msg>();
 
-		// TODO retrieve previous messages from this conversation
-
 		adapter = new MessagesListAdapter(main, listMessages);
 		listMsg.setAdapter(adapter);
 		listMsg.setSelection(listMsg.getCount() - 1);
 		view.addView(listMsg);
+
+		Intent intent = main.getIntent();
+		final String sessionId = intent.getStringExtra("sessionId");
+		FirebaseManager.FindConversation(sessionId);
 
 		return view;
 	}
@@ -62,6 +70,8 @@ public class ChatViewConstructor {
 		inputChat.setHint(main.getResources().getString(
 				R.string.chat_input_holder));
 		inputChat.setTextColor(Color.WHITE);
+		inputChat.clearFocus();
+		inputChat.setFocusableInTouchMode(true);
 
 		inputChat.setLayoutParams(layoutParams);
 
@@ -72,9 +82,10 @@ public class ChatViewConstructor {
 			public void onClick(View v) {
 				SendMessage(listMessages, adapter, inputChat.getText()
 						.toString());
+				inputChat.setText("");
 			}
 		});
-
+		view.setFocusableInTouchMode(true);
 		view.addView(inputChat);
 		view.addView(btnSend);
 
@@ -83,11 +94,62 @@ public class ChatViewConstructor {
 
 	public static void SendMessage(ArrayList<Msg> listMessages,
 			MessagesListAdapter adapter, String message) {
-		// TODO Send message to cloud
 
-		listMessages.add(new Msg("2cle", "2email", message, null, true, "2f",
-				"2time", "2date"));
-		adapter.notifyDataSetChanged();
-		listMsg.setSelection(listMsg.getCount() - 1);
+		Calendar c = Calendar.getInstance();
+		int hour = c.get(Calendar.HOUR_OF_DAY);
+		int minute = c.get(Calendar.MINUTE);
+		int date = c.get(Calendar.DATE);
+
+		String month = DecideMonth(Calendar.MONTH);
+
+		Msg msg = new Msg(message, "client", "" + hour + ":" + minute, month
+				+ " " + date);
+
+		// TODO Send message to cloud
+		conversationRef.child("msg" + listMsg.getCount() + 1).setValue(msg);
+	}
+
+	private static String DecideMonth(int month) {
+		switch (month) {
+		case 1:
+			return "January";
+
+		case 2:
+			return "February";
+
+		case 3:
+			return "March";
+
+		case 4:
+			return "April";
+
+		case 5:
+			return "May";
+
+		case 6:
+			return "June";
+
+		case 7:
+			return "July";
+
+		case 8:
+			return "August";
+
+		case 9:
+			return "September";
+
+		case 10:
+			return "October";
+
+		case 11:
+			return "November";
+
+		case 12:
+			return "December";
+
+		default:
+			return "Invalid month";
+
+		}
 	}
 }
