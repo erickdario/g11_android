@@ -21,7 +21,7 @@ public class User {
 	public String getFullName() {
 		return userName;
 	}
-	
+
 	public String getCompanysName() {
 		return companysName;
 	}

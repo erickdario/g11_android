@@ -2,7 +2,6 @@ package com.grupoonce.mensajes.Helpers;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 import com.firebase.client.Firebase;
 import com.grupoonce.chat.FirebaseManager;
@@ -46,8 +45,9 @@ public class ChatViewConstructor {
 		view.addView(listMsg);
 
 		Intent intent = main.getIntent();
-		final String sessionId = intent.getStringExtra("sessionId");
-		FirebaseManager.FindConversation(sessionId);
+		String conversationUrl = intent.getStringExtra("conversationUrl");
+		conversationRef = new Firebase(conversationUrl);
+		FirebaseManager.FindConversation();
 
 		return view;
 	}
@@ -105,8 +105,7 @@ public class ChatViewConstructor {
 		Msg msg = new Msg(message, "client", "" + hour + ":" + minute, month
 				+ " " + date);
 
-		// TODO Send message to cloud
-		conversationRef.child("msg" + listMsg.getCount() + 1).setValue(msg);
+		conversationRef.child("msg" + (listMsg.getCount() + 1)).setValue(msg);
 	}
 
 	private static String DecideMonth(int month) {

@@ -1,18 +1,14 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.chat.FirebaseManager;
-import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
-import com.grupoonce.mensajes.Helpers.MainMenuViewConstructor;
 import com.grupoonce.mensajes.Helpers.SharedViewConstructor;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
-public class MainMenuActivity extends Activity {
+public class MainMenuAdvisorActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,27 +22,16 @@ public class MainMenuActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT);
 
 		LinearLayout header = SharedViewConstructor.ConstructHeader(this);
-		LinearLayout body = MainMenuViewConstructor.ConstructBody(this);
+		
 		linearLayout.addView(header);
-		linearLayout.addView(body);
 
 		setContentView(linearLayout, rlp);
 	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-	    super.onActivityResult(requestCode, resultCode, data);
-
-	    if (requestCode == 0xe110)
-	    	ChatViewConstructor.conversationRef.removeEventListener(FirebaseManager.childEventListener);
-	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main_menu, menu);
+		getMenuInflater().inflate(R.menu.main_menu_advisor, menu);
 		return true;
 	}
 

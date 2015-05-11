@@ -13,19 +13,21 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.grupoonce.mensajes.MainMenuActivity;
+import com.grupoonce.mensajes.MainMenuAdvisorActivity;
 import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
 
 public class FirebaseManager {
+
+	public static ChildEventListener childEventListener;
+	public static ValueEventListener valueEventListener;
+	public static Activity main;
 
 	public static Firebase ref = new Firebase(
 			"https://glaring-heat-1751.firebaseio.com");
 	public static Firebase.AuthResultHandler authResultHandler = new Firebase.AuthResultHandler() {
 		@Override
-		public void onAuthenticated(AuthData authData) {
-			// Authenticated successfully with payload authData
-			Intent intent = new Intent(main, MainMenuActivity.class);
-			intent.putExtra("sessionId", authData.getUid());
-			main.startActivity(intent);
+		public void onAuthenticated(final AuthData authData) {
+			UserWasAuthenticated(authData);
 		}
 
 		@Override
@@ -49,64 +51,30 @@ public class FirebaseManager {
 			}
 		}
 	};
-	public static Activity main;
 
-	public static void FindConversation(final String userId) {
-		Firebase usersRef = ref.child("users").child(userId);
-
-		usersRef.addValueEventListener(new ValueEventListener() {
+	public static void UserWasAuthenticated(final AuthData authData) {
+		// Authenticated successfully with payload authData
+		Firebase userRef = ref.child("users").child(authData.getUid());
+		valueEventListener = new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot snapshot) {
 				@SuppressWarnings("unchecked")
 				Map<String, Object> user = (Map<String, Object>) snapshot
 						.getValue();
-				ChatViewConstructor.conversationRef = new Firebase(
-						"https://glaring-heat-1751.firebaseio.com/messages/"
-								+ user.get("city") + "_"
-								+ user.get("companysName"));
-
-				ChatViewConstructor.conversationRef.addChildEventListener(new ChildEventListener() {
-					@Override
-					public void onChildAdded(DataSnapshot msgSnapshot,
-							String previousChild) {
-						@SuppressWarnings("unchecked")
-						Map<String, Object> msg = (Map<String, Object>) msgSnapshot
-								.getValue();
-						System.out.println("value " + msgSnapshot.getValue());
-						ChatViewConstructor.listMessages.add(new Msg(msg.get(
-								"text").toString(), msg.get("sender")
-								.toString(), "" + msg.get("time"), msg.get(
-								"date").toString()));
-						ChatViewConstructor.adapter.notifyDataSetChanged();
-						ChatViewConstructor.listMsg
-								.setSelection(ChatViewConstructor.listMsg
-										.getCount() - 1);
-					}
-
-					@Override
-					public void onCancelled(FirebaseError arg0) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onChildChanged(DataSnapshot arg0, String arg1) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onChildMoved(DataSnapshot arg0, String arg1) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onChildRemoved(DataSnapshot arg0) {
-						// TODO Auto-generated method stub
-
-					}
-				});
+				if (user.get("companysName").equals("grupoonce")) {
+					Intent intent = new Intent(main,
+							MainMenuAdvisorActivity.class);
+					intent.putExtra("sessionId", authData.getUid());
+					main.startActivity(intent);
+				} else {
+					Intent intent = new Intent(main, MainMenuActivity.class);
+					intent.putExtra(
+							"conversationUrl",
+							"https://glaring-heat-1751.firebaseio.com/messages/"
+									+ user.get("city") + "_"
+									+ user.get("companysName"));
+					main.startActivity(intent);
+				}
 			}
 
 			@Override
@@ -114,7 +82,55 @@ public class FirebaseManager {
 				System.out.println("The read failed: "
 						+ firebaseError.getMessage());
 			}
-		});
+		};
+		userRef.addValueEventListener(valueEventListener);
+	}
+
+	public static void FindConversation() {
+
+		childEventListener = new ChildEventListener() {
+			@Override
+			public void onChildAdded(DataSnapshot msgSnapshot,
+					String previousChild) {
+				@SuppressWarnings("unchecked")
+				Map<String, Object> msg = (Map<String, Object>) msgSnapshot
+						.getValue();
+				ChatViewConstructor.listMessages.add(new Msg(msg.get("text")
+						.toString(), msg.get("sender").toString(), ""
+						+ msg.get("time"), msg.get("date").toString()));
+				ChatViewConstructor.adapter.notifyDataSetChanged();
+				ChatViewConstructor.listMsg
+						.setSelection(ChatViewConstructor.listMsg.getCount() - 1);
+				System.out.println(msg.get("text").toString());
+			}
+
+			@Override
+			public void onCancelled(FirebaseError arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onChildChanged(DataSnapshot arg0, String arg1) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onChildMoved(DataSnapshot arg0, String arg1) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onChildRemoved(DataSnapshot arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		ChatViewConstructor.conversationRef
+				.addChildEventListener(childEventListener);
 	}
 
 	public static void CreateUser(final String userName, final String city,
@@ -129,7 +145,7 @@ public class FirebaseManager {
 						Firebase usersRef = ref.child("users");
 						usersRef.child(accountId).setValue(user);
 						Toast.makeText(main,
-								"Cuenta" + userName + "creada con éxito",
+								"Cuenta " + userName + " creada con éxito",
 								Toast.LENGTH_LONG).show();
 					}
 
@@ -152,7 +168,7 @@ public class FirebaseManager {
 						default:
 							Toast.makeText(
 									main,
-									"Algo salió mal, por favor verifique sus datos",
+									"Por favor verifique sus datos",
 									Toast.LENGTH_LONG).show();
 							break;
 						}

@@ -21,9 +21,6 @@ public class MainMenuViewConstructor {
 
 	public static LinearLayout ConstructBody(final MainMenuActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
-		
-		Intent intent = main.getIntent();
-		final String sessionId = intent.getStringExtra("sessionId");
 
 		LinearLayout view = SharedViewConstructor.ConstructBackground(main,
 				size, LinearLayout.LayoutParams.MATCH_PARENT,
@@ -78,8 +75,11 @@ public class MainMenuViewConstructor {
 		chat.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(main, ChatActivity.class);
-				intent.putExtra("sessionId", sessionId);
-				main.startActivity(intent);
+				Intent intentGet = main.getIntent();
+				String conversationUrl = intentGet
+						.getStringExtra("conversationUrl");
+				intent.putExtra("conversationUrl", conversationUrl);
+				main.startActivityForResult(intent, 0xe110);
 			}
 		});
 

@@ -6,8 +6,7 @@ public class Msg {
 	private String time;
 	private String date;
 
-	public Msg(String text,
-			String sender, String time, String date) {
+	public Msg(String text, String sender, String time, String date) {
 		this.text = text;
 		this.sender = sender;
 		this.time = time;
@@ -29,7 +28,7 @@ public class Msg {
 	public void setLocal(String sender) {
 		this.sender = sender;
 	}
-	
+
 	public void setTime(String time) {
 		this.time = time;
 	}

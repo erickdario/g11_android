@@ -6,6 +6,7 @@ package com.grupoonce.mensajes.Helpers;
 import com.grupoonce.mensajes.R;
 
 import android.net.Uri;
+import android.os.Build;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -92,6 +93,7 @@ public class SharedViewConstructor {
 	}
 
 	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
 	public static Button ConstructButton(Activity main, Point size,
 			int stringId, int marginX, int marginY, int width,
 			int drawableText, int drawableButton) {
@@ -103,8 +105,13 @@ public class SharedViewConstructor {
 		sessionBtn.setText(main.getResources().getString(stringId));
 		sessionBtn.setLayoutParams(btnLayoutParams);
 		sessionBtn.setTextColor(main.getResources().getColor(drawableText));
-		sessionBtn.setBackground(main.getResources().getDrawable(
-				drawableButton, null));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			sessionBtn.setBackground(main.getResources().getDrawable(
+					drawableButton, null));
+		} else {
+			sessionBtn.setBackground(main.getResources().getDrawable(
+					drawableButton));
+		}
 
 		return sessionBtn;
 	}
@@ -130,32 +137,46 @@ public class SharedViewConstructor {
 		scrollView.setBackgroundColor(main.getResources().getColor(
 				android.R.color.transparent));
 		scrollView.setLayoutParams(new LayoutParams(width,
-				(int) (size.y * 0.69)));
-		
+				(int) (size.y * 0.80)));
+
 		return scrollView;
 	}
-	
+
+	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
-	public static ImageButton ContructImageButton(Activity main, int resource, Point size, float side){
+	public static ImageButton ContructImageButton(Activity main, int resource,
+			Point size, float side) {
 		ImageButton imageBtn = new ImageButton(main);
-		
-		imageBtn.setImageDrawable(main.getResources().getDrawable(resource,
-				null));
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			imageBtn.setImageDrawable(main.getResources().getDrawable(resource,
+					null));
+		} else {
+			imageBtn.setImageDrawable(main.getResources().getDrawable(resource));
+		}
+
 		imageBtn.setAdjustViewBounds(true);
 		imageBtn.setBackgroundColor(Color.TRANSPARENT);
 		imageBtn.setScaleType(ScaleType.CENTER_CROP);
 		imageBtn.setLayoutParams(new LinearLayout.LayoutParams(
 				(int) (size.y * side), (int) (size.y * side)));
-		
+
 		return imageBtn;
 	}
 
+	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	private static ImageButton CreateMediaButton(int resource,
 			final Activity main, int width, int height, final String url) {
 		final ImageButton btnSocialMedia = new ImageButton(main);
-		btnSocialMedia.setImageDrawable(main.getResources().getDrawable(
-				resource, null));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			btnSocialMedia.setImageDrawable(main.getResources().getDrawable(
+					resource, null));
+		} else {
+			btnSocialMedia.setImageDrawable(main.getResources().getDrawable(
+					resource));
+		}
+
 		// set the layoutParams on the button
 		btnSocialMedia.setAdjustViewBounds(true);
 		btnSocialMedia.setBackgroundColor(Color.argb(100, 195, 195, 195));

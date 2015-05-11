@@ -1,5 +1,6 @@
 package com.grupoonce.mensajes.Helpers;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.MainActivity;
@@ -9,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.text.InputType;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,12 +25,19 @@ import android.widget.Switch;
 
 public class SessionViewConstructor {
 
+	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public static LinearLayout ContructBody(MainActivity main) {
-		Point size = SharedViewConstructor.GetScreenSize(main);
-
 		Firebase.setAndroidContext(main);
 		FirebaseManager.main = main;
+		AuthData authData = FirebaseManager.ref.getAuth();
+		if (authData != null) {
+			FirebaseManager.UserWasAuthenticated(authData);
+		} else {
+			// no user authenticated with Firebase
+		}
+
+		Point size = SharedViewConstructor.GetScreenSize(main);
 
 		LinearLayout view = SharedViewConstructor.ConstructBackground(main,
 				size, LinearLayout.LayoutParams.MATCH_PARENT,
@@ -59,8 +68,14 @@ public class SessionViewConstructor {
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		switchLayoutParams.setMargins(0, 40, 0, 0);
 		tb.setLayoutParams(switchLayoutParams);
-		tb.setBackground(main.getResources().getDrawable(
-				R.drawable.switch_shape, null));
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			tb.setBackground(main.getResources().getDrawable(
+					R.drawable.switch_shape, null));
+		} else {
+			tb.setBackground(main.getResources().getDrawable(
+					R.drawable.switch_shape));
+		}
 
 		tb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView,
@@ -81,7 +96,6 @@ public class SessionViewConstructor {
 		return view;
 	}
 
-	@SuppressLint("NewApi")
 	private static LinearLayout ConstructLoginView(final MainActivity main,
 			Point size) {
 		final LinearLayout viewLogin = new LinearLayout(main);
@@ -172,6 +186,7 @@ public class SessionViewConstructor {
 		return viewSignup;
 	}
 
+	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	private static EditText ContructSessionEditText(MainActivity main,
 			int placeholderId, int inputType) {
@@ -183,8 +198,14 @@ public class SessionViewConstructor {
 		editTextSession.setHint(main.getResources().getString(placeholderId));
 		editTextSession.setLayoutParams(layoutParams);
 		editTextSession.setInputType(InputType.TYPE_CLASS_TEXT | inputType);
-		editTextSession.setBackground(main.getResources().getDrawable(
-				R.drawable.edittext, null));
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			editTextSession.setBackground(main.getResources().getDrawable(
+					R.drawable.edittext, null));
+		} else {
+			editTextSession.setBackground(main.getResources().getDrawable(
+					R.drawable.edittext));
+		}
 
 		return editTextSession;
 	}

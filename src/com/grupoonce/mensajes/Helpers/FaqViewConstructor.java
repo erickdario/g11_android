@@ -31,16 +31,17 @@ public class FaqViewConstructor {
 
 		LinearLayout questionsView = SharedViewConstructor.ConstructBackground(
 				main, size, (int) (size.x * 0.70), (int) (size.y * 0.69));
-		
-		ScrollView faqScrollView = SharedViewConstructor
-				.ContructScrollView(main, (int) (size.x * 0.70), size);
+
+		ScrollView faqScrollView = SharedViewConstructor.ContructScrollView(
+				main, (int) (size.x * 0.70), size);
 
 		LayoutParams layout = new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		layout.setMargins(0, (int) (size.y * 0.01), 0, 0);
 
-		TextView title = SharedViewConstructor.ConstructTextView(main, layout, 24, main
-				.getResources().getString(R.string.faq), true, Color.BLACK);
+		TextView title = SharedViewConstructor.ConstructTextView(main, layout,
+				24, main.getResources().getString(R.string.faq), true,
+				Color.BLACK);
 		titleView.addView(title);
 
 		String[] faq_array = main.getResources().getStringArray(
