@@ -10,6 +10,7 @@
     <string name="password">Contraseña</string>
     <string name="company_name">Nombre de la compañia</string>
     <string name="confirm_password">Confirmar contraseña</string>
+    <string name="user">Usuario:</string>
 
     <string-array name="states_array">
         <item>Monterrey</item>

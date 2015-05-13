@@ -28,6 +28,7 @@ public class ChatViewConstructor {
 	public static MessagesListAdapter adapter;
 	public static ListView listMsg;
 	public static Firebase conversationRef;
+	public static String role;
 
 	public static LinearLayout ContructConversation(ChatActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
@@ -46,6 +47,7 @@ public class ChatViewConstructor {
 
 		Intent intent = main.getIntent();
 		String conversationUrl = intent.getStringExtra("conversationUrl");
+		role = intent.getStringExtra("role");
 		conversationRef = new Firebase(conversationUrl);
 		FirebaseManager.FindConversation();
 
@@ -102,7 +104,7 @@ public class ChatViewConstructor {
 
 		String month = DecideMonth(Calendar.MONTH);
 
-		Msg msg = new Msg(message, "client", "" + hour + ":" + minute, month
+		Msg msg = new Msg(message, role, "" + hour + ":" + minute, month
 				+ " " + date);
 
 		conversationRef.child("msg" + (listMsg.getCount() + 1)).setValue(msg);

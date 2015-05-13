@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.FaqActivity;
 import com.grupoonce.mensajes.ServicesActivity;
 import com.grupoonce.mensajes.ChatActivity;
@@ -24,7 +23,7 @@ public class MainMenuViewConstructor {
 
 		LinearLayout view = SharedViewConstructor.ConstructBackground(main,
 				size, LinearLayout.LayoutParams.MATCH_PARENT,
-				(int) (size.y * 0.89));
+				(int) (size.y * 0.79));
 
 		LinearLayout btnView = SharedViewConstructor.ConstructBackground(main,
 				size, (int) (size.x * 0.80), (int) (size.y * 0.89));
@@ -40,7 +39,7 @@ public class MainMenuViewConstructor {
 				26, main.getResources().getString(R.string.title_main_menu),
 				true, Color.BLACK);
 
-		final Button faq = SharedViewConstructor.ConstructButton(main, size,
+		Button faq = SharedViewConstructor.ConstructButton(main, size,
 				R.string.faq, 0, (int) (size.y * 0.04),
 				LayoutParams.MATCH_PARENT, R.drawable.session_btn_text,
 				R.drawable.session_button);
@@ -53,8 +52,8 @@ public class MainMenuViewConstructor {
 			}
 		});
 
-		final Button services = SharedViewConstructor.ConstructButton(main,
-				size, R.string.services, 0, (int) (size.y * 0.04),
+		Button services = SharedViewConstructor.ConstructButton(main, size,
+				R.string.services, 0, (int) (size.y * 0.04),
 				LayoutParams.MATCH_PARENT, R.drawable.session_btn_text,
 				R.drawable.session_button);
 
@@ -66,7 +65,7 @@ public class MainMenuViewConstructor {
 			}
 		});
 
-		final Button chat = SharedViewConstructor.ConstructButton(main, size,
+		Button chat = SharedViewConstructor.ConstructButton(main, size,
 				R.string.chat, 0, (int) (size.y * 0.04),
 				LayoutParams.MATCH_PARENT, R.drawable.session_btn_text,
 				R.drawable.session_button);
@@ -79,22 +78,12 @@ public class MainMenuViewConstructor {
 				String conversationUrl = intentGet
 						.getStringExtra("conversationUrl");
 				intent.putExtra("conversationUrl", conversationUrl);
+				intent.putExtra("role", "client");
 				main.startActivityForResult(intent, 0xe110);
 			}
 		});
 
-		final Button signOut = SharedViewConstructor.ConstructButton(main,
-				size, R.string.sign_out, 0, (int) (size.y * 0.04),
-				LayoutParams.MATCH_PARENT, R.drawable.session_btn_text,
-				R.drawable.close_session_button);
-
-		// Set click listener for button
-		signOut.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				main.finish();
-				FirebaseManager.ref.unauth();
-			}
-		});
+		Button signOut = SharedViewConstructor.ConstructSignOut(main, size, LayoutParams.MATCH_PARENT);
 
 		btnView.addView(welcome);
 		btnView.addView(title);

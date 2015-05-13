@@ -4,6 +4,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -15,10 +16,12 @@ import com.firebase.client.ValueEventListener;
 import com.grupoonce.mensajes.MainMenuActivity;
 import com.grupoonce.mensajes.MainMenuAdvisorActivity;
 import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
+import com.grupoonce.mensajes.Helpers.MMAdvisorViewConstructor;
 
 public class FirebaseManager {
 
-	public static ChildEventListener childEventListener;
+	public static ChildEventListener childEventListenerConversation;
+	public static ChildEventListener childEventListenerConversations;
 	public static ValueEventListener valueEventListener;
 	public static Activity main;
 
@@ -37,16 +40,16 @@ public class FirebaseManager {
 			case FirebaseError.USER_DOES_NOT_EXIST:
 				Toast.makeText(main,
 						"El usuario no existe en la base de datos",
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 				break;
 			case FirebaseError.INVALID_PASSWORD:
 				Toast.makeText(main, "La contraseña es incorrecta",
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 				break;
 			default:
 				Toast.makeText(main,
 						"Algo salió mal, por favor verifique sus datos",
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 				break;
 			}
 		}
@@ -65,13 +68,18 @@ public class FirebaseManager {
 					Intent intent = new Intent(main,
 							MainMenuAdvisorActivity.class);
 					intent.putExtra("sessionId", authData.getUid());
+					intent.putExtra("city", user.get("city").toString());
+					intent.putExtra(
+							"conversationsUrl",
+							"https://glaring-heat-1751.firebaseio.com/messages/"
+									+ user.get("city"));
 					main.startActivity(intent);
 				} else {
 					Intent intent = new Intent(main, MainMenuActivity.class);
 					intent.putExtra(
 							"conversationUrl",
 							"https://glaring-heat-1751.firebaseio.com/messages/"
-									+ user.get("city") + "_"
+									+ user.get("city") + "/"
 									+ user.get("companysName"));
 					main.startActivity(intent);
 				}
@@ -85,10 +93,49 @@ public class FirebaseManager {
 		};
 		userRef.addValueEventListener(valueEventListener);
 	}
+	
+	public static void FindConversations() {
+		Log.d("debug", "conversations");
+		childEventListenerConversations = new ChildEventListener() {
+			@Override
+			public void onChildAdded(DataSnapshot conversationSnapshot,
+					String previousChild) {
+				//TODO get last date of last message
+				MMAdvisorViewConstructor.listConversations.add(new Conversation(conversationSnapshot.getKey(), "lastDateMsg"));
+				MMAdvisorViewConstructor.adapter.notifyDataSetChanged();
+				System.out.println(conversationSnapshot.getValue().toString());
+			}
+
+			@Override
+			public void onCancelled(FirebaseError arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onChildChanged(DataSnapshot arg0, String arg1) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onChildMoved(DataSnapshot arg0, String arg1) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onChildRemoved(DataSnapshot arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+		MMAdvisorViewConstructor.conversationsRef.addChildEventListener(childEventListenerConversations);
+	}
 
 	public static void FindConversation() {
 
-		childEventListener = new ChildEventListener() {
+		childEventListenerConversation = new ChildEventListener() {
 			@Override
 			public void onChildAdded(DataSnapshot msgSnapshot,
 					String previousChild) {
@@ -101,7 +148,6 @@ public class FirebaseManager {
 				ChatViewConstructor.adapter.notifyDataSetChanged();
 				ChatViewConstructor.listMsg
 						.setSelection(ChatViewConstructor.listMsg.getCount() - 1);
-				System.out.println(msg.get("text").toString());
 			}
 
 			@Override
@@ -130,7 +176,7 @@ public class FirebaseManager {
 		};
 
 		ChatViewConstructor.conversationRef
-				.addChildEventListener(childEventListener);
+				.addChildEventListener(childEventListenerConversation);
 	}
 
 	public static void CreateUser(final String userName, final String city,
@@ -146,7 +192,7 @@ public class FirebaseManager {
 						usersRef.child(accountId).setValue(user);
 						Toast.makeText(main,
 								"Cuenta " + userName + " creada con éxito",
-								Toast.LENGTH_LONG).show();
+								Toast.LENGTH_SHORT).show();
 					}
 
 					@Override
@@ -155,21 +201,21 @@ public class FirebaseManager {
 						case FirebaseError.EMAIL_TAKEN:
 							Toast.makeText(main,
 									"Correo registrado con otra cuenta",
-									Toast.LENGTH_LONG).show();
+									Toast.LENGTH_SHORT).show();
 							break;
 						case FirebaseError.INVALID_EMAIL:
 							Toast.makeText(main, "Correo inválido",
-									Toast.LENGTH_LONG).show();
+									Toast.LENGTH_SHORT).show();
 							break;
 						case FirebaseError.NETWORK_ERROR:
 							Toast.makeText(main, "Error de conectividad",
-									Toast.LENGTH_LONG).show();
+									Toast.LENGTH_SHORT).show();
 							break;
 						default:
 							Toast.makeText(
 									main,
 									"Por favor verifique sus datos",
-									Toast.LENGTH_LONG).show();
+									Toast.LENGTH_SHORT).show();
 							break;
 						}
 					}

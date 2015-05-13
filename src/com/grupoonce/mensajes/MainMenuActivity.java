@@ -39,7 +39,7 @@ public class MainMenuActivity extends Activity {
 	    super.onActivityResult(requestCode, resultCode, data);
 
 	    if (requestCode == 0xe110)
-	    	ChatViewConstructor.conversationRef.removeEventListener(FirebaseManager.childEventListener);
+	    	ChatViewConstructor.conversationRef.removeEventListener(FirebaseManager.childEventListenerConversation);
 	}
 
 

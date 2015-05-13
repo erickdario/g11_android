@@ -3,6 +3,7 @@ package com.grupoonce.chat;
 import java.util.List;
 
 import com.grupoonce.mensajes.R;
+import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -47,10 +48,18 @@ public class MessagesListAdapter extends BaseAdapter {
 		LayoutInflater mInflater = (LayoutInflater) context
 				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-		if (messagesItems.get(position).getSender().equals("client")) {
-			convertView = mInflater.inflate(R.layout.item_msg_right, null);
-		} else {
-			convertView = mInflater.inflate(R.layout.item_msg_left, null);
+		if (ChatViewConstructor.role.equals("client")) {
+			if (messagesItems.get(position).getSender().equals("client")) {
+				convertView = mInflater.inflate(R.layout.item_msg_right, null);
+			} else {
+				convertView = mInflater.inflate(R.layout.item_msg_left, null);
+			}
+		}else{
+			if (messagesItems.get(position).getSender().equals("adviser")) {
+				convertView = mInflater.inflate(R.layout.item_msg_right, null);
+			} else {
+				convertView = mInflater.inflate(R.layout.item_msg_left, null);
+			}
 		}
 
 		TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);

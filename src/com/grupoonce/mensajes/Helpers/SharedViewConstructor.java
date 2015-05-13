@@ -3,6 +3,7 @@
  */
 package com.grupoonce.mensajes.Helpers;
 
+import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.R;
 
 import android.net.Uri;
@@ -68,6 +69,31 @@ public class SharedViewConstructor {
 
 		view.addView(btnG11);
 		view.addView(iconsView);
+
+		return view;
+	}
+	
+	public static LinearLayout ConstructHeaderG11(final Activity main) {
+		// Create LinearLayout
+		LinearLayout view = new LinearLayout(main);
+		view.setOrientation(LinearLayout.HORIZONTAL);
+		view.setBackgroundResource(R.color.orange_g11);
+		Point size = GetScreenSize(main);
+
+		LinearLayout menuView = new LinearLayout(main);
+		menuView.setOrientation(LinearLayout.VERTICAL);
+		menuView.setGravity(Gravity.CENTER_HORIZONTAL);
+		menuView.setLayoutParams(new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT, (int) (size.y * 0.21)));
+
+
+		ImageButton btnG11 = CreateMediaButton(R.drawable.logo_white, main,
+				(int) (size.y * 0.12), (int) (size.y * 0.21),
+				"http://grupoonce.mx");
+		btnG11.setBackgroundColor(Color.rgb(0, 0, 0));
+
+		view.addView(btnG11);
+		view.addView(menuView);
 
 		return view;
 	}
@@ -162,6 +188,22 @@ public class SharedViewConstructor {
 				(int) (size.y * side), (int) (size.y * side)));
 
 		return imageBtn;
+	}
+	
+	public static Button ConstructSignOut(final Activity main, Point size, int width){
+		Button signOut = ConstructButton(main,
+				size, R.string.sign_out, 0, (int) (size.y * 0.04),
+				width, R.drawable.session_btn_text,
+				R.drawable.close_session_button);
+
+		// Set click listener for button
+		signOut.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				main.finish();
+				FirebaseManager.ref.unauth();
+			}
+		});
+		return signOut;
 	}
 
 	@SuppressWarnings("deprecation")
