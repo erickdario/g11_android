@@ -26,20 +26,22 @@ public class MainMenuAdvisorActivity extends Activity {
 
 		LinearLayout header = MMAdvisorViewConstructor.ConstructHeader(this);
 		LinearLayout body = MMAdvisorViewConstructor.ConstructBody(this);
-		
+
 		linearLayout.addView(header);
 		linearLayout.addView(body);
 
 		setContentView(linearLayout, rlp);
 	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-	    super.onActivityResult(requestCode, resultCode, data);
 
-	    if (requestCode == 0xe110)
-	    	ChatViewConstructor.conversationRef.removeEventListener(FirebaseManager.childEventListenerConversation);
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == 0xe110) {
+			ChatViewConstructor.conversationRef
+					.removeEventListener(FirebaseManager.childEventListenerConversation);
+			MMAdvisorViewConstructor.adapter.notifyDataSetChanged();
+		}
 	}
 
 	@Override

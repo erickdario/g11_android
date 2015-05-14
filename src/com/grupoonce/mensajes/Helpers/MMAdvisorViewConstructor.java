@@ -31,9 +31,10 @@ public class MMAdvisorViewConstructor {
 	public static ListView listConvo;
 	public static Firebase conversationsRef;
 	static String city;
+	public static TextView newMessagesCounter;
 
 	public static LinearLayout ConstructHeader(MainMenuAdvisorActivity main) {
-
+		FirebaseManager.role = "adviser";
 		LinearLayout header = SharedViewConstructor.ConstructHeaderG11(main);
 		Point size = SharedViewConstructor.GetScreenSize(main);
 
@@ -51,10 +52,30 @@ public class MMAdvisorViewConstructor {
 		user.setBackgroundColor(Color.TRANSPARENT);
 		user.setGravity(Gravity.CENTER_HORIZONTAL);
 
+		LinearLayout viewMessage = new LinearLayout(main);
+		viewMessage.setLayoutParams(layout);
+		viewMessage.setOrientation(LinearLayout.HORIZONTAL);
+		viewMessage.setBackgroundColor(Color.TRANSPARENT);
+		viewMessage.setGravity(Gravity.CENTER_HORIZONTAL);
+
+		LayoutParams layoutTextView = new LinearLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		TextView newMessages = SharedViewConstructor.ConstructTextView(
+				(Activity) main, layoutTextView, 20, main.getResources()
+						.getString(R.string.new_messages), false, Color.BLACK);
+		newMessages.setBackgroundColor(Color.TRANSPARENT);
+
+		newMessagesCounter = SharedViewConstructor.ConstructTextView(
+				(Activity) main, layoutTextView, 20, "0", false, Color.BLACK);
+		newMessagesCounter.setBackgroundColor(Color.TRANSPARENT);
+
 		Button signOut = SharedViewConstructor.ConstructSignOut(main, size,
-				LayoutParams.WRAP_CONTENT);
+				LayoutParams.WRAP_CONTENT, (int) (size.y * 0.02));
 
 		menu.addView(user);
+		viewMessage.addView(newMessages);
+		viewMessage.addView(newMessagesCounter);
+		menu.addView(viewMessage);
 		menu.addView(signOut);
 		header.addView(menu);
 
@@ -94,6 +115,8 @@ public class MMAdvisorViewConstructor {
 						+ city + "/" + companyName.getText().toString();
 				intent.putExtra("conversationUrl", conversationUrl);
 				intent.putExtra("role", "adviser");
+				MMAdvisorViewConstructor.listConversations.get(position)
+						.setRead(true);
 				main.startActivityForResult(intent, 0xe110);
 			}
 		});
@@ -102,7 +125,6 @@ public class MMAdvisorViewConstructor {
 		String conversationsUrl = intent.getStringExtra("conversationsUrl");
 		conversationsRef = new Firebase(conversationsUrl);
 		FirebaseManager.FindConversations();
-
 		scrollView.addView(conversationsView);
 		view.addView(scrollView);
 

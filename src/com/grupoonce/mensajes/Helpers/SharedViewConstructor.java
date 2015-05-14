@@ -72,7 +72,7 @@ public class SharedViewConstructor {
 
 		return view;
 	}
-	
+
 	public static LinearLayout ConstructHeaderG11(final Activity main) {
 		// Create LinearLayout
 		LinearLayout view = new LinearLayout(main);
@@ -85,7 +85,6 @@ public class SharedViewConstructor {
 		menuView.setGravity(Gravity.CENTER_HORIZONTAL);
 		menuView.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT, (int) (size.y * 0.21)));
-
 
 		ImageButton btnG11 = CreateMediaButton(R.drawable.logo_white, main,
 				(int) (size.y * 0.12), (int) (size.y * 0.21),
@@ -189,11 +188,11 @@ public class SharedViewConstructor {
 
 		return imageBtn;
 	}
-	
-	public static Button ConstructSignOut(final Activity main, Point size, int width){
-		Button signOut = ConstructButton(main,
-				size, R.string.sign_out, 0, (int) (size.y * 0.04),
-				width, R.drawable.session_btn_text,
+
+	public static Button ConstructSignOut(final Activity main, Point size,
+			int width, int marginY) {
+		Button signOut = ConstructButton(main, size, R.string.sign_out, 0,
+				marginY, width, R.drawable.session_btn_text,
 				R.drawable.close_session_button);
 
 		// Set click listener for button

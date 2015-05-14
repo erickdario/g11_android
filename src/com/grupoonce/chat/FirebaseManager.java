@@ -1,5 +1,9 @@
 package com.grupoonce.chat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 import android.app.Activity;
@@ -24,6 +28,7 @@ public class FirebaseManager {
 	public static ChildEventListener childEventListenerConversations;
 	public static ValueEventListener valueEventListener;
 	public static Activity main;
+	public static String role;
 
 	public static Firebase ref = new Firebase(
 			"https://glaring-heat-1751.firebaseio.com");
@@ -69,8 +74,7 @@ public class FirebaseManager {
 							MainMenuAdvisorActivity.class);
 					intent.putExtra("sessionId", authData.getUid());
 					intent.putExtra("city", user.get("city").toString());
-					intent.putExtra(
-							"conversationsUrl",
+					intent.putExtra("conversationsUrl",
 							"https://glaring-heat-1751.firebaseio.com/messages/"
 									+ user.get("city"));
 					main.startActivity(intent);
@@ -93,17 +97,24 @@ public class FirebaseManager {
 		};
 		userRef.addValueEventListener(valueEventListener);
 	}
-	
+
 	public static void FindConversations() {
 		Log.d("debug", "conversations");
 		childEventListenerConversations = new ChildEventListener() {
 			@Override
 			public void onChildAdded(DataSnapshot conversationSnapshot,
 					String previousChild) {
-				//TODO get last date of last message
-				MMAdvisorViewConstructor.listConversations.add(new Conversation(conversationSnapshot.getKey(), "lastDateMsg"));
+				// TODO get last date of last message
+				Boolean read = GetIfAnyNotRead(conversationSnapshot, role);
+				String lastDate = GetLastDate(conversationSnapshot);
+				MMAdvisorViewConstructor.listConversations
+						.add(new Conversation(conversationSnapshot.getKey(),
+								lastDate, read));
+				MMAdvisorViewConstructor.newMessagesCounter.setText(""
+						+ MMAdvisorViewConstructor.adapter.getCountUnread());
 				MMAdvisorViewConstructor.adapter.notifyDataSetChanged();
-				System.out.println(conversationSnapshot.getValue().toString());
+				System.out.println(MMAdvisorViewConstructor.newMessagesCounter
+						.getText().toString());
 			}
 
 			@Override
@@ -113,9 +124,27 @@ public class FirebaseManager {
 			}
 
 			@Override
-			public void onChildChanged(DataSnapshot arg0, String arg1) {
-				// TODO Auto-generated method stub
-
+			public void onChildChanged(DataSnapshot conversationSnapshot,
+					String previousChildKey) {
+				Boolean read = GetIfAnyNotRead(conversationSnapshot, role);
+				if (!read) {
+					for (int index = 0; index < MMAdvisorViewConstructor.listConversations
+							.size(); index++) {
+						if (MMAdvisorViewConstructor.listConversations
+								.get(index).getCompanysName()
+								.equals(conversationSnapshot.getKey())) {
+							String lastDate = GetLastDate(conversationSnapshot);
+							MMAdvisorViewConstructor.listConversations.get(
+									index).setRead(false);
+							MMAdvisorViewConstructor.listConversations.get(
+									index).setLastDateMsg(lastDate);
+							MMAdvisorViewConstructor.adapter
+									.notifyDataSetChanged();
+						}
+					}
+				}
+				MMAdvisorViewConstructor.newMessagesCounter.setText(""
+						+ MMAdvisorViewConstructor.adapter.getCountUnread());
 			}
 
 			@Override
@@ -130,7 +159,8 @@ public class FirebaseManager {
 
 			}
 		};
-		MMAdvisorViewConstructor.conversationsRef.addChildEventListener(childEventListenerConversations);
+		MMAdvisorViewConstructor.conversationsRef
+				.addChildEventListener(childEventListenerConversations);
 	}
 
 	public static void FindConversation() {
@@ -142,9 +172,15 @@ public class FirebaseManager {
 				@SuppressWarnings("unchecked")
 				Map<String, Object> msg = (Map<String, Object>) msgSnapshot
 						.getValue();
-				ChatViewConstructor.listMessages.add(new Msg(msg.get("text")
-						.toString(), msg.get("sender").toString(), ""
-						+ msg.get("time"), msg.get("date").toString()));
+				Msg message = new Msg(msg.get("text").toString(), msg.get(
+						"sender").toString(), msg.get("time").toString(), msg
+						.get("date").toString(), msg.get("read").toString());
+				if (!message.getSender().equals(role)) {
+					message.setRead("true");
+					ChatViewConstructor.conversationRef.child(
+							msgSnapshot.getKey()).setValue(message);
+				}
+				ChatViewConstructor.listMessages.add(message);
 				ChatViewConstructor.adapter.notifyDataSetChanged();
 				ChatViewConstructor.listMsg
 						.setSelection(ChatViewConstructor.listMsg.getCount() - 1);
@@ -212,8 +248,7 @@ public class FirebaseManager {
 									Toast.LENGTH_SHORT).show();
 							break;
 						default:
-							Toast.makeText(
-									main,
+							Toast.makeText(main,
 									"Por favor verifique sus datos",
 									Toast.LENGTH_SHORT).show();
 							break;
@@ -222,4 +257,49 @@ public class FirebaseManager {
 				});
 	}
 
+	private static Boolean GetIfAnyNotRead(DataSnapshot conversationSnapshot,
+			String role) {
+		for (int index = 1; index <= conversationSnapshot.getChildrenCount(); index++) {
+			Boolean read;
+			if (!conversationSnapshot.child("/" + index + "/sender").getValue()
+					.toString().equals(role)) {
+				read = Boolean.valueOf(conversationSnapshot
+						.child("/" + index + "/read").getValue().toString());
+				if (!read) {
+					return read;
+				}
+			}
+		}
+		return true;
+	}
+
+	private static String GetLastDate(DataSnapshot conversationSnapshot) {
+		String maxDateStr = conversationSnapshot.child("/1/date").getValue()
+				.toString();
+		SimpleDateFormat format = new SimpleDateFormat("MMMM d", Locale.ENGLISH);
+		Date maxDate = null;
+		try {
+			maxDate = format.parse(maxDateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("The date wasn't in the right format");
+		}
+		System.out.println(maxDate);
+		for (int index = 2; index <= conversationSnapshot.getChildrenCount(); index++) {
+			String dateStr = conversationSnapshot.child("/" + index + "/date")
+					.getValue().toString();
+			Date date = null;
+			try {
+				date = format.parse(dateStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				System.out.println("The date wasn't in the right format");
+			}
+
+			if (date.after(maxDate)) {
+				maxDate = date;
+			}
+		}
+		return format.format(maxDate);
+	}
 }

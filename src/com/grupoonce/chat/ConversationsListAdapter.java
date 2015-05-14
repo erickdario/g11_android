@@ -19,9 +19,21 @@ public class ConversationsListAdapter extends BaseAdapter {
 	private Context context;
 	private List<Conversation> conversationsItems;
 
-	public ConversationsListAdapter(Context context, List<Conversation> navDrawerItems) {
+	public ConversationsListAdapter(Context context,
+			List<Conversation> navDrawerItems) {
 		this.context = context;
 		this.conversationsItems = navDrawerItems;
+	}
+
+	public int getCountUnread() {
+		int unread = 0;
+		for (int index = 0; index < conversationsItems.size(); index++) {
+			if (!conversationsItems.get(index).getRead()) {
+				unread++;
+			}
+		}
+
+		return unread;
 	}
 
 	@Override
@@ -52,14 +64,20 @@ public class ConversationsListAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.item_conversation, null);
 		}
 
-		TextView txtConversation = (TextView) convertView.findViewById(R.id.txtConversation);
+		TextView txtConversation = (TextView) convertView
+				.findViewById(R.id.txtConversation);
 		txtConversation.setText(conversation.getCompanysName());
-		
+
 		TextView read = (TextView) convertView.findViewById(R.id.read);
-		read.setText(Html.fromHtml("&#9679;"));
-		//TODO add logic to switch icon no new message icon -> &#9898;
-		
-		TextView txtTimeFrom = (TextView) convertView.findViewById(R.id.lblTimeFrom);
+
+		if (conversation.getRead()) {
+			read.setText(Html.fromHtml("&#9898;"));
+		} else {
+			read.setText(Html.fromHtml("&#9679;"));
+		}
+
+		TextView txtTimeFrom = (TextView) convertView
+				.findViewById(R.id.lblTimeFrom);
 		txtTimeFrom.setText(conversation.getLastDateMsg());
 
 		return convertView;

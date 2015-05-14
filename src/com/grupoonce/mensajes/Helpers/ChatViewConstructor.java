@@ -104,10 +104,10 @@ public class ChatViewConstructor {
 
 		String month = DecideMonth(Calendar.MONTH);
 
-		Msg msg = new Msg(message, role, "" + hour + ":" + minute, month
-				+ " " + date);
+		Msg msg = new Msg(message, role, "" + hour + ":" + minute, month + " "
+				+ date, "false");
 
-		conversationRef.child("msg" + (listMsg.getCount() + 1)).setValue(msg);
+		conversationRef.child("" + (listMsg.getCount() + 1)).setValue(msg);
 	}
 
 	private static String DecideMonth(int month) {

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.FaqActivity;
 import com.grupoonce.mensajes.ServicesActivity;
 import com.grupoonce.mensajes.ChatActivity;
@@ -19,6 +20,7 @@ import com.grupoonce.mensajes.R;
 public class MainMenuViewConstructor {
 
 	public static LinearLayout ConstructBody(final MainMenuActivity main) {
+		FirebaseManager.role = "client";
 		Point size = SharedViewConstructor.GetScreenSize(main);
 
 		LinearLayout view = SharedViewConstructor.ConstructBackground(main,
@@ -83,7 +85,8 @@ public class MainMenuViewConstructor {
 			}
 		});
 
-		Button signOut = SharedViewConstructor.ConstructSignOut(main, size, LayoutParams.MATCH_PARENT);
+		Button signOut = SharedViewConstructor.ConstructSignOut(main, size,
+				LayoutParams.MATCH_PARENT, (int) (size.y * 0.04));
 
 		btnView.addView(welcome);
 		btnView.addView(title);
