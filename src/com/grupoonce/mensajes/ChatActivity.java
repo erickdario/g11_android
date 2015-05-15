@@ -1,6 +1,6 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
+import com.grupoonce.mensajes.helpers.ChatViewConstructor;
 
 import android.app.Activity;
 import android.os.Bundle;

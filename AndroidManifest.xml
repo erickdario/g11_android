@@ -60,6 +60,10 @@
             android:name=".AdminMenuActivity"
             android:label="@string/title_activity_admin_menu" >
         </activity>
+        <activity
+            android:name=".AdviserConfigurationActivity"
+            android:label="@string/title_activity_adviser_configuration" >
+        </activity>
     </application>
 
 </manifest>

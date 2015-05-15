@@ -1,13 +1,14 @@
 /**
  * 
  */
-package com.grupoonce.mensajes.Helpers;
+package com.grupoonce.mensajes.helpers;
 
 import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.R;
 
 import android.net.Uri;
 import android.os.Build;
+import android.text.InputType;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -142,11 +144,11 @@ public class SharedViewConstructor {
 	}
 
 	public static TextView ConstructTextView(Activity main,
-			LayoutParams layout, int size, String text, Boolean bold, int color) {
+			LayoutParams layout, int textSize, String text, Boolean bold, int color) {
 		TextView textView = new TextView(main);
 		textView.setLayoutParams(layout);
 		textView.setText(text);
-		textView.setTextSize(size);
+		textView.setTextSize(textSize);
 		textView.setGravity(Gravity.START);
 		if (bold) {
 			textView.setTypeface(null, Typeface.BOLD);
@@ -156,7 +158,7 @@ public class SharedViewConstructor {
 		return textView;
 	}
 
-	public static ScrollView ContructScrollView(Activity main, int width,
+	public static ScrollView ConstructScrollView(Activity main, int width,
 			Point size) {
 		ScrollView scrollView = new ScrollView(main);
 		scrollView.setBackgroundColor(main.getResources().getColor(
@@ -169,7 +171,7 @@ public class SharedViewConstructor {
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
-	public static ImageButton ContructImageButton(Activity main, int resource,
+	public static ImageButton ConstructImageButton(Activity main, int resource,
 			Point size, float side) {
 		ImageButton imageBtn = new ImageButton(main);
 
@@ -203,6 +205,30 @@ public class SharedViewConstructor {
 			}
 		});
 		return signOut;
+	}
+	
+	@SuppressWarnings("deprecation")
+	@SuppressLint("NewApi")
+	public static EditText ContructG11EditText(Activity main,
+			int placeholderId, int inputType) {
+		LinearLayout.LayoutParams layoutParams = new LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		layoutParams.setMargins(0, 40, 0, 0);
+
+		EditText editTextSession = new EditText(main);
+		editTextSession.setHint(main.getResources().getString(placeholderId));
+		editTextSession.setLayoutParams(layoutParams);
+		editTextSession.setInputType(InputType.TYPE_CLASS_TEXT | inputType);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			editTextSession.setBackground(main.getResources().getDrawable(
+					R.drawable.edittext, null));
+		} else {
+			editTextSession.setBackground(main.getResources().getDrawable(
+					R.drawable.edittext));
+		}
+
+		return editTextSession;
 	}
 
 	@SuppressWarnings("deprecation")

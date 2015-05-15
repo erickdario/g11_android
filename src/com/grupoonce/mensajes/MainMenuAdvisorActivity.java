@@ -1,8 +1,8 @@
 package com.grupoonce.mensajes;
 
 import com.grupoonce.chat.FirebaseManager;
-import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
-import com.grupoonce.mensajes.Helpers.MMAdvisorViewConstructor;
+import com.grupoonce.mensajes.helpers.ChatViewConstructor;
+import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,8 +24,8 @@ public class MainMenuAdvisorActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT);
 
-		LinearLayout header = MMAdvisorViewConstructor.ConstructHeader(this);
-		LinearLayout body = MMAdvisorViewConstructor.ConstructBody(this);
+		LinearLayout header = MMAdviserViewConstructor.ConstructHeader(this);
+		LinearLayout body = MMAdviserViewConstructor.ConstructBody(this);
 
 		linearLayout.addView(header);
 		linearLayout.addView(body);
@@ -38,9 +38,12 @@ public class MainMenuAdvisorActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == 0xe110) {
-			ChatViewConstructor.conversationRef
-					.removeEventListener(FirebaseManager.childEventListenerConversation);
-			MMAdvisorViewConstructor.adapter.notifyDataSetChanged();
+			if (FirebaseManager.childEventListenerConversation != null) {
+				ChatViewConstructor.conversationRef
+						.removeEventListener(FirebaseManager.childEventListenerConversation);
+			}
+
+			MMAdviserViewConstructor.adapter.notifyDataSetChanged();
 		}
 	}
 

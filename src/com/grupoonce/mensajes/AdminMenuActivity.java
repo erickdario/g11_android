@@ -1,16 +1,44 @@
 package com.grupoonce.mensajes;
 
+import com.grupoonce.chat.FirebaseManager;
+import com.grupoonce.mensajes.helpers.AdminViewConstructor;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 public class AdminMenuActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_admin_menu);
+
+		LinearLayout linearLayout = new LinearLayout(this);
+		linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+		LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT);
+
+		LinearLayout header = AdminViewConstructor.ConstructHeader(this);
+		LinearLayout body = AdminViewConstructor.ConstructBody(this);
+
+		linearLayout.addView(header);
+		linearLayout.addView(body);
+
+		setContentView(linearLayout, rlp);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == 0xe110)
+			AdminViewConstructor.statesRef
+					.removeEventListener(FirebaseManager.childEventListenerStates);
 	}
 
 	@Override

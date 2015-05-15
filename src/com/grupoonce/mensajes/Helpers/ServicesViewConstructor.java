@@ -1,4 +1,4 @@
-package com.grupoonce.mensajes.Helpers;
+package com.grupoonce.mensajes.helpers;
 
 import android.graphics.Color;
 import android.graphics.Point;
@@ -25,7 +25,7 @@ public class ServicesViewConstructor {
 		view.setBackgroundColor(Color.BLACK);
 
 		ScrollView servicesScrollView = SharedViewConstructor
-				.ContructScrollView(main, LayoutParams.MATCH_PARENT, size);
+				.ConstructScrollView(main, LayoutParams.MATCH_PARENT, size);
 		LinearLayout servicesView = SharedViewConstructor.ConstructBackground(
 				main, size, LayoutParams.MATCH_PARENT, (int) (size.y * 0.80));
 		servicesView.setBackgroundColor(Color.BLACK);
@@ -47,7 +47,7 @@ public class ServicesViewConstructor {
 			int id = main.getResources().getIdentifier(fname, "drawable",
 					"com.grupoonce.mensajes");
 
-			ImageButton btnService = SharedViewConstructor.ContructImageButton(
+			ImageButton btnService = SharedViewConstructor.ConstructImageButton(
 					main, id, size, 0.09f);
 
 			TextView text = SharedViewConstructor.ConstructTextView(main,
@@ -72,7 +72,7 @@ public class ServicesViewConstructor {
 			int id = main.getResources().getIdentifier(fname, "drawable",
 					"com.grupoonce.mensajes");
 
-			ImageButton btnService = SharedViewConstructor.ContructImageButton(
+			ImageButton btnService = SharedViewConstructor.ConstructImageButton(
 					main, id, size, 0.09f);
 
 			TextView text = SharedViewConstructor.ConstructTextView(main,
@@ -97,7 +97,7 @@ public class ServicesViewConstructor {
 			int id = main.getResources().getIdentifier(fname, "drawable",
 					"com.grupoonce.mensajes");
 
-			ImageButton btnService = SharedViewConstructor.ContructImageButton(
+			ImageButton btnService = SharedViewConstructor.ConstructImageButton(
 					main, id, size, 0.09f);
 
 			TextView text = SharedViewConstructor.ConstructTextView(main,

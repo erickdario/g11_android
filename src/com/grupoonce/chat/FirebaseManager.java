@@ -3,6 +3,7 @@ package com.grupoonce.chat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -19,13 +20,18 @@ import com.firebase.client.ValueEventListener;
 import com.grupoonce.mensajes.AdminMenuActivity;
 import com.grupoonce.mensajes.MainMenuActivity;
 import com.grupoonce.mensajes.MainMenuAdvisorActivity;
-import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
-import com.grupoonce.mensajes.Helpers.MMAdvisorViewConstructor;
+import com.grupoonce.mensajes.R;
+import com.grupoonce.mensajes.admin.State;
+import com.grupoonce.mensajes.helpers.AdminViewConstructor;
+import com.grupoonce.mensajes.helpers.AdviserConfigurationConstructor;
+import com.grupoonce.mensajes.helpers.ChatViewConstructor;
+import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
 
 public class FirebaseManager {
 
 	public static ChildEventListener childEventListenerConversation;
 	public static ChildEventListener childEventListenerConversations;
+	public static ChildEventListener childEventListenerStates;
 	public static ValueEventListener valueEventListener;
 	public static Activity main;
 	public static String role;
@@ -60,6 +66,94 @@ public class FirebaseManager {
 		}
 	};
 
+	public static void FindUser(final String city) {
+		Firebase usersRef = ref.child("users");
+		usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot snapshot) {
+				Iterator<DataSnapshot> iterator = snapshot.getChildren()
+						.iterator();
+				while (iterator.hasNext()) {
+					DataSnapshot userSnapshot = iterator.next();
+
+					if (userSnapshot.child("city").getValue().toString()
+							.equals(city)
+							&& userSnapshot.child("companysName").getValue()
+									.toString().equals("grupoonce")) {
+						AdviserConfigurationConstructor.userKey = userSnapshot
+								.getKey();
+						AdviserConfigurationConstructor.userName = userSnapshot
+								.child("userName").getValue().toString();
+						AdviserConfigurationConstructor.oldPassword = userSnapshot
+								.child("password").getValue().toString();
+
+						AdviserConfigurationConstructor.user.setText(main
+								.getResources().getString(R.string.user)
+								+ "\n"
+								+ AdviserConfigurationConstructor.userName);
+
+						AdviserConfigurationConstructor.oldPasswordView
+								.setText(main.getResources().getString(
+										R.string.old_password)
+										+ "\n"
+										+ AdviserConfigurationConstructor.oldPassword);
+					}
+				}
+			}
+
+			@Override
+			public void onCancelled(FirebaseError firebaseError) {
+			}
+		});
+	}
+
+	public static void ChangePassword(final String email,
+			final String oldPassword, final String newPassword) {
+		ref.changePassword(email, oldPassword, newPassword,
+				new Firebase.ResultHandler() {
+					@Override
+					public void onSuccess() {
+						Toast.makeText(
+								main,
+								"La contraseña del usuario " + email
+										+ " fue cambiada con éxito",
+								Toast.LENGTH_SHORT).show();
+						AdviserConfigurationConstructor.oldPassword = newPassword;
+						AdviserConfigurationConstructor.oldPasswordView
+								.setText(main.getResources().getString(
+										R.string.old_password)
+										+ "\n"
+										+ AdviserConfigurationConstructor.oldPassword);
+						ref.child("users").child(AdviserConfigurationConstructor.userKey).child("password")
+								.setValue(newPassword);
+					}
+
+					@Override
+					public void onError(FirebaseError firebaseError) {
+						switch (firebaseError.getCode()) {
+						case FirebaseError.DISCONNECTED:
+							Toast.makeText(main,
+									"Hubo un problema de conectividad",
+									Toast.LENGTH_SHORT).show();
+							break;
+						case FirebaseError.OPERATION_FAILED:
+							Toast.makeText(
+									main,
+									"Ocurrió un error en el servidor, intente más tarde",
+									Toast.LENGTH_SHORT).show();
+							break;
+						default:
+							Toast.makeText(
+									main,
+									"Lo sentimos, intente mas tarde"
+											+ firebaseError.getMessage(),
+									Toast.LENGTH_SHORT).show();
+							break;
+						}
+					}
+				});
+	}
+
 	public static void UserWasAuthenticated(final AuthData authData) {
 		// Authenticated successfully with payload authData
 		Firebase userRef = ref.child("users").child(authData.getUid());
@@ -73,9 +167,9 @@ public class FirebaseManager {
 					if (user.get("city").toString().equals("admin")) {
 						Intent intent = new Intent(main,
 								AdminMenuActivity.class);
-						intent.putExtra("conversationsUrl",
-								"https://glaring-heat-1751.firebaseio.com/messages/");
-						main.startActivity(intent);
+						intent.putExtra("statesUrl",
+								"https://glaring-heat-1751.firebaseio.com/messages");
+						main.startActivityForResult(intent, 0xe110);
 					} else {
 						Intent intent = new Intent(main,
 								MainMenuAdvisorActivity.class);
@@ -98,7 +192,7 @@ public class FirebaseManager {
 							"https://glaring-heat-1751.firebaseio.com/messages/"
 									+ user.get("city") + "/" + userName + "%"
 									+ companysName);
-					main.startActivity(intent);
+					main.startActivityForResult(intent, 0xe110);
 				}
 			}
 
@@ -109,6 +203,42 @@ public class FirebaseManager {
 			}
 		};
 		userRef.addValueEventListener(valueEventListener);
+	}
+
+	public static void FindStates() {
+
+		childEventListenerStates = new ChildEventListener() {
+
+			@Override
+			public void onCancelled(FirebaseError arg0) {
+			}
+
+			@Override
+			public void onChildAdded(DataSnapshot stateSnapshot,
+					String previousChild) {
+				AdminViewConstructor.listStates.add(new State(stateSnapshot
+						.getKey()));
+				AdminViewConstructor.adapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onChildChanged(DataSnapshot arg0, String ar1) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onChildMoved(DataSnapshot arg0, String arg1) {
+			}
+
+			@Override
+			public void onChildRemoved(DataSnapshot arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+		AdminViewConstructor.statesRef
+				.addChildEventListener(childEventListenerStates);
 	}
 
 	public static void FindConversations() {
@@ -125,16 +255,13 @@ public class FirebaseManager {
 						.substring(conversationNameOnFirebase.indexOf("%") + 1,
 								conversationNameOnFirebase.length());
 				String userNameConversation = conversationNameOnFirebase
-						.substring(0,
-								conversationNameOnFirebase.indexOf("%"));
-				MMAdvisorViewConstructor.listConversations
+						.substring(0, conversationNameOnFirebase.indexOf("%"));
+				MMAdviserViewConstructor.listConversations
 						.add(new Conversation(companysNameConversation,
 								userNameConversation, lastDate, read));
-				MMAdvisorViewConstructor.newMessagesCounter.setText(""
-						+ MMAdvisorViewConstructor.adapter.getCountUnread());
-				MMAdvisorViewConstructor.adapter.notifyDataSetChanged();
-				System.out.println(MMAdvisorViewConstructor.newMessagesCounter
-						.getText().toString());
+				MMAdviserViewConstructor.newMessagesCounter.setText(""
+						+ MMAdviserViewConstructor.adapter.getCountUnread());
+				MMAdviserViewConstructor.adapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -148,23 +275,23 @@ public class FirebaseManager {
 					String previousChildKey) {
 				Boolean read = GetIfAnyNotRead(conversationSnapshot, role);
 				if (!read) {
-					for (int index = 0; index < MMAdvisorViewConstructor.listConversations
+					for (int index = 0; index < MMAdviserViewConstructor.listConversations
 							.size(); index++) {
-						if (MMAdvisorViewConstructor.listConversations
+						if (MMAdviserViewConstructor.listConversations
 								.get(index).getCompanysName()
 								.equals(conversationSnapshot.getKey())) {
 							String lastDate = GetLastDate(conversationSnapshot);
-							MMAdvisorViewConstructor.listConversations.get(
+							MMAdviserViewConstructor.listConversations.get(
 									index).setRead(false);
-							MMAdvisorViewConstructor.listConversations.get(
+							MMAdviserViewConstructor.listConversations.get(
 									index).setLastDateMsg(lastDate);
-							MMAdvisorViewConstructor.adapter
+							MMAdviserViewConstructor.adapter
 									.notifyDataSetChanged();
 						}
 					}
 				}
-				MMAdvisorViewConstructor.newMessagesCounter.setText(""
-						+ MMAdvisorViewConstructor.adapter.getCountUnread());
+				MMAdviserViewConstructor.newMessagesCounter.setText(""
+						+ MMAdviserViewConstructor.adapter.getCountUnread());
 			}
 
 			@Override
@@ -179,7 +306,7 @@ public class FirebaseManager {
 
 			}
 		};
-		MMAdvisorViewConstructor.conversationsRef
+		MMAdviserViewConstructor.conversationsRef
 				.addChildEventListener(childEventListenerConversations);
 	}
 
@@ -220,14 +347,10 @@ public class FirebaseManager {
 
 			@Override
 			public void onChildMoved(DataSnapshot arg0, String arg1) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void onChildRemoved(DataSnapshot arg0) {
-				// TODO Auto-generated method stub
-
 			}
 		};
 
@@ -236,14 +359,14 @@ public class FirebaseManager {
 	}
 
 	public static void CreateUser(final String userName, final String city,
-			String password, final String companysName) {
-
+			final String password, final String companysName) {
 		ref.createUser(userName, password,
 				new Firebase.ValueResultHandler<Map<String, Object>>() {
 					@Override
 					public void onSuccess(Map<String, Object> result) {
 						String accountId = (String) result.get("uid");
-						User user = new User(userName, city, companysName);
+						User user = new User(userName, city, companysName,
+								password);
 						Firebase usersRef = ref.child("users");
 						usersRef.child(accountId).setValue(user);
 						Toast.makeText(main,
@@ -296,7 +419,8 @@ public class FirebaseManager {
 	private static String GetLastDate(DataSnapshot conversationSnapshot) {
 		String maxDateStr = conversationSnapshot.child("/1/date").getValue()
 				.toString();
-		SimpleDateFormat format = new SimpleDateFormat("MMMM d", new Locale("es", "ES"));
+		SimpleDateFormat format = new SimpleDateFormat("MMMM d", new Locale(
+				"es", "ES"));
 		Date maxDate = null;
 		try {
 			maxDate = format.parse(maxDateStr);

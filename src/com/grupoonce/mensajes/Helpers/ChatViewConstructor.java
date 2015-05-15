@@ -1,4 +1,4 @@
-package com.grupoonce.mensajes.Helpers;
+package com.grupoonce.mensajes.helpers;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -77,7 +77,7 @@ public class ChatViewConstructor {
 
 		inputChat.setLayoutParams(layoutParams);
 
-		ImageButton btnSend = SharedViewConstructor.ContructImageButton(main,
+		ImageButton btnSend = SharedViewConstructor.ConstructImageButton(main,
 				R.drawable.send_now, size, 0.1f);
 		// Set click listener for button
 		btnSend.setOnClickListener(new OnClickListener() {

@@ -1,4 +1,4 @@
-package com.grupoonce.mensajes.Helpers;
+package com.grupoonce.mensajes.helpers;
 
 import android.content.Intent;
 import android.graphics.Color;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.grupoonce.mensajes.Helpers;
+package com.grupoonce.mensajes.helpers;
 
 import com.grupoonce.mensajes.FaqActivity;
 import com.grupoonce.mensajes.R;
@@ -32,7 +32,7 @@ public class FaqViewConstructor {
 		LinearLayout questionsView = SharedViewConstructor.ConstructBackground(
 				main, size, (int) (size.x * 0.70), (int) (size.y * 0.69));
 
-		ScrollView faqScrollView = SharedViewConstructor.ContructScrollView(
+		ScrollView faqScrollView = SharedViewConstructor.ConstructScrollView(
 				main, (int) (size.x * 0.70), size);
 
 		LayoutParams layout = new LinearLayout.LayoutParams(

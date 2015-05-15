@@ -1,9 +1,9 @@
 package com.grupoonce.mensajes;
 
 import com.grupoonce.chat.FirebaseManager;
-import com.grupoonce.mensajes.Helpers.MMAdvisorViewConstructor;
-import com.grupoonce.mensajes.Helpers.SessionViewConstructor;
-import com.grupoonce.mensajes.Helpers.SharedViewConstructor;
+import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
+import com.grupoonce.mensajes.helpers.SessionViewConstructor;
+import com.grupoonce.mensajes.helpers.SharedViewConstructor;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -39,8 +39,10 @@ public class MainActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == 0xe110) {
-			MMAdvisorViewConstructor.conversationsRef
-					.removeEventListener(FirebaseManager.childEventListenerConversations);
+			if (FirebaseManager.childEventListenerConversations != null) {
+				MMAdviserViewConstructor.conversationsRef
+						.removeEventListener(FirebaseManager.childEventListenerConversations);
+			}
 		}
 	}
 

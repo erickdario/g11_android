@@ -1,23 +1,19 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.chat.FirebaseManager;
-import com.grupoonce.mensajes.helpers.ChatViewConstructor;
-import com.grupoonce.mensajes.helpers.MainMenuViewConstructor;
-import com.grupoonce.mensajes.helpers.SharedViewConstructor;
+import com.grupoonce.mensajes.helpers.AdviserConfigurationConstructor;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
-public class MainMenuActivity extends Activity {
+public class AdviserConfigurationActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		LinearLayout linearLayout = new LinearLayout(this);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -25,8 +21,9 @@ public class MainMenuActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT);
 
-		LinearLayout header = SharedViewConstructor.ConstructHeader(this);
-		LinearLayout body = MainMenuViewConstructor.ConstructBody(this);
+		LinearLayout header = AdviserConfigurationConstructor.ConstructHeader(this);
+		LinearLayout body = AdviserConfigurationConstructor.ConstructBody(this);
+
 		linearLayout.addView(header);
 		linearLayout.addView(body);
 
@@ -34,18 +31,9 @@ public class MainMenuActivity extends Activity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
-		if (requestCode == 0xe110)
-			ChatViewConstructor.conversationRef
-					.removeEventListener(FirebaseManager.childEventListenerConversation);
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main_menu, menu);
+		getMenuInflater().inflate(R.menu.adviser_configuration, menu);
 		return true;
 	}
 

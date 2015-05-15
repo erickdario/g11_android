@@ -3,7 +3,7 @@ package com.grupoonce.chat;
 import java.util.List;
 
 import com.grupoonce.mensajes.R;
-import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
+import com.grupoonce.mensajes.helpers.ChatViewConstructor;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

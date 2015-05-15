@@ -1,4 +1,4 @@
-package com.grupoonce.mensajes.Helpers;
+package com.grupoonce.mensajes.helpers;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -104,11 +104,13 @@ public class SessionViewConstructor {
 		viewLogin.setLayoutParams(new LinearLayout.LayoutParams(
 				(int) (size.x * 0.80), (int) (size.y * 0.85)));
 
-		final EditText email = ContructSessionEditText(main, R.string.email,
-				InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
+		final EditText email = SharedViewConstructor
+				.ContructG11EditText(main, R.string.email,
+						InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
 
-		final EditText password = ContructSessionEditText(main,
-				R.string.password, InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		final EditText password = SharedViewConstructor
+				.ContructG11EditText(main, R.string.password,
+						InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
 		LinearLayout.LayoutParams btnLayoutParams = new LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -143,14 +145,17 @@ public class SessionViewConstructor {
 		viewSignup.setLayoutParams(new LinearLayout.LayoutParams(
 				(int) (size.x * 0.80), (int) (size.y * 0.85)));
 
-		final EditText companysName = ContructSessionEditText(main,
-				R.string.company_name, InputType.TYPE_CLASS_TEXT);
-		final EditText email = ContructSessionEditText(main, R.string.email,
-				InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
-		final EditText password = ContructSessionEditText(main,
-				R.string.password, InputType.TYPE_TEXT_VARIATION_PASSWORD);
-		EditText confirmPassword = ContructSessionEditText(main,
-				R.string.confirm_password,
+		final EditText companysName = SharedViewConstructor
+				.ContructG11EditText(main, R.string.company_name,
+						InputType.TYPE_CLASS_TEXT);
+		final EditText email = SharedViewConstructor
+				.ContructG11EditText(main, R.string.email,
+						InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
+		final EditText password = SharedViewConstructor
+				.ContructG11EditText(main, R.string.password,
+						InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		EditText confirmPassword = SharedViewConstructor.ContructG11EditText(
+				main, R.string.confirm_password,
 				InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
 		final Button signUp = SharedViewConstructor.ConstructButton(main, size,
@@ -194,27 +199,4 @@ public class SessionViewConstructor {
 		return viewSignup;
 	}
 
-	@SuppressWarnings("deprecation")
-	@SuppressLint("NewApi")
-	private static EditText ContructSessionEditText(MainActivity main,
-			int placeholderId, int inputType) {
-		LinearLayout.LayoutParams layoutParams = new LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		layoutParams.setMargins(0, 40, 0, 0);
-
-		EditText editTextSession = new EditText(main);
-		editTextSession.setHint(main.getResources().getString(placeholderId));
-		editTextSession.setLayoutParams(layoutParams);
-		editTextSession.setInputType(InputType.TYPE_CLASS_TEXT | inputType);
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			editTextSession.setBackground(main.getResources().getDrawable(
-					R.drawable.edittext, null));
-		} else {
-			editTextSession.setBackground(main.getResources().getDrawable(
-					R.drawable.edittext));
-		}
-
-		return editTextSession;
-	}
 }

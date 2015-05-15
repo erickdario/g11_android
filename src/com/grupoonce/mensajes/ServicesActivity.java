@@ -1,7 +1,7 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.mensajes.Helpers.ServicesViewConstructor;
-import com.grupoonce.mensajes.Helpers.SharedViewConstructor;
+import com.grupoonce.mensajes.helpers.ServicesViewConstructor;
+import com.grupoonce.mensajes.helpers.SharedViewConstructor;
 
 import android.app.Activity;
 import android.os.Bundle;

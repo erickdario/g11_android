@@ -11,14 +11,29 @@
     <string name="company_name">Nombre de la compañia</string>
     <string name="confirm_password">Confirmar contraseña</string>
     <string name="user">Usuario:</string>
+    <string name="admin_user">Usuario: Administrador</string>
     <string name="new_messages">Mensajes nuevos:</string>
     <string name="left_item_corner">◥</string>
     <string name="right_item_corner">◣</string>
+    <string name="configuration">Configuración</string>
+    <string name="old_password">Contraseña actual</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="change_password">Actualizar contraseña</string>
+    <string name="show_password">Mostrar contraseña</string>
+    <string name="state_image_description">Image for each state</string>
 
     <string-array name="states_array">
-        <item>Monterrey</item>
+        <item>Aguascalientes</item>
+        <item>Celaya</item>
+        <item>Culiacan</item>
+        <item>DF</item>
         <item>Guadalajara</item>
-        <item>Queretaro</item>
+        <item>León</item>
+        <item>Querétaro</item>
+        <item>San Luis Potosí</item>
+        <item>Tijuana</item>
+        <item>Torreón</item>
+        <item>Zacatecas</item>
     </string-array>
     <string-array name="faq_array">
         <item>¿En qué horario puedo usar el chat con un asesor en la app?</item>
@@ -66,5 +81,6 @@
     <string name="services_section2">Multicanal</string>
     <string name="services_section3">Valores</string>
     <string name="title_activity_admin_menu">AdminMenuActivity</string>
+    <string name="title_activity_adviser_configuration">AdviserConfigurationActivity</string>
 
 </resources>
