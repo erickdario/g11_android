@@ -67,6 +67,10 @@ public class ConversationsListAdapter extends BaseAdapter {
 		TextView txtConversation = (TextView) convertView
 				.findViewById(R.id.txtConversation);
 		txtConversation.setText(conversation.getCompanysName());
+		
+		TextView txtUserName = (TextView) convertView
+				.findViewById(R.id.lblUserName);
+		txtUserName.setText(conversation.getUserName());
 
 		TextView read = (TextView) convertView.findViewById(R.id.read);
 

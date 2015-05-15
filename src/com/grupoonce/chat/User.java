@@ -18,7 +18,7 @@ public class User {
 		return city;
 	}
 
-	public String getFullName() {
+	public String getUserName() {
 		return userName;
 	}
 

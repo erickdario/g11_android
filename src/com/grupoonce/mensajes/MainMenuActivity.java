@@ -32,16 +32,15 @@ public class MainMenuActivity extends Activity {
 
 		setContentView(linearLayout, rlp);
 	}
-	
+
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-	    super.onActivityResult(requestCode, resultCode, data);
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
 
-	    if (requestCode == 0xe110)
-	    	ChatViewConstructor.conversationRef.removeEventListener(FirebaseManager.childEventListenerConversation);
+		if (requestCode == 0xe110)
+			ChatViewConstructor.conversationRef
+					.removeEventListener(FirebaseManager.childEventListenerConversation);
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -12,6 +12,8 @@
     <string name="confirm_password">Confirmar contraseña</string>
     <string name="user">Usuario:</string>
     <string name="new_messages">Mensajes nuevos:</string>
+    <string name="left_item_corner">◥</string>
+    <string name="right_item_corner">◣</string>
 
     <string-array name="states_array">
         <item>Monterrey</item>
@@ -63,5 +65,6 @@
     <string name="title_activity_main_menu_advisor">MainMenuAdvisorActivity</string>
     <string name="services_section2">Multicanal</string>
     <string name="services_section3">Valores</string>
+    <string name="title_activity_admin_menu">AdminMenuActivity</string>
 
 </resources>

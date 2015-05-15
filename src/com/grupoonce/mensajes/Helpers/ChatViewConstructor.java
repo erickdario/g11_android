@@ -102,7 +102,7 @@ public class ChatViewConstructor {
 		int minute = c.get(Calendar.MINUTE);
 		int date = c.get(Calendar.DATE);
 
-		String month = DecideMonth(Calendar.MONTH);
+		String month = DecideMonth(c.get(Calendar.MONTH));
 
 		Msg msg = new Msg(message, role, "" + hour + ":" + minute, month + " "
 				+ date, "false");
@@ -112,41 +112,41 @@ public class ChatViewConstructor {
 
 	private static String DecideMonth(int month) {
 		switch (month) {
+		case 0:
+			return "Enero";
+
 		case 1:
-			return "January";
+			return "Febrero";
 
 		case 2:
-			return "February";
+			return "Marzo";
 
 		case 3:
-			return "March";
+			return "Abril";
 
 		case 4:
-			return "April";
+			return "Mayo";
 
 		case 5:
-			return "May";
+			return "Junio";
 
 		case 6:
-			return "June";
+			return "Julio";
 
 		case 7:
-			return "July";
+			return "Agosto";
 
 		case 8:
-			return "August";
+			return "Septiembre";
 
 		case 9:
-			return "September";
+			return "Octubre";
 
 		case 10:
-			return "October";
+			return "Noviembre";
 
 		case 11:
-			return "November";
-
-		case 12:
-			return "December";
+			return "Diciembre";
 
 		default:
 			return "Invalid month";

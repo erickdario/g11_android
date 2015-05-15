@@ -8,7 +8,6 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -17,6 +16,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.grupoonce.mensajes.AdminMenuActivity;
 import com.grupoonce.mensajes.MainMenuActivity;
 import com.grupoonce.mensajes.MainMenuAdvisorActivity;
 import com.grupoonce.mensajes.Helpers.ChatViewConstructor;
@@ -70,21 +70,34 @@ public class FirebaseManager {
 				Map<String, Object> user = (Map<String, Object>) snapshot
 						.getValue();
 				if (user.get("companysName").equals("grupoonce")) {
-					Intent intent = new Intent(main,
-							MainMenuAdvisorActivity.class);
-					intent.putExtra("sessionId", authData.getUid());
-					intent.putExtra("city", user.get("city").toString());
-					intent.putExtra("conversationsUrl",
-							"https://glaring-heat-1751.firebaseio.com/messages/"
-									+ user.get("city"));
-					main.startActivity(intent);
+					if (user.get("city").toString().equals("admin")) {
+						Intent intent = new Intent(main,
+								AdminMenuActivity.class);
+						intent.putExtra("conversationsUrl",
+								"https://glaring-heat-1751.firebaseio.com/messages/");
+						main.startActivity(intent);
+					} else {
+						Intent intent = new Intent(main,
+								MainMenuAdvisorActivity.class);
+						intent.putExtra("sessionId", authData.getUid());
+						intent.putExtra("city", user.get("city").toString());
+						intent.putExtra("conversationsUrl",
+								"https://glaring-heat-1751.firebaseio.com/messages/"
+										+ user.get("city"));
+						main.startActivityForResult(intent, 0xe110);
+					}
+
 				} else {
 					Intent intent = new Intent(main, MainMenuActivity.class);
-					intent.putExtra(
-							"conversationUrl",
+					String userName = user.get("userName").toString();
+					userName = CleanString(userName);
+
+					String companysName = user.get("companysName").toString();
+					companysName = CleanString(companysName);
+					intent.putExtra("conversationUrl",
 							"https://glaring-heat-1751.firebaseio.com/messages/"
-									+ user.get("city") + "/"
-									+ user.get("companysName"));
+									+ user.get("city") + "/" + userName + "%"
+									+ companysName);
 					main.startActivity(intent);
 				}
 			}
@@ -99,7 +112,6 @@ public class FirebaseManager {
 	}
 
 	public static void FindConversations() {
-		Log.d("debug", "conversations");
 		childEventListenerConversations = new ChildEventListener() {
 			@Override
 			public void onChildAdded(DataSnapshot conversationSnapshot,
@@ -107,9 +119,17 @@ public class FirebaseManager {
 				// TODO get last date of last message
 				Boolean read = GetIfAnyNotRead(conversationSnapshot, role);
 				String lastDate = GetLastDate(conversationSnapshot);
+				String conversationNameOnFirebase = conversationSnapshot
+						.getKey();
+				String companysNameConversation = conversationNameOnFirebase
+						.substring(conversationNameOnFirebase.indexOf("%") + 1,
+								conversationNameOnFirebase.length());
+				String userNameConversation = conversationNameOnFirebase
+						.substring(0,
+								conversationNameOnFirebase.indexOf("%"));
 				MMAdvisorViewConstructor.listConversations
-						.add(new Conversation(conversationSnapshot.getKey(),
-								lastDate, read));
+						.add(new Conversation(companysNameConversation,
+								userNameConversation, lastDate, read));
 				MMAdvisorViewConstructor.newMessagesCounter.setText(""
 						+ MMAdvisorViewConstructor.adapter.getCountUnread());
 				MMAdvisorViewConstructor.adapter.notifyDataSetChanged();
@@ -276,7 +296,7 @@ public class FirebaseManager {
 	private static String GetLastDate(DataSnapshot conversationSnapshot) {
 		String maxDateStr = conversationSnapshot.child("/1/date").getValue()
 				.toString();
-		SimpleDateFormat format = new SimpleDateFormat("MMMM d", Locale.ENGLISH);
+		SimpleDateFormat format = new SimpleDateFormat("MMMM d", new Locale("es", "ES"));
 		Date maxDate = null;
 		try {
 			maxDate = format.parse(maxDateStr);
@@ -284,7 +304,6 @@ public class FirebaseManager {
 			e.printStackTrace();
 			System.out.println("The date wasn't in the right format");
 		}
-		System.out.println(maxDate);
 		for (int index = 2; index <= conversationSnapshot.getChildrenCount(); index++) {
 			String dateStr = conversationSnapshot.child("/" + index + "/date")
 					.getValue().toString();
@@ -301,5 +320,14 @@ public class FirebaseManager {
 			}
 		}
 		return format.format(maxDate);
+	}
+
+	private static String CleanString(String stringToClean) {
+		stringToClean = stringToClean.replace(".", "");
+		stringToClean = stringToClean.replace("#", "");
+		stringToClean = stringToClean.replace("$", "");
+		stringToClean = stringToClean.replace("[", "");
+		stringToClean = stringToClean.replace("]", "");
+		return stringToClean;
 	}
 }

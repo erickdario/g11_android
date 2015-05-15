@@ -1,9 +1,12 @@
 package com.grupoonce.mensajes;
 
+import com.grupoonce.chat.FirebaseManager;
+import com.grupoonce.mensajes.Helpers.MMAdvisorViewConstructor;
 import com.grupoonce.mensajes.Helpers.SessionViewConstructor;
 import com.grupoonce.mensajes.Helpers.SharedViewConstructor;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +32,16 @@ public class MainActivity extends Activity {
 		linearLayout.addView(body);
 
 		setContentView(linearLayout, rlp);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == 0xe110) {
+			MMAdvisorViewConstructor.conversationsRef
+					.removeEventListener(FirebaseManager.childEventListenerConversations);
+		}
 	}
 
 	@Override

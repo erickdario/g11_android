@@ -3,11 +3,13 @@ package com.grupoonce.chat;
 public class Conversation {
 
 	private String companysName;
+	private String userName;
 	private String lastDateMsg;
 	private Boolean read;
 	
-	public Conversation(String companysName, String lastDateMsg, Boolean read){
+	public Conversation(String companysName, String userName, String lastDateMsg, Boolean read){
 		this.companysName = companysName;
+		this.setUserName(userName);
 		this.setLastDateMsg(lastDateMsg);
 		this.setRead(read);
 	}
@@ -53,6 +55,20 @@ public class Conversation {
 	 */
 	public void setRead(Boolean read) {
 		this.read = read;
+	}
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

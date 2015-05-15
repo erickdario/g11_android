@@ -110,9 +110,11 @@ public class MMAdvisorViewConstructor {
 					int position, long id) {
 				TextView companyName = (TextView) view
 						.findViewById(R.id.txtConversation);
+				TextView userName = (TextView) view
+						.findViewById(R.id.lblUserName);
 				Intent intent = new Intent(main, ChatActivity.class);
 				String conversationUrl = "https://glaring-heat-1751.firebaseio.com/messages/"
-						+ city + "/" + companyName.getText().toString();
+						+ city + "/" + userName.getText().toString() + "%" + companyName.getText().toString();
 				intent.putExtra("conversationUrl", conversationUrl);
 				intent.putExtra("role", "adviser");
 				MMAdvisorViewConstructor.listConversations.get(position)

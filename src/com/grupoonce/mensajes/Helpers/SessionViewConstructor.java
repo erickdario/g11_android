@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Switch;
+import android.widget.Toast;
 
 public class SessionViewConstructor {
 
@@ -171,9 +172,16 @@ public class SessionViewConstructor {
 		// Set click listener for button
 		signUp.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				FirebaseManager.CreateUser(email.getText().toString(), spinner
-						.getSelectedItem().toString(), password.getText()
-						.toString(), companysName.getText().toString());
+				if (companysName.getText().toString().equals("grupoonce")) {
+					Toast.makeText(main,
+							"Por favor escriba otro nombre para su compañia",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					FirebaseManager.CreateUser(email.getText().toString(),
+							spinner.getSelectedItem().toString(), password
+									.getText().toString(), companysName
+									.getText().toString());
+				}
 			}
 		});
 
