@@ -35,6 +35,21 @@
         <item>Torreón</item>
         <item>Zacatecas</item>
     </string-array>
+    <string-array name="states_array_img_ids">
+        <item>aguascalientes</item>
+        <item>celaya</item>
+        <item>culiacan</item>
+        <item>df</item>
+        <item>guadalajara</item>
+        <item>leon</item>
+        <item>queretaro</item>
+        <item>san_luis</item>
+        <item>tijuana</item>
+        <item>torreon</item>
+        <item>zacatecas</item>
+    </string-array>
+    
+    
     <string-array name="faq_array">
         <item>¿En qué horario puedo usar el chat con un asesor en la app?</item>
         <item>R: El servicio está disponible desde las 9:00am hasta las 8:00pm.</item>

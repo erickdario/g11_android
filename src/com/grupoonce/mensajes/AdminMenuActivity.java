@@ -1,6 +1,5 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.helpers.AdminViewConstructor;
 
 import android.app.Activity;
@@ -36,9 +35,6 @@ public class AdminMenuActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (requestCode == 0xe110)
-			AdminViewConstructor.statesRef
-					.removeEventListener(FirebaseManager.childEventListenerStates);
 	}
 
 	@Override

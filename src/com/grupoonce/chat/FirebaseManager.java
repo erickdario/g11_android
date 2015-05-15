@@ -21,8 +21,6 @@ import com.grupoonce.mensajes.AdminMenuActivity;
 import com.grupoonce.mensajes.MainMenuActivity;
 import com.grupoonce.mensajes.MainMenuAdvisorActivity;
 import com.grupoonce.mensajes.R;
-import com.grupoonce.mensajes.admin.State;
-import com.grupoonce.mensajes.helpers.AdminViewConstructor;
 import com.grupoonce.mensajes.helpers.AdviserConfigurationConstructor;
 import com.grupoonce.mensajes.helpers.ChatViewConstructor;
 import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
@@ -31,7 +29,6 @@ public class FirebaseManager {
 
 	public static ChildEventListener childEventListenerConversation;
 	public static ChildEventListener childEventListenerConversations;
-	public static ChildEventListener childEventListenerStates;
 	public static ValueEventListener valueEventListener;
 	public static Activity main;
 	public static String role;
@@ -167,8 +164,6 @@ public class FirebaseManager {
 					if (user.get("city").toString().equals("admin")) {
 						Intent intent = new Intent(main,
 								AdminMenuActivity.class);
-						intent.putExtra("statesUrl",
-								"https://glaring-heat-1751.firebaseio.com/messages");
 						main.startActivityForResult(intent, 0xe110);
 					} else {
 						Intent intent = new Intent(main,
@@ -204,43 +199,7 @@ public class FirebaseManager {
 		};
 		userRef.addValueEventListener(valueEventListener);
 	}
-
-	public static void FindStates() {
-
-		childEventListenerStates = new ChildEventListener() {
-
-			@Override
-			public void onCancelled(FirebaseError arg0) {
-			}
-
-			@Override
-			public void onChildAdded(DataSnapshot stateSnapshot,
-					String previousChild) {
-				AdminViewConstructor.listStates.add(new State(stateSnapshot
-						.getKey()));
-				AdminViewConstructor.adapter.notifyDataSetChanged();
-			}
-
-			@Override
-			public void onChildChanged(DataSnapshot arg0, String ar1) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onChildMoved(DataSnapshot arg0, String arg1) {
-			}
-
-			@Override
-			public void onChildRemoved(DataSnapshot arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		};
-		AdminViewConstructor.statesRef
-				.addChildEventListener(childEventListenerStates);
-	}
-
+	
 	public static void FindConversations() {
 		childEventListenerConversations = new ChildEventListener() {
 			@Override

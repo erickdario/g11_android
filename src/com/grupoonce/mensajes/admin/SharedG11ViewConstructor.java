@@ -23,5 +23,4 @@ public class SharedG11ViewConstructor {
 
 		return user;
 	}
-
 }
