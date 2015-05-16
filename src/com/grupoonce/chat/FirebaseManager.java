@@ -365,12 +365,15 @@ public class FirebaseManager {
 
 	private static Boolean GetIfAnyNotRead(DataSnapshot conversationSnapshot,
 			String role) {
-		for (int index = 1; index <= conversationSnapshot.getChildrenCount(); index++) {
+		Iterator<DataSnapshot> iterator = conversationSnapshot.getChildren()
+				.iterator();
+		while (iterator.hasNext()) {
 			Boolean read;
-			if (!conversationSnapshot.child("/" + index + "/sender").getValue()
-					.toString().equals(role)) {
-				read = Boolean.valueOf(conversationSnapshot
-						.child("/" + index + "/read").getValue().toString());
+			DataSnapshot messageSnapshot = iterator.next();
+			if (!messageSnapshot.child("/sender").getValue().toString()
+					.equals(role)) {
+				read = Boolean.valueOf(messageSnapshot.child("/read")
+						.getValue().toString());
 
 				if (!read) {
 					return read;
@@ -381,8 +384,13 @@ public class FirebaseManager {
 	}
 
 	private static String GetLastDate(DataSnapshot conversationSnapshot) {
-		String maxDateStr = conversationSnapshot.child("/1/date").getValue()
-				.toString();
+		Iterator<DataSnapshot> iterator = conversationSnapshot.getChildren()
+				.iterator();
+		String maxDateStr = "";
+		while (iterator.hasNext()) {
+			DataSnapshot messageSnapshot = iterator.next();
+			maxDateStr = messageSnapshot.child("/date").getValue().toString();
+		}
 		SimpleDateFormat format = new SimpleDateFormat("MMMM d", new Locale(
 				"es", "ES"));
 		Date maxDate = null;
@@ -391,21 +399,6 @@ public class FirebaseManager {
 		} catch (ParseException e) {
 			e.printStackTrace();
 			Log.d("Firebase", "The date wasn't in the right format");
-		}
-		for (int index = 2; index <= conversationSnapshot.getChildrenCount(); index++) {
-			String dateStr = conversationSnapshot.child("/" + index + "/date")
-					.getValue().toString();
-			Date date = null;
-			try {
-				date = format.parse(dateStr);
-			} catch (ParseException e) {
-				e.printStackTrace();
-				Log.d("Firebase", "The date wasn't in the right format");
-			}
-
-			if (date.after(maxDate)) {
-				maxDate = date;
-			}
 		}
 		return format.format(maxDate);
 	}
