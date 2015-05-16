@@ -1,6 +1,8 @@
 package com.grupoonce.mensajes;
 
+import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.helpers.ChatViewConstructor;
+import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -25,6 +27,12 @@ public class ChatActivity extends Activity {
 		LinearLayout chatInput = ChatViewConstructor.ContructInputChat(this);
 		linearLayout.addView(chatBody);
 		linearLayout.addView(chatInput);
+
+		if (FirebaseManager.childEventListenerConversations != null) {
+			MMAdviserViewConstructor.conversationsRef
+					.removeEventListener(FirebaseManager.childEventListenerConversations);
+			MMAdviserViewConstructor.listConversations.clear();
+		}
 
 		setContentView(linearLayout, rlp);
 	}

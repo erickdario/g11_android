@@ -9,6 +9,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -37,7 +38,7 @@ public class FirebaseManager {
 			"https://glaring-heat-1751.firebaseio.com");
 	public static Firebase.AuthResultHandler authResultHandler = new Firebase.AuthResultHandler() {
 		@Override
-		public void onAuthenticated(final AuthData authData) {
+		public void onAuthenticated(AuthData authData) {
 			UserWasAuthenticated(authData);
 		}
 
@@ -121,8 +122,9 @@ public class FirebaseManager {
 										R.string.old_password)
 										+ "\n"
 										+ AdviserConfigurationConstructor.oldPassword);
-						ref.child("users").child(AdviserConfigurationConstructor.userKey).child("password")
-								.setValue(newPassword);
+						ref.child("users")
+								.child(AdviserConfigurationConstructor.userKey)
+								.child("password").setValue(newPassword);
 					}
 
 					@Override
@@ -140,10 +142,8 @@ public class FirebaseManager {
 									Toast.LENGTH_SHORT).show();
 							break;
 						default:
-							Toast.makeText(
-									main,
-									"Lo sentimos, intente mas tarde"
-											+ firebaseError.getMessage(),
+							Toast.makeText(main,
+									"Lo sentimos, intente mas tarde",
 									Toast.LENGTH_SHORT).show();
 							break;
 						}
@@ -193,13 +193,12 @@ public class FirebaseManager {
 
 			@Override
 			public void onCancelled(FirebaseError firebaseError) {
-				System.out.println("The read failed: "
-						+ firebaseError.getMessage());
+				Log.d("Firebase ", firebaseError.getMessage());
 			}
 		};
 		userRef.addValueEventListener(valueEventListener);
 	}
-	
+
 	public static void FindConversations() {
 		childEventListenerConversations = new ChildEventListener() {
 			@Override
@@ -236,21 +235,26 @@ public class FirebaseManager {
 				if (!read) {
 					for (int index = 0; index < MMAdviserViewConstructor.listConversations
 							.size(); index++) {
+						String conversationNameOnFirebase = conversationSnapshot
+								.getKey();
+						conversationNameOnFirebase = conversationNameOnFirebase
+								.substring(
+										conversationNameOnFirebase.indexOf("%") + 1,
+										conversationNameOnFirebase.length());
 						if (MMAdviserViewConstructor.listConversations
 								.get(index).getCompanysName()
-								.equals(conversationSnapshot.getKey())) {
-							String lastDate = GetLastDate(conversationSnapshot);
+								.equals(conversationNameOnFirebase)) {
 							MMAdviserViewConstructor.listConversations.get(
 									index).setRead(false);
 							MMAdviserViewConstructor.listConversations.get(
-									index).setLastDateMsg(lastDate);
-							MMAdviserViewConstructor.adapter
-									.notifyDataSetChanged();
+									index).setLastDateMsg(
+									GetLastDate(conversationSnapshot));
 						}
 					}
 				}
 				MMAdviserViewConstructor.newMessagesCounter.setText(""
 						+ MMAdviserViewConstructor.adapter.getCountUnread());
+				MMAdviserViewConstructor.adapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -367,6 +371,7 @@ public class FirebaseManager {
 					.toString().equals(role)) {
 				read = Boolean.valueOf(conversationSnapshot
 						.child("/" + index + "/read").getValue().toString());
+
 				if (!read) {
 					return read;
 				}
@@ -385,7 +390,7 @@ public class FirebaseManager {
 			maxDate = format.parse(maxDateStr);
 		} catch (ParseException e) {
 			e.printStackTrace();
-			System.out.println("The date wasn't in the right format");
+			Log.d("Firebase", "The date wasn't in the right format");
 		}
 		for (int index = 2; index <= conversationSnapshot.getChildrenCount(); index++) {
 			String dateStr = conversationSnapshot.child("/" + index + "/date")
@@ -395,7 +400,7 @@ public class FirebaseManager {
 				date = format.parse(dateStr);
 			} catch (ParseException e) {
 				e.printStackTrace();
-				System.out.println("The date wasn't in the right format");
+				Log.d("Firebase", "The date wasn't in the right format");
 			}
 
 			if (date.after(maxDate)) {

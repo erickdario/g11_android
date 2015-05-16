@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,7 +71,6 @@ public class MMAdviserViewConstructor {
 
 		Intent intent = main.getIntent();
 		String role = intent.getStringExtra("role");
-		System.out.println(role);
 
 		Button signOutOrConfiguration = null;
 		if (role == null) {
@@ -150,6 +150,7 @@ public class MMAdviserViewConstructor {
 		Intent intent = main.getIntent();
 		String conversationsUrl = intent.getStringExtra("conversationsUrl");
 		conversationsRef = new Firebase(conversationsUrl);
+		Log.d("FindConversations", "");
 		FirebaseManager.FindConversations();
 		scrollView.addView(conversationsView);
 		view.addView(scrollView);

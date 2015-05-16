@@ -38,11 +38,11 @@ public class MainMenuAdvisorActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == 0xe110) {
-			if (FirebaseManager.childEventListenerConversation != null) {
+			//if (FirebaseManager.childEventListenerConversation != null) {
 				ChatViewConstructor.conversationRef
 						.removeEventListener(FirebaseManager.childEventListenerConversation);
-			}
-
+			//}
+				FirebaseManager.FindConversations();
 			MMAdviserViewConstructor.adapter.notifyDataSetChanged();
 		}
 	}

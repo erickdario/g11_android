@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="17"
+        android:minSdkVersion="16"
         android:targetSdkVersion="22" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,7 +17,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,43 +28,57 @@
         </activity>
         <activity
             android:name=".MainMenuActivity"
-            android:label="@string/title_activity_main_menu" >
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_main_menu"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".FaqActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_faq"
-            android:parentActivityName=".MainMenuActivity" >
+            android:parentActivityName=".MainMenuActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.grupoonce.mensajes.MainMenuActivity" />
         </activity>
         <activity
             android:name=".ServicesActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_services"
-            android:parentActivityName=".MainMenuActivity" >
+            android:parentActivityName=".MainMenuActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.grupoonce.mensajes.MainMenuActivity" />
         </activity>
         <activity
             android:name=".ChatActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_chat"
-            android:parentActivityName=".MainMenuActivity" >
+            android:parentActivityName=".MainMenuActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.grupoonce.mensajes.MainMenuActivity" />
         </activity>
         <activity
             android:name=".MainMenuAdvisorActivity"
-            android:label="@string/title_activity_main_menu_advisor" >
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_main_menu_advisor"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".AdminMenuActivity"
-            android:label="@string/title_activity_admin_menu" >
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_admin_menu"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".AdviserConfigurationActivity"
-            android:label="@string/title_activity_adviser_configuration" >
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_adviser_configuration"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
