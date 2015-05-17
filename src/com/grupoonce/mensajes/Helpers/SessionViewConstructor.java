@@ -154,9 +154,9 @@ public class SessionViewConstructor {
 		final EditText password = SharedViewConstructor
 				.ContructG11EditText(main, R.string.password,
 						InputType.TYPE_TEXT_VARIATION_PASSWORD);
-		EditText confirmPassword = SharedViewConstructor.ContructG11EditText(
-				main, R.string.confirm_password,
-				InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		final EditText confirmPassword = SharedViewConstructor
+				.ContructG11EditText(main, R.string.confirm_password,
+						InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
 		final Button signUp = SharedViewConstructor.ConstructButton(main, size,
 				R.string.sign_up, (int) (size.x * 0.38), (int) (size.y * 0.09),
@@ -177,9 +177,17 @@ public class SessionViewConstructor {
 		// Set click listener for button
 		signUp.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				if (companysName.getText().toString().equals("grupoonce")) {
+				if (companysName.getText().toString().equals("grupoonce")
+						|| companysName.getText().toString().isEmpty()
+						|| companysName.getText().toString().trim().equals("")) {
 					Toast.makeText(main,
 							"Por favor escriba otro nombre para su compañia",
+							Toast.LENGTH_SHORT).show();
+				}
+				if (!confirmPassword.getText().toString()
+						.equals(password.getText().toString())) {
+					Toast.makeText(main,
+							"La confirmación de contraseña no coincide",
 							Toast.LENGTH_SHORT).show();
 				} else {
 					FirebaseManager.CreateUser(email.getText().toString(),

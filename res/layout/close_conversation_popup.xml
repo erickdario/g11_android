@@ -39,6 +39,13 @@
             android:layout_height="wrap_content"
             android:text="@string/area4"
             android:textColor="#fff" />
+        
+        <RadioButton
+            android:id="@+id/area5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/area5"
+            android:textColor="#fff" />
     </RadioGroup>
 
     <TextView

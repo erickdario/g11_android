@@ -157,7 +157,7 @@ public class ConversationsListAdapter extends BaseAdapter {
 										.getResources()
 										.getDrawable(R.drawable.completed, null));
 					} else {
-						((ImageButton) innerView.getParent())
+						((ImageButton) innerView.getTag())
 								.setBackground(context.getResources()
 										.getDrawable(R.drawable.completed));
 					}

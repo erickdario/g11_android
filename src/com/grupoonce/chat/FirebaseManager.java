@@ -263,8 +263,25 @@ public class FirebaseManager {
 			}
 
 			@Override
-			public void onChildRemoved(DataSnapshot arg0) {
-				// TODO Auto-generated method stub
+			public void onChildRemoved(DataSnapshot conversationSnapshot) {
+				for (int index = 0; index < MMAdviserViewConstructor.listConversations
+						.size(); index++) {
+					String conversationNameOnFirebase = conversationSnapshot
+							.getKey();
+					conversationNameOnFirebase = conversationNameOnFirebase
+							.substring(
+									conversationNameOnFirebase.indexOf("%") + 1,
+									conversationNameOnFirebase.length());
+					if (MMAdviserViewConstructor.listConversations.get(index)
+							.getCompanysName()
+							.equals(conversationNameOnFirebase)) {
+						MMAdviserViewConstructor.listConversations
+								.remove(index);
+					}
+				}
+				MMAdviserViewConstructor.newMessagesCounter.setText(""
+						+ MMAdviserViewConstructor.adapter.getCountUnread());
+				MMAdviserViewConstructor.adapter.notifyDataSetChanged();
 
 			}
 		};
