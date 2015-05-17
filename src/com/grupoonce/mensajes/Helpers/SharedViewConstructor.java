@@ -192,8 +192,8 @@ public class SharedViewConstructor {
 	}
 
 	public static Button ConstructSignOut(final Activity main, Point size,
-			int width, int marginY) {
-		Button signOut = ConstructButton(main, size, R.string.sign_out, 0,
+			int width, int marginX, int marginY) {
+		Button signOut = ConstructButton(main, size, R.string.sign_out, marginX,
 				marginY, width, R.drawable.session_btn_text,
 				R.drawable.close_session_button);
 

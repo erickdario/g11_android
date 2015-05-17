@@ -2,6 +2,7 @@ package com.grupoonce.mensajes.helpers;
 
 import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.AdminMenuActivity;
+import com.grupoonce.mensajes.ChartsActivity;
 import com.grupoonce.mensajes.MainMenuAdvisorActivity;
 import com.grupoonce.mensajes.R;
 
@@ -21,7 +22,7 @@ import android.widget.LinearLayout.LayoutParams;
 
 public class AdminViewConstructor {
 
-	public static LinearLayout ConstructHeader(AdminMenuActivity main) {
+	public static LinearLayout ConstructHeader(final AdminMenuActivity main) {
 		FirebaseManager.role = "adviser";
 		LinearLayout header = SharedViewConstructor.ConstructHeaderG11(main);
 		Point size = SharedViewConstructor.GetScreenSize(main);
@@ -39,11 +40,33 @@ public class AdminViewConstructor {
 		user.setBackgroundColor(Color.TRANSPARENT);
 		user.setGravity(Gravity.CENTER_HORIZONTAL);
 
-		Button signOut = SharedViewConstructor.ConstructSignOut(main, size,
-				LayoutParams.WRAP_CONTENT, (int) (size.y * 0.02));
+		LinearLayout view = new LinearLayout(main);
+		view.setOrientation(LinearLayout.HORIZONTAL);
+		view.setGravity(Gravity.CENTER_HORIZONTAL);
 
+		Button signOut = SharedViewConstructor.ConstructSignOut(main, size,
+				LayoutParams.WRAP_CONTENT, (int) (size.y * 0.01),
+				(int) (size.y * 0.01));
+
+		Button charts = SharedViewConstructor.ConstructButton(main, size,
+				R.string.charts, 0, (int) (size.y * 0.01),
+				LayoutParams.WRAP_CONTENT, R.drawable.session_btn_text,
+				R.drawable.close_session_button);
+		
+		charts.setOnClickListener(new AdapterView.OnClickListener() {
+			public void onClick(View view) {
+				Intent intent = new Intent(main,
+						ChartsActivity.class);
+				intent.putExtra("role", "admin");
+				main.startActivityForResult(intent, 0xe110);
+			}
+		});
+		
+
+		view.addView(charts);
+		view.addView(signOut);
 		menu.addView(user);
-		menu.addView(signOut);
+		menu.addView(view);
 		header.addView(menu);
 
 		return header;
@@ -60,9 +83,9 @@ public class AdminViewConstructor {
 
 		ScrollView scrollView = SharedViewConstructor.ConstructScrollView(main,
 				LayoutParams.MATCH_PARENT, size);
-		
-		LinearLayout statesView = SharedViewConstructor.ConstructBackground(main,
-				size, LinearLayout.LayoutParams.MATCH_PARENT,
+
+		LinearLayout statesView = SharedViewConstructor.ConstructBackground(
+				main, size, LinearLayout.LayoutParams.MATCH_PARENT,
 				(int) (size.y * 0.79));
 
 		String[] states_array = main.getResources().getStringArray(
@@ -79,16 +102,16 @@ public class AdminViewConstructor {
 			String fname = states_array_img_ids[i];
 			int id = main.getResources().getIdentifier(fname, "drawable",
 					"com.grupoonce.mensajes");
-			
-			
-			ImageButton stateImage = SharedViewConstructor.ConstructImageButton(
-					main, id, size, 0.1f);
+
+			ImageButton stateImage = SharedViewConstructor
+					.ConstructImageButton(main, id, size, 0.1f);
 			LayoutParams params = (LayoutParams) stateImage.getLayoutParams();
 			params.gravity = Gravity.START;
 			stateImage.setLayoutParams(params);
 
-			final TextView state = SharedViewConstructor.ConstructTextView(main,
-					new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+			final TextView state = SharedViewConstructor.ConstructTextView(
+					main, new LinearLayout.LayoutParams(
+							LayoutParams.WRAP_CONTENT,
 							LayoutParams.WRAP_CONTENT), 28, states_array[i],
 					false, Color.BLACK);
 
@@ -109,10 +132,10 @@ public class AdminViewConstructor {
 			stateView.addView(state);
 			statesView.addView(stateView);
 		}
+
 		scrollView.addView(statesView);
 		view.addView(scrollView);
 		return view;
-
 	}
 
 }

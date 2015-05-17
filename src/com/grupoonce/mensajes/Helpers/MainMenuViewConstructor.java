@@ -86,7 +86,7 @@ public class MainMenuViewConstructor {
 		});
 
 		Button signOut = SharedViewConstructor.ConstructSignOut(main, size,
-				LayoutParams.MATCH_PARENT, (int) (size.y * 0.04));
+				LayoutParams.MATCH_PARENT, 0, (int) (size.y * 0.04));
 
 		btnView.addView(welcome);
 		btnView.addView(title);

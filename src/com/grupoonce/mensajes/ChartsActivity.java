@@ -1,22 +1,18 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.chat.FirebaseManager;
-import com.grupoonce.mensajes.helpers.ChatViewConstructor;
-import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
+import com.grupoonce.mensajes.helpers.ChartsViewConstructor;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
-public class MainMenuAdvisorActivity extends Activity {
+public class ChartsActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		LinearLayout linearLayout = new LinearLayout(this);
 		linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -24,8 +20,8 @@ public class MainMenuAdvisorActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT);
 
-		LinearLayout header = MMAdviserViewConstructor.ConstructHeader(this);
-		LinearLayout body = MMAdviserViewConstructor.ConstructBody(this);
+		LinearLayout header = ChartsViewConstructor.ConstructHeader(this);
+		LinearLayout body = ChartsViewConstructor.ConstructBody(this);
 
 		linearLayout.addView(header);
 		linearLayout.addView(body);
@@ -34,21 +30,9 @@ public class MainMenuAdvisorActivity extends Activity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
-		if (requestCode == 0xe110) {
-			ChatViewConstructor.conversationRef
-					.removeEventListener(FirebaseManager.childEventListenerConversation);
-			FirebaseManager.FindConversations();
-			MMAdviserViewConstructor.adapter.notifyDataSetChanged();
-		}
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main_menu_advisor, menu);
+		getMenuInflater().inflate(R.menu.charts, menu);
 		return true;
 	}
 

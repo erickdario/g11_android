@@ -142,7 +142,7 @@ public class ServicesViewConstructor {
 		layoutService.setMargins((int) (size.x * 0.01), (int) (size.y * 0.02),
 				0, 0);
 		serviceView.setLayoutParams(layoutService);
-		serviceView.setGravity(Gravity.START);
+		serviceView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
 
 		return serviceView;
 	}

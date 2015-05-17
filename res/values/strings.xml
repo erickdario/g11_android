@@ -21,6 +21,20 @@
     <string name="change_password">Actualizar contraseña</string>
     <string name="show_password">Mostrar contraseña</string>
     <string name="state_image_description">Image for each state</string>
+    <string name="image_close_conversation_description">Image button to close a conversation</string>
+    <string name="charts">Gráficas</string>
+    <string name="closing_conversation_description">Gráficas</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="comment">Comentario sobre la consulta:</string>
+    <string name="close_conversation_hint">Describe brevemente el caso</string>
+    <string name="separator">|</string>
+    
+    <string name="area1">Cobranzas</string>
+    <string name="area2">Finanzas</string>
+    <string name="area3">Fiscal</string>
+    <string name="area4">Recursos humanos</string>
+    <string name="area5">Otros</string>
 
     <string-array name="states_array">
         <item>Aguascalientes</item>
@@ -48,8 +62,6 @@
         <item>torreon</item>
         <item>zacatecas</item>
     </string-array>
-    
-    
     <string-array name="faq_array">
         <item>¿En qué horario puedo usar el chat con un asesor en la app?</item>
         <item>R: El servicio está disponible desde las 9:00am hasta las 8:00pm.</item>
@@ -97,5 +109,6 @@
     <string name="services_section3">Valores</string>
     <string name="title_activity_admin_menu">AdminMenuActivity</string>
     <string name="title_activity_adviser_configuration">AdviserConfigurationActivity</string>
+    <string name="title_activity_charts">ChartsActivity</string>
 
 </resources>

@@ -204,7 +204,6 @@ public class FirebaseManager {
 			@Override
 			public void onChildAdded(DataSnapshot conversationSnapshot,
 					String previousChild) {
-				// TODO get last date of last message
 				Boolean read = GetIfAnyNotRead(conversationSnapshot, role);
 				String lastDate = GetLastDate(conversationSnapshot);
 				String conversationNameOnFirebase = conversationSnapshot
@@ -319,6 +318,29 @@ public class FirebaseManager {
 
 		ChatViewConstructor.conversationRef
 				.addChildEventListener(childEventListenerConversation);
+	}
+
+	public static void CloseConversation(final String state,
+			String conversation, String comment, final String area) {
+		ref.child("/closed_conversations/" + state + "/" + conversation)
+				.child("/area/").setValue(area);
+		ref.child("/closed_conversations/" + state + "/" + conversation)
+				.child("/comment/").setValue(comment);
+		ref.child("/charts/").child(state + "/")
+				.addListenerForSingleValueEvent(new ValueEventListener() {
+					@Override
+					public void onDataChange(DataSnapshot snapshot) {
+						int amount = Integer.parseInt(snapshot
+								.child("/" + area).getValue().toString());
+						ref.child("/charts/").child(state + "/" + area + "/")
+								.setValue(amount + 1);
+					}
+
+					@Override
+					public void onCancelled(FirebaseError firebaseError) {
+					}
+				});
+		ref.child("/messages/" + state + "/" + conversation).removeValue();
 	}
 
 	public static void CreateUser(final String userName, final String city,
