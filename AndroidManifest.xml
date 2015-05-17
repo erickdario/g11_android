@@ -80,6 +80,14 @@
             android:label="@string/title_activity_adviser_configuration"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".ChartsActivity"
+            android:label="@string/title_activity_charts"
+            android:parentActivityName=".AdminMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.grupoonce.mensajes.AdminMenuActivity" />
+        </activity>
     </application>
 
 </manifest>

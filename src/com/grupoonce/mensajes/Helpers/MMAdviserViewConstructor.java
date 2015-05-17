@@ -34,7 +34,7 @@ public class MMAdviserViewConstructor {
 	public static ConversationsListAdapter adapter;
 	public static ListView listConvo;
 	public static Firebase conversationsRef;
-	static String city;
+	public static String city;
 	public static TextView newMessagesCounter;
 
 	public static LinearLayout ConstructHeader(final MainMenuAdvisorActivity main) {
@@ -75,7 +75,7 @@ public class MMAdviserViewConstructor {
 		Button signOutOrConfiguration = null;
 		if (role == null) {
 			signOutOrConfiguration = SharedViewConstructor.ConstructSignOut(main, size,
-					LayoutParams.WRAP_CONTENT, (int) (size.y * 0.02));
+					LayoutParams.WRAP_CONTENT, 0, (int) (size.y * 0.02));
 		} else {
 			signOutOrConfiguration = SharedViewConstructor.ConstructButton(main, size,
 					R.string.configuration, 0, (int) (size.y * 0.02),
@@ -87,7 +87,7 @@ public class MMAdviserViewConstructor {
 				public void onClick(View v) {
 					Intent intent = new Intent(main, AdviserConfigurationActivity.class);
 					intent.putExtra("city", city);
-					main.startActivityForResult(intent, 0xe110);
+					main.startActivity(intent);
 				}
 			});
 		}
@@ -129,7 +129,7 @@ public class MMAdviserViewConstructor {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				TextView companyName = (TextView) view
-						.findViewById(R.id.txtConversation);
+						.findViewById(R.id.txtCompany);
 				TextView userName = (TextView) view
 						.findViewById(R.id.lblUserName);
 				Intent intent = new Intent(main, ChatActivity.class);

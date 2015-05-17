@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/black_g11"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <RadioGroup
+        android:id="@+id/areas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/area1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/area1"
+            android:textColor="#fff" />
+
+        <RadioButton
+            android:id="@+id/area2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/area2"
+            android:textColor="#fff" />
+
+        <RadioButton
+            android:id="@+id/area3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/area3"
+            android:textColor="#fff" />
+
+        <RadioButton
+            android:id="@+id/area4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/area4"
+            android:textColor="#fff" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:text="@string/comment"
+        android:textColor="#fff" />
+
+    <EditText
+        android:id="@+id/comment_close_conversation"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:hint="@string/close_conversation_hint"
+        android:textColor="#fff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/dismiss"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/cancel"
+            android:textColor="#fff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginStart="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginEnd="10dip"
+            android:text="@string/separator"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/accept"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accept"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+</LinearLayout>

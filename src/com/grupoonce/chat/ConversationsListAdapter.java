@@ -3,15 +3,28 @@ package com.grupoonce.chat;
 import java.util.List;
 
 import com.grupoonce.mensajes.R;
+import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
+import com.grupoonce.mensajes.helpers.SharedViewConstructor;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActionBar.LayoutParams;
 import android.content.Context;
+import android.graphics.Point;
+import android.os.Build;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class ConversationsListAdapter extends BaseAdapter {
@@ -64,10 +77,15 @@ public class ConversationsListAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.item_conversation, null);
 		}
 
-		TextView txtConversation = (TextView) convertView
-				.findViewById(R.id.txtConversation);
-		txtConversation.setText(conversation.getCompanysName());
-		
+		ImageButton closeConversation = (ImageButton) convertView
+				.findViewById(R.id.closeConversation);
+
+		closeConversation.setOnClickListener(closeConversationClickListener);
+
+		TextView txtCompany = (TextView) convertView
+				.findViewById(R.id.txtCompany);
+		txtCompany.setText(conversation.getCompanysName());
+
 		TextView txtUserName = (TextView) convertView
 				.findViewById(R.id.lblUserName);
 		txtUserName.setText(conversation.getUserName());
@@ -86,4 +104,83 @@ public class ConversationsListAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
+	private OnClickListener closeConversationClickListener = new OnClickListener() {
+		@SuppressLint("InflateParams")
+		@Override
+		public void onClick(View trigeringButton) {
+			Point size = SharedViewConstructor
+					.GetScreenSize((Activity) context);
+			View parentRow = (View) trigeringButton.getParent();
+			TextView txtCompany = (TextView) parentRow
+					.findViewById(R.id.txtCompany);
+			TextView txtUserName = (TextView) parentRow
+					.findViewById(R.id.lblUserName);
+			final String conversation = txtUserName.getText().toString() + "%"
+					+ txtCompany.getText().toString();
+
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			final View popUpView = inflater.inflate(
+					R.layout.close_conversation_popup, null, false);
+			final PopupWindow popupWindow = new PopupWindow(popUpView,
+					(int) (size.x * 0.9), LayoutParams.WRAP_CONTENT, true);
+
+			final Button btnDismiss = (Button) popUpView
+					.findViewById(R.id.dismiss);
+
+			btnDismiss.setOnClickListener(new Button.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					popupWindow.dismiss();
+				}
+			});
+
+			final Button btnAccept = (Button) popUpView
+					.findViewById(R.id.accept);
+			btnAccept.setTag(trigeringButton);
+
+			final EditText commentConversation = (EditText) popUpView
+					.findViewById(R.id.comment_close_conversation);
+
+			btnAccept.setOnClickListener(new Button.OnClickListener() {
+
+				@SuppressWarnings("deprecation")
+				@SuppressLint("NewApi")
+				@Override
+				public void onClick(View innerView) {
+
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+						((ImageButton) innerView.getTag())
+								.setBackground(context
+										.getResources()
+										.getDrawable(R.drawable.completed, null));
+					} else {
+						((ImageButton) innerView.getParent())
+								.setBackground(context.getResources()
+										.getDrawable(R.drawable.completed));
+					}
+
+					RadioGroup radioGroup = (RadioGroup) popUpView
+							.findViewById(R.id.areas);
+					int selectedId = radioGroup.getCheckedRadioButtonId();
+
+					View radioAreaButton = radioGroup.findViewById(selectedId);
+
+					int radioId = radioGroup.indexOfChild(radioAreaButton);
+					RadioButton btn = (RadioButton) radioGroup
+							.getChildAt(radioId);
+					String area = (String) btn.getText();
+
+					FirebaseManager.CloseConversation(
+							MMAdviserViewConstructor.city, conversation,
+							commentConversation.getText().toString(), area);
+					popupWindow.dismiss();
+				}
+			});
+
+			popupWindow.showAtLocation(parentRow, Gravity.CENTER, 0, 0);
+		}
+	};
 }
