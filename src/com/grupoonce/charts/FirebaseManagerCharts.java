@@ -1,6 +1,7 @@
 package com.grupoonce.charts;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 
 import android.app.Activity;
@@ -27,6 +28,14 @@ public class FirebaseManagerCharts {
 
 	public static void GetInfoCharts(final ChartsActivity main) {
 		Firebase statesRef = ref.child("charts");
+
+		Calendar cal = Calendar.getInstance();
+		int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+
+		if (dayOfMonth == 1) {
+			statesRef.removeValue();
+			ref.child("closed_conversations").removeValue();
+		}
 
 		statesRef.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override

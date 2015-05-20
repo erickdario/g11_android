@@ -55,6 +55,10 @@ public class FirebaseManager {
 				Toast.makeText(main, "La contraseña es incorrecta",
 						Toast.LENGTH_SHORT).show();
 				break;
+			case FirebaseError.NETWORK_ERROR:
+				Toast.makeText(main, "Error de conexión",
+						Toast.LENGTH_SHORT).show();
+				break;
 			default:
 				Toast.makeText(main,
 						"Algo salió mal, por favor verifique sus datos",

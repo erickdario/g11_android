@@ -24,12 +24,16 @@
     <string name="image_close_conversation_description">Image button to close a conversation</string>
     <string name="charts">Gráficas</string>
     <string name="closing_conversation_description">Gráficas</string>
+    <string name="save_chart_description">Gráficas</string>
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="comment">Comentario sobre la consulta:</string>
     <string name="close_conversation_hint">Describe brevemente el caso</string>
     <string name="separator">|</string>
-    
+    <string name="certification">Certificación</string>
+    <string name="certification_explanation">Buscando la excelencia en sus procesos GRUPO ONCE obtuvo la certificación: ISO 9001&#8211;2008 Grupo Once "EVALUACIÓN DE ATENCIÓN AL CLIENTE".\n\n Con la certificadora inglesa: BSI Group México, una de las 5 casas certificadoras de mayor prestigio en el mundo.\n</string>
+    <string name="customer_service">Servicio al cliente</string>
+    <string name="customer_service_explanation">Permite a sus clientes dedicarse a la operación diaria y generación de nuevos productos innovadores, mientras que nosotros nos dedicamos a dar seguimiento a la calidad del servicio proporcionado a sus clientes. \n\nLa empresa que tiene éxito actualmente no es la que tiene los mejores productos o la mayor variedad de éstos, sino la que tiene a un número mayor de clientes, o al menos a los más rentables. \n\nNuestro Centro de Atención a Clientes permite que las empresas aumenten la satisfacción y lealtad de sus clienes en su interacción con las diversas áreas de la empresa, atendiéndolo coordinadamente en todo momento, costituyendo una fuente de información valiosa y de toma de decisión para la Alta Dirección.\n</string>
     <string name="area1">Cobranzas</string>
     <string name="area2">Finanzas</string>
     <string name="area3">Fiscal</string>

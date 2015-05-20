@@ -3,10 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
-    
-	<com.github.mikephil.charting.charts.BarChart
+
+    <ImageButton
+        android:id="@+id/saveImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:adjustViewBounds="true"
+        android:background="@drawable/downloads_icon"
+        android:contentDescription="@string/save_chart_description" />
+
+    <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
-    
+        android:layout_height="250dp" />
+
 </LinearLayout>

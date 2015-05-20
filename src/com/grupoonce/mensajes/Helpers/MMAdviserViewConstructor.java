@@ -37,7 +37,8 @@ public class MMAdviserViewConstructor {
 	public static String city;
 	public static TextView newMessagesCounter;
 
-	public static LinearLayout ConstructHeader(final MainMenuAdvisorActivity main) {
+	public static LinearLayout ConstructHeader(
+			final MainMenuAdvisorActivity main) {
 		FirebaseManager.role = "adviser";
 		LinearLayout header = SharedViewConstructor.ConstructHeaderG11(main);
 		Point size = SharedViewConstructor.GetScreenSize(main);
@@ -74,18 +75,21 @@ public class MMAdviserViewConstructor {
 
 		Button signOutOrConfiguration = null;
 		if (role == null) {
-			signOutOrConfiguration = SharedViewConstructor.ConstructSignOut(main, size,
-					LayoutParams.WRAP_CONTENT, 0, (int) (size.y * 0.02));
+			signOutOrConfiguration = SharedViewConstructor.ConstructSignOut(
+					main, size, LayoutParams.WRAP_CONTENT, 0,
+					(int) (size.y * 0.02));
 		} else {
-			signOutOrConfiguration = SharedViewConstructor.ConstructButton(main, size,
-					R.string.configuration, 0, (int) (size.y * 0.02),
-					LayoutParams.WRAP_CONTENT, R.drawable.session_btn_text,
+			signOutOrConfiguration = SharedViewConstructor.ConstructButton(
+					main, size, R.string.configuration, 0,
+					(int) (size.y * 0.02), 0, 0, LayoutParams.WRAP_CONTENT,
+					R.drawable.session_btn_text,
 					R.drawable.close_session_button);
-			
+
 			// Set click listener for button
 			signOutOrConfiguration.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					Intent intent = new Intent(main, AdviserConfigurationActivity.class);
+					Intent intent = new Intent(main,
+							AdviserConfigurationActivity.class);
 					intent.putExtra("city", city);
 					main.startActivity(intent);
 				}

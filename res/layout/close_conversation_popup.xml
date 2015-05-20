@@ -59,7 +59,7 @@
         android:id="@+id/comment_close_conversation"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:hint="@string/close_conversation_hint"
+        android:inputType="text"
         android:textColor="#fff" />
 
     <LinearLayout

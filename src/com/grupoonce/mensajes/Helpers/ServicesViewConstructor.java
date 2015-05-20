@@ -47,8 +47,8 @@ public class ServicesViewConstructor {
 			int id = main.getResources().getIdentifier(fname, "drawable",
 					"com.grupoonce.mensajes");
 
-			ImageButton btnService = SharedViewConstructor.ConstructImageButton(
-					main, id, size, 0.09f);
+			ImageButton btnService = SharedViewConstructor
+					.ConstructImageButton(main, id, size, 0.09f);
 
 			TextView text = SharedViewConstructor.ConstructTextView(main,
 					layout, 18, services_array[i], false, main.getResources()
@@ -72,8 +72,8 @@ public class ServicesViewConstructor {
 			int id = main.getResources().getIdentifier(fname, "drawable",
 					"com.grupoonce.mensajes");
 
-			ImageButton btnService = SharedViewConstructor.ConstructImageButton(
-					main, id, size, 0.09f);
+			ImageButton btnService = SharedViewConstructor
+					.ConstructImageButton(main, id, size, 0.09f);
 
 			TextView text = SharedViewConstructor.ConstructTextView(main,
 					layout, 18, services_array[i], false, main.getResources()
@@ -97,8 +97,8 @@ public class ServicesViewConstructor {
 			int id = main.getResources().getIdentifier(fname, "drawable",
 					"com.grupoonce.mensajes");
 
-			ImageButton btnService = SharedViewConstructor.ConstructImageButton(
-					main, id, size, 0.09f);
+			ImageButton btnService = SharedViewConstructor
+					.ConstructImageButton(main, id, size, 0.09f);
 
 			TextView text = SharedViewConstructor.ConstructTextView(main,
 					layout, 18, services_array[i], false, main.getResources()
@@ -108,6 +108,36 @@ public class ServicesViewConstructor {
 			serviceView.addView(text);
 			servicesView.addView(serviceView);
 		}
+
+		LinearLayout titleView4 = ConstructTitleView(main, size, layout,
+				R.string.certification);
+		servicesView.addView(titleView4);
+
+		TextView textCertification = SharedViewConstructor.ConstructTextView(
+				main,
+				layout,
+				18,
+				main.getResources().getString(
+						R.string.certification_explanation), false, main
+						.getResources().getColor(R.color.orange_g11));
+		LinearLayout certificationView = ConstructServiceView(main, size);
+		certificationView.addView(textCertification);
+		servicesView.addView(certificationView);
+
+		LinearLayout titleView5 = ConstructTitleView(main, size, layout,
+				R.string.customer_service);
+		servicesView.addView(titleView5);
+
+		TextView textCustomerService = SharedViewConstructor.ConstructTextView(
+				main,
+				layout,
+				18,
+				main.getResources().getString(
+						R.string.customer_service_explanation), false, main
+						.getResources().getColor(R.color.orange_g11));
+		LinearLayout customerServiceView = ConstructServiceView(main, size);
+		customerServiceView.addView(textCustomerService);
+		servicesView.addView(customerServiceView);
 
 		servicesScrollView.addView(servicesView);
 		view.addView(servicesScrollView);

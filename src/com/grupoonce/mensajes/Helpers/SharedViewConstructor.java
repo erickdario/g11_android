@@ -122,11 +122,12 @@ public class SharedViewConstructor {
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public static Button ConstructButton(Activity main, Point size,
-			int stringId, int marginX, int marginY, int width,
-			int drawableText, int drawableButton) {
+			int stringId, int marginLeft, int marginTop, int marginRight,
+			int marginBottom, int width, int drawableText, int drawableButton) {
 		LinearLayout.LayoutParams btnLayoutParams = new LayoutParams(width,
 				LayoutParams.WRAP_CONTENT);
-		btnLayoutParams.setMargins(marginX, marginY, 0, 0);
+		btnLayoutParams.setMargins(marginLeft, marginTop, marginRight,
+				marginBottom);
 
 		final Button sessionBtn = new Button(main);
 		sessionBtn.setText(main.getResources().getString(stringId));
@@ -144,7 +145,8 @@ public class SharedViewConstructor {
 	}
 
 	public static TextView ConstructTextView(Activity main,
-			LayoutParams layout, int textSize, String text, Boolean bold, int color) {
+			LayoutParams layout, int textSize, String text, Boolean bold,
+			int color) {
 		TextView textView = new TextView(main);
 		textView.setLayoutParams(layout);
 		textView.setText(text);
@@ -192,10 +194,10 @@ public class SharedViewConstructor {
 	}
 
 	public static Button ConstructSignOut(final Activity main, Point size,
-			int width, int marginX, int marginY) {
-		Button signOut = ConstructButton(main, size, R.string.sign_out, marginX,
-				marginY, width, R.drawable.session_btn_text,
-				R.drawable.close_session_button);
+			int width, int marginLeft, int marginTop) {
+		Button signOut = ConstructButton(main, size, R.string.sign_out,
+				marginLeft, marginTop, 0, 0, width,
+				R.drawable.session_btn_text, R.drawable.close_session_button);
 
 		// Set click listener for button
 		signOut.setOnClickListener(new OnClickListener() {
@@ -206,7 +208,7 @@ public class SharedViewConstructor {
 		});
 		return signOut;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public static EditText ContructG11EditText(Activity main,

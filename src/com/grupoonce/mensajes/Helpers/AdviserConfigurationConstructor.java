@@ -73,7 +73,7 @@ public class AdviserConfigurationConstructor {
 						InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
 		Button changePassword = SharedViewConstructor.ConstructButton(main,
-				size, R.string.change_password, 0, (int) (size.y * 0.05),
+				size, R.string.change_password, 0, (int) (size.y * 0.05), 0, 0,
 				LayoutParams.WRAP_CONTENT, R.drawable.session_btn_text,
 				R.drawable.session_button);
 		changePassword.setOnClickListener(new OnClickListener() {

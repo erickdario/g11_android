@@ -49,19 +49,17 @@ public class AdminViewConstructor {
 				(int) (size.y * 0.01));
 
 		Button charts = SharedViewConstructor.ConstructButton(main, size,
-				R.string.charts, 0, (int) (size.y * 0.01),
+				R.string.charts, 0, (int) (size.y * 0.01), 0, 0,
 				LayoutParams.WRAP_CONTENT, R.drawable.session_btn_text,
 				R.drawable.close_session_button);
-		
+
 		charts.setOnClickListener(new AdapterView.OnClickListener() {
 			public void onClick(View view) {
-				Intent intent = new Intent(main,
-						ChartsActivity.class);
+				Intent intent = new Intent(main, ChartsActivity.class);
 				intent.putExtra("role", "admin");
 				main.startActivityForResult(intent, 0xe110);
 			}
 		});
-		
 
 		view.addView(charts);
 		view.addView(signOut);

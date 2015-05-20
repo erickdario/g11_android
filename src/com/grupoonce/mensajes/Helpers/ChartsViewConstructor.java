@@ -28,7 +28,6 @@ public class ChartsViewConstructor {
 		LinearLayout header = SharedViewConstructor.ConstructHeaderG11(main);
 
 		return header;
-
 	}
 
 	public static LinearLayout ConstructBody(ChartsActivity main) {

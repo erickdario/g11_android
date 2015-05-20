@@ -42,7 +42,7 @@ public class MainMenuViewConstructor {
 				true, Color.BLACK);
 
 		Button faq = SharedViewConstructor.ConstructButton(main, size,
-				R.string.faq, 0, (int) (size.y * 0.04),
+				R.string.faq, 0, (int) (size.y * 0.04), 0, 0,
 				LayoutParams.MATCH_PARENT, R.drawable.session_btn_text,
 				R.drawable.session_button);
 
@@ -55,7 +55,7 @@ public class MainMenuViewConstructor {
 		});
 
 		Button services = SharedViewConstructor.ConstructButton(main, size,
-				R.string.services, 0, (int) (size.y * 0.04),
+				R.string.services, 0, (int) (size.y * 0.04), 0, 0,
 				LayoutParams.MATCH_PARENT, R.drawable.session_btn_text,
 				R.drawable.session_button);
 
@@ -68,7 +68,7 @@ public class MainMenuViewConstructor {
 		});
 
 		Button chat = SharedViewConstructor.ConstructButton(main, size,
-				R.string.chat, 0, (int) (size.y * 0.04),
+				R.string.chat, 0, (int) (size.y * 0.04), 0, 0,
 				LayoutParams.MATCH_PARENT, R.drawable.session_btn_text,
 				R.drawable.session_button);
 
