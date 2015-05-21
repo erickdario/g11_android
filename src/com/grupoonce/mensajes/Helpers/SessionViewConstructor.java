@@ -19,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class SessionViewConstructor {
+	
+	public static Button loginBtn;
 
 	public static LinearLayout ContructBody(MainActivity main) {
 		Firebase.setAndroidContext(main);
@@ -60,7 +62,7 @@ public class SessionViewConstructor {
 				.ContructG11EditText(main, R.string.password,
 						InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-		final Button loginBtn = SharedViewConstructor.ConstructButton(main,
+		loginBtn = SharedViewConstructor.ConstructButton(main,
 				size, R.string.log_in, 0, 0, 0, 0, LayoutParams.WRAP_CONTENT,
 				R.drawable.session_btn_text, R.drawable.session_button);
 
@@ -78,6 +80,7 @@ public class SessionViewConstructor {
 				FirebaseManager.ref.authWithPassword(
 						email.getText().toString(), password.getText()
 								.toString(), FirebaseManager.authResultHandler);
+				loginBtn.setEnabled(false);
 			}
 		});
 

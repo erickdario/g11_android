@@ -40,9 +40,9 @@ public class AdminViewConstructor {
 		user.setBackgroundColor(Color.TRANSPARENT);
 		user.setGravity(Gravity.CENTER_HORIZONTAL);
 
-		LinearLayout view = new LinearLayout(main);
-		view.setOrientation(LinearLayout.HORIZONTAL);
-		view.setGravity(Gravity.CENTER_HORIZONTAL);
+		LinearLayout yellowView = new LinearLayout(main);
+		yellowView.setOrientation(LinearLayout.HORIZONTAL);
+		yellowView.setGravity(Gravity.CENTER_HORIZONTAL);
 
 		Button signOut = SharedViewConstructor.ConstructSignOut(main, size,
 				LayoutParams.WRAP_CONTENT, (int) (size.y * 0.01),
@@ -61,10 +61,10 @@ public class AdminViewConstructor {
 			}
 		});
 
-		view.addView(charts);
-		view.addView(signOut);
+		yellowView.addView(charts);
+		yellowView.addView(signOut);
 		menu.addView(user);
-		menu.addView(view);
+		menu.addView(yellowView);
 		header.addView(menu);
 
 		return header;

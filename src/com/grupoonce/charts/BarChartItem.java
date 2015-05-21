@@ -1,7 +1,10 @@
 package com.grupoonce.charts;
 
+import java.io.File;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,9 +58,15 @@ public class BarChartItem extends ChartItem {
 
 			@Override
 			public void onClick(View v) {
-
+				File extBaseDir = Environment.getExternalStorageDirectory();
+				File file = new File(extBaseDir.getAbsolutePath() + "/DCIM/Grupo_once");
+		        if (!file.exists()) {
+		            if (!file.mkdirs()) {
+		                return;
+		            }
+		        }
 				if (mChart.saveToGallery(
-						"Grupo_once" + System.currentTimeMillis(), 70)) {
+						"Grupo_once/G11_" + System.currentTimeMillis() + ".jpeg", 70)) {
 					Toast.makeText(c, "Gráfica salvada con éxito!",
 							Toast.LENGTH_SHORT).show();
 				} else {
@@ -86,15 +95,16 @@ public class BarChartItem extends ChartItem {
 		xAxis.setPosition(XAxisPosition.BOTTOM);
 		xAxis.setDrawGridLines(false);
 		xAxis.setDrawAxisLine(true);
+		xAxis.setSpaceBetweenLabels(TYPE_BARCHART);
+		xAxis.setTextSize(8f);
+		xAxis.setXOffset(TYPE_BARCHART);
 
 		YAxis leftAxis = holder.chart.getAxisLeft();
 		leftAxis.setLabelCount(labelCount);
-		// leftAxis.setSpaceTop(20f);
 		leftAxis.setValueFormatter(custom);
 
 		YAxis rightAxis = holder.chart.getAxisRight();
 		rightAxis.setLabelCount(labelCount);
-		// rightAxis.setSpaceTop(20f);
 		rightAxis.setValueFormatter(custom);
 
 		// set data

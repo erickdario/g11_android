@@ -34,16 +34,21 @@
     <string name="certification_explanation">Buscando la excelencia en sus procesos GRUPO ONCE obtuvo la certificación: ISO 9001&#8211;2008 Grupo Once "EVALUACIÓN DE ATENCIÓN AL CLIENTE".\n\n Con la certificadora inglesa: BSI Group México, una de las 5 casas certificadoras de mayor prestigio en el mundo.\n</string>
     <string name="customer_service">Servicio al cliente</string>
     <string name="customer_service_explanation">Permite a sus clientes dedicarse a la operación diaria y generación de nuevos productos innovadores, mientras que nosotros nos dedicamos a dar seguimiento a la calidad del servicio proporcionado a sus clientes. \n\nLa empresa que tiene éxito actualmente no es la que tiene los mejores productos o la mayor variedad de éstos, sino la que tiene a un número mayor de clientes, o al menos a los más rentables. \n\nNuestro Centro de Atención a Clientes permite que las empresas aumenten la satisfacción y lealtad de sus clienes en su interacción con las diversas áreas de la empresa, atendiéndolo coordinadamente en todo momento, costituyendo una fuente de información valiosa y de toma de decisión para la Alta Dirección.\n</string>
-    <string name="area1">Cobranzas</string>
-    <string name="area2">Finanzas</string>
-    <string name="area3">Fiscal</string>
-    <string name="area4">Recursos humanos</string>
-    <string name="area5">Otros</string>
+    <string name="area1">Recibos</string>
+    <string name="area2">Facturas</string>
+    <string name="area3">IMSS</string>
+    <string name="area4">Jurídico</string>
+    <string name="area5">Requerimiento especial</string>
+    <string name="area6">Tesorería</string>
+    <string name="area7">Operativo</string>
+    <string name="area8">Contabilidad</string>
+    <string name="area9">Auditoría</string>
+    <string name="send_email_charts">Mandar correo con comentarios</string>
 
     <string-array name="states_array">
         <item>Aguascalientes</item>
         <item>Celaya</item>
-        <item>Culiacan</item>
+        <item>Culiacán</item>
         <item>DF</item>
         <item>Guadalajara</item>
         <item>León</item>

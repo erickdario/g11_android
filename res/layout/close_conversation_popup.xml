@@ -46,6 +46,34 @@
             android:layout_height="wrap_content"
             android:text="@string/area5"
             android:textColor="#fff" />
+        
+        <RadioButton
+            android:id="@+id/area6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/area6"
+            android:textColor="#fff" />
+        
+        <RadioButton
+            android:id="@+id/area7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/area7"
+            android:textColor="#fff" />
+        
+        <RadioButton
+            android:id="@+id/area8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/area8"
+            android:textColor="#fff" />
+        
+        <RadioButton
+            android:id="@+id/area9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/area9"
+            android:textColor="#fff" />
     </RadioGroup>
 
     <TextView

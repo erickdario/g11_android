@@ -25,6 +25,7 @@ import com.grupoonce.mensajes.R;
 import com.grupoonce.mensajes.helpers.AdviserConfigurationConstructor;
 import com.grupoonce.mensajes.helpers.ChatViewConstructor;
 import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
+import com.grupoonce.mensajes.helpers.SessionViewConstructor;
 
 public class FirebaseManager {
 
@@ -40,6 +41,7 @@ public class FirebaseManager {
 		@Override
 		public void onAuthenticated(AuthData authData) {
 			UserWasAuthenticated(authData);
+			SessionViewConstructor.loginBtn.setEnabled(true);
 		}
 
 		@Override
@@ -56,8 +58,8 @@ public class FirebaseManager {
 						Toast.LENGTH_SHORT).show();
 				break;
 			case FirebaseError.NETWORK_ERROR:
-				Toast.makeText(main, "Error de conexión",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(main, "Error de conexión", Toast.LENGTH_SHORT)
+						.show();
 				break;
 			default:
 				Toast.makeText(main,
@@ -65,6 +67,7 @@ public class FirebaseManager {
 						Toast.LENGTH_SHORT).show();
 				break;
 			}
+			SessionViewConstructor.loginBtn.setEnabled(true);
 		}
 	};
 
@@ -351,8 +354,13 @@ public class FirebaseManager {
 				.addListenerForSingleValueEvent(new ValueEventListener() {
 					@Override
 					public void onDataChange(DataSnapshot snapshot) {
-						int amount = Integer.parseInt(snapshot
-								.child("/" + area).getValue().toString());
+						int amount;
+						try {
+							amount = Integer.parseInt(snapshot
+									.child("/" + area).getValue().toString());
+						} catch (NullPointerException nullException) {
+							amount = 0;
+						}
 						ref.child("/charts/").child(state + "/" + area + "/")
 								.setValue(amount + 1);
 					}

@@ -1,21 +1,26 @@
 package com.grupoonce.mensajes.helpers;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import android.content.Context;
+import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.grupoonce.charts.ChartDataAdapter;
 import com.grupoonce.charts.ChartItem;
 import com.grupoonce.charts.FirebaseManagerCharts;
 import com.grupoonce.mensajes.ChartsActivity;
+import com.grupoonce.mensajes.R;
 
 public class ChartsViewConstructor {
 
@@ -24,9 +29,39 @@ public class ChartsViewConstructor {
 	public static ArrayList<Entry> pieEntries = new ArrayList<Entry>();
 	public static ChartDataAdapter cda;
 
-	public static LinearLayout ConstructHeader(ChartsActivity main) {
+	public static LinearLayout ConstructHeader(final ChartsActivity main) {
 		LinearLayout header = SharedViewConstructor.ConstructHeaderG11(main);
+		Point size = SharedViewConstructor.GetScreenSize(main);
 
+		LinearLayout menu = (LinearLayout) header.getChildAt(1);
+		header.removeViewAt(1);
+
+		LayoutParams layout = new LinearLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
+		TextView chartTitle = SharedViewConstructor.ConstructTextView(
+				(Activity) main, layout, 20,
+				main.getResources().getString(R.string.charts), false,
+				Color.BLACK);
+		chartTitle.setGravity(Gravity.CENTER_HORIZONTAL);
+
+		Button sendEmail = SharedViewConstructor.ConstructButton(main, size,
+				R.string.send_email_charts, 0, (int) (size.y * 0.01), 0, 0,
+				LayoutParams.WRAP_CONTENT, R.drawable.session_btn_text,
+				R.drawable.close_session_button);
+		
+		sendEmail.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				FirebaseManagerCharts.SendEmailInfo(main);
+			}
+			
+		});
+
+		menu.addView(chartTitle);
+		menu.addView(sendEmail);
+		header.addView(menu);
 		return header;
 	}
 
@@ -48,32 +83,6 @@ public class ChartsViewConstructor {
 
 		view.addView(lv);
 		return view;
-	}
-
-	/** adapter that supports 3 different item types */
-	public static class ChartDataAdapter extends ArrayAdapter<ChartItem> {
-
-		public ChartDataAdapter(Context context, List<ChartItem> objects) {
-			super(context, 0, objects);
-
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			return getItem(position).getView(position, convertView,
-					getContext());
-		}
-
-		@Override
-		public int getItemViewType(int position) {
-			// return the views type
-			return getItem(position).getItemType();
-		}
-
-		@Override
-		public int getViewTypeCount() {
-			return 3; // we have 2 different item-types
-		}
 	}
 
 }

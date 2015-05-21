@@ -1,5 +1,7 @@
 package com.grupoonce.charts;
 
+import java.io.File;
+
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendPosition;
@@ -11,6 +13,7 @@ import com.grupoonce.mensajes.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,9 +58,15 @@ public class PieChartItem extends ChartItem {
 
 			@Override
 			public void onClick(View v) {
-
+				File extBaseDir = Environment.getExternalStorageDirectory();
+				File file = new File(extBaseDir.getAbsolutePath() + "/DCIM/Grupo_once");
+		        if (!file.exists()) {
+		            if (!file.mkdirs()) {
+		                return;
+		            }
+		        }
 				if (mChart.saveToGallery(
-						"Grupo_once" + System.currentTimeMillis(), 70)) {
+						"Grupo_once/G11_" + System.currentTimeMillis() + ".jpeg", 70)) {
 					Toast.makeText(c, "Gráfica salvada con éxito!",
 							Toast.LENGTH_SHORT).show();
 				} else {
