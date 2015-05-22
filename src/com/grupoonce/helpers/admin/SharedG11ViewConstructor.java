@@ -1,4 +1,4 @@
-package com.grupoonce.mensajes.admin;
+package com.grupoonce.helpers.admin;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.grupoonce.helpers.SharedViewConstructor;
 import com.grupoonce.mensajes.R;
-import com.grupoonce.mensajes.helpers.SharedViewConstructor;
 
 public class SharedG11ViewConstructor {
 

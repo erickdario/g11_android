@@ -1,4 +1,4 @@
-package com.grupoonce.mensajes.helpers;
+package com.grupoonce.helpers;
 
 import java.util.ArrayList;
 
@@ -6,11 +6,11 @@ import com.firebase.client.Firebase;
 import com.grupoonce.chat.Conversation;
 import com.grupoonce.chat.ConversationsListAdapter;
 import com.grupoonce.chat.FirebaseManager;
+import com.grupoonce.helpers.admin.SharedG11ViewConstructor;
 import com.grupoonce.mensajes.AdviserConfigurationActivity;
 import com.grupoonce.mensajes.ChatActivity;
 import com.grupoonce.mensajes.MainMenuAdvisorActivity;
 import com.grupoonce.mensajes.R;
-import com.grupoonce.mensajes.admin.SharedG11ViewConstructor;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,9 +1,9 @@
 package com.grupoonce.mensajes;
 
 import com.grupoonce.chat.FirebaseManager;
-import com.grupoonce.mensajes.helpers.ChatViewConstructor;
-import com.grupoonce.mensajes.helpers.MainMenuViewConstructor;
-import com.grupoonce.mensajes.helpers.SharedViewConstructor;
+import com.grupoonce.helpers.ChatViewConstructor;
+import com.grupoonce.helpers.MainMenuViewConstructor;
+import com.grupoonce.helpers.SharedViewConstructor;
 
 import android.app.Activity;
 import android.content.Intent;

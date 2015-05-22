@@ -1,4 +1,4 @@
-package com.grupoonce.mensajes.helpers;
+package com.grupoonce.helpers;
 
 import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.AdminMenuActivity;

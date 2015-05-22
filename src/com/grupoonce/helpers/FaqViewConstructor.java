@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.grupoonce.mensajes.helpers;
+package com.grupoonce.helpers;
 
 import com.grupoonce.mensajes.FaqActivity;
 import com.grupoonce.mensajes.R;

@@ -1,4 +1,4 @@
-package com.grupoonce.mensajes.helpers;
+package com.grupoonce.helpers;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
@@ -65,6 +65,7 @@ public class SessionViewConstructor {
 		loginBtn = SharedViewConstructor.ConstructButton(main,
 				size, R.string.log_in, 0, 0, 0, 0, LayoutParams.WRAP_CONTENT,
 				R.drawable.session_btn_text, R.drawable.session_button);
+		loginBtn.setId(0x33D);
 
 		RelativeLayout relativeLayout = new RelativeLayout(main);
 		relativeLayout.setPadding(0, 0, 0, 100);

@@ -1,4 +1,4 @@
-package com.grupoonce.mensajes.helpers;
+package com.grupoonce.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.grupoonce.chat.FirebaseManager;
+import com.grupoonce.helpers.admin.SharedG11ViewConstructor;
 import com.grupoonce.mensajes.AdviserConfigurationActivity;
 import com.grupoonce.mensajes.R;
-import com.grupoonce.mensajes.admin.SharedG11ViewConstructor;
 
 public class AdviserConfigurationConstructor {
 
@@ -56,7 +56,6 @@ public class AdviserConfigurationConstructor {
 		LinearLayout viewContainer = SharedViewConstructor.ConstructBackground(
 				main, size, (int) (size.x * 0.8), (int) (size.y * 0.79));
 
-		// TODO create all elements on configuration body
 		LayoutParams layout = new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		layout.setMargins(0, (int) (size.x * 0.08), 0, 0);

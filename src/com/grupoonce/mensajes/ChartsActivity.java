@@ -1,6 +1,6 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.mensajes.helpers.ChartsViewConstructor;
+import com.grupoonce.helpers.ChartsViewConstructor;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

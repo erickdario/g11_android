@@ -2,9 +2,9 @@ package com.grupoonce.chat;
 
 import java.util.List;
 
+import com.grupoonce.helpers.MMAdviserViewConstructor;
+import com.grupoonce.helpers.SharedViewConstructor;
 import com.grupoonce.mensajes.R;
-import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
-import com.grupoonce.mensajes.helpers.SharedViewConstructor;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

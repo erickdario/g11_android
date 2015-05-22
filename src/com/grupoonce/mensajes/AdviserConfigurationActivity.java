@@ -1,6 +1,6 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.mensajes.helpers.AdviserConfigurationConstructor;
+import com.grupoonce.helpers.AdviserConfigurationConstructor;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -18,14 +18,14 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.grupoonce.helpers.AdviserConfigurationConstructor;
+import com.grupoonce.helpers.ChatViewConstructor;
+import com.grupoonce.helpers.MMAdviserViewConstructor;
+import com.grupoonce.helpers.SessionViewConstructor;
 import com.grupoonce.mensajes.AdminMenuActivity;
 import com.grupoonce.mensajes.MainMenuActivity;
 import com.grupoonce.mensajes.MainMenuAdvisorActivity;
 import com.grupoonce.mensajes.R;
-import com.grupoonce.mensajes.helpers.AdviserConfigurationConstructor;
-import com.grupoonce.mensajes.helpers.ChatViewConstructor;
-import com.grupoonce.mensajes.helpers.MMAdviserViewConstructor;
-import com.grupoonce.mensajes.helpers.SessionViewConstructor;
 
 public class FirebaseManager {
 
@@ -46,27 +46,8 @@ public class FirebaseManager {
 
 		@Override
 		public void onAuthenticationError(FirebaseError firebaseError) {
-
-			switch (firebaseError.getCode()) {
-			case FirebaseError.USER_DOES_NOT_EXIST:
-				Toast.makeText(main,
-						"El usuario no existe en la base de datos",
-						Toast.LENGTH_SHORT).show();
-				break;
-			case FirebaseError.INVALID_PASSWORD:
-				Toast.makeText(main, "La contraseña es incorrecta",
-						Toast.LENGTH_SHORT).show();
-				break;
-			case FirebaseError.NETWORK_ERROR:
-				Toast.makeText(main, "Error de conexión", Toast.LENGTH_SHORT)
-						.show();
-				break;
-			default:
-				Toast.makeText(main,
-						"Algo salió mal, por favor verifique sus datos",
-						Toast.LENGTH_SHORT).show();
-				break;
-			}
+			DisplayError(firebaseError,
+					"Algo salió mal, por favor verifique sus datos");
 			SessionViewConstructor.loginBtn.setEnabled(true);
 		}
 	};
@@ -108,6 +89,7 @@ public class FirebaseManager {
 
 			@Override
 			public void onCancelled(FirebaseError firebaseError) {
+				DisplayError(firebaseError, "Lo sentimos, intente mas tarde");
 			}
 		});
 	}
@@ -136,24 +118,8 @@ public class FirebaseManager {
 
 					@Override
 					public void onError(FirebaseError firebaseError) {
-						switch (firebaseError.getCode()) {
-						case FirebaseError.DISCONNECTED:
-							Toast.makeText(main,
-									"Hubo un problema de conectividad",
-									Toast.LENGTH_SHORT).show();
-							break;
-						case FirebaseError.OPERATION_FAILED:
-							Toast.makeText(
-									main,
-									"Ocurrió un error en el servidor, intente más tarde",
-									Toast.LENGTH_SHORT).show();
-							break;
-						default:
-							Toast.makeText(main,
-									"Lo sentimos, intente mas tarde",
-									Toast.LENGTH_SHORT).show();
-							break;
-						}
+						DisplayError(firebaseError,
+								"Lo sentimos, intente mas tarde");
 					}
 				});
 	}
@@ -390,28 +356,47 @@ public class FirebaseManager {
 
 					@Override
 					public void onError(FirebaseError firebaseError) {
-						switch (firebaseError.getCode()) {
-						case FirebaseError.EMAIL_TAKEN:
-							Toast.makeText(main,
-									"Correo registrado con otra cuenta",
-									Toast.LENGTH_SHORT).show();
-							break;
-						case FirebaseError.INVALID_EMAIL:
-							Toast.makeText(main, "Correo inválido",
-									Toast.LENGTH_SHORT).show();
-							break;
-						case FirebaseError.NETWORK_ERROR:
-							Toast.makeText(main, "Error de conectividad",
-									Toast.LENGTH_SHORT).show();
-							break;
-						default:
-							Toast.makeText(main,
-									"Por favor verifique sus datos",
-									Toast.LENGTH_SHORT).show();
-							break;
-						}
+						DisplayError(firebaseError,
+								"Por favor verifique sus datos");
 					}
 				});
+	}
+
+	private static void DisplayError(FirebaseError firebaseError,
+			String defaultMessage) {
+		switch (firebaseError.getCode()) {
+		case FirebaseError.USER_DOES_NOT_EXIST:
+			Toast.makeText(main, "El usuario no existe en la base de datos",
+					Toast.LENGTH_SHORT).show();
+			break;
+		case FirebaseError.INVALID_PASSWORD:
+			Toast.makeText(main, "La contraseña es incorrecta",
+					Toast.LENGTH_SHORT).show();
+			break;
+		case FirebaseError.NETWORK_ERROR:
+			Toast.makeText(main, "Error de conexión", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		case FirebaseError.DISCONNECTED:
+			Toast.makeText(main, "Hubo un problema de conectividad",
+					Toast.LENGTH_SHORT).show();
+			break;
+		case FirebaseError.OPERATION_FAILED:
+			Toast.makeText(main,
+					"Ocurrió un error en el servidor, intente más tarde",
+					Toast.LENGTH_SHORT).show();
+			break;
+		case FirebaseError.EMAIL_TAKEN:
+			Toast.makeText(main, "Correo registrado con otra cuenta",
+					Toast.LENGTH_SHORT).show();
+			break;
+		case FirebaseError.INVALID_EMAIL:
+			Toast.makeText(main, "Correo inválido", Toast.LENGTH_SHORT).show();
+			break;
+		default:
+			Toast.makeText(main, defaultMessage, Toast.LENGTH_SHORT).show();
+			break;
+		}
 	}
 
 	private static Boolean GetIfAnyNotRead(DataSnapshot conversationSnapshot,

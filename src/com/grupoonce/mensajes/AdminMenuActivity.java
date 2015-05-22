@@ -1,6 +1,6 @@
 package com.grupoonce.mensajes;
 
-import com.grupoonce.mensajes.helpers.AdminViewConstructor;
+import com.grupoonce.helpers.AdminViewConstructor;
 
 import android.app.Activity;
 import android.content.Intent;
