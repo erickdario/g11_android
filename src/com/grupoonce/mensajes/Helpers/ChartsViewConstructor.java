@@ -8,7 +8,7 @@ import android.graphics.Point;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,18 +45,16 @@ public class ChartsViewConstructor {
 				Color.BLACK);
 		chartTitle.setGravity(Gravity.CENTER_HORIZONTAL);
 
-		Button sendEmail = SharedViewConstructor.ConstructButton(main, size,
-				R.string.send_email_charts, 0, (int) (size.y * 0.01), 0, 0,
-				LayoutParams.WRAP_CONTENT, R.drawable.session_btn_text,
-				R.drawable.close_session_button);
-		
-		sendEmail.setOnClickListener(new OnClickListener(){
+		ImageButton sendEmail = SharedViewConstructor.ConstructImageButton(
+				main, R.drawable.send_email, size, 0.15f);
+
+		sendEmail.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				FirebaseManagerCharts.SendEmailInfo(main);
 			}
-			
+
 		});
 
 		menu.addView(chartTitle);

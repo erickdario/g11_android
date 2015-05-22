@@ -156,7 +156,7 @@ public class FirebaseManagerCharts {
 	private static void SendEmail(ChartsActivity main) {
 		try {
 			ArrayList<Uri> URIs = new ArrayList<Uri>();
-			String email = "erick_dario2492@hotmail.com";
+			String email = "ealanis@grupoonce.mx";
 			String subject = "Mensajes asesores de conversaciones concluidas y gráficas";
 			String message = messageConversations;
 			File sdcard = Environment.getExternalStorageDirectory();
