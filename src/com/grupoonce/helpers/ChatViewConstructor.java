@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 package com.grupoonce.helpers;
 
 import java.util.ArrayList;
@@ -22,6 +26,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.LinearLayout.LayoutParams;
 
+/**
+ * Draws and manages all the interaction for the elements to be displayed in the
+ * ChatActivity activity
+ * 
+ * @author erickdario
+ *
+ */
 public class ChatViewConstructor {
 
 	public static ArrayList<Msg> listMessages;
@@ -30,6 +41,15 @@ public class ChatViewConstructor {
 	public static Firebase conversationRef;
 	public static String role;
 
+	/**
+	 * Sets up and loads a previous conversation from Firebase, if any, and sets
+	 * the cursor of the conversation on the last item
+	 * 
+	 * @param main
+	 *            Activity trying to draw the list of active messages in the
+	 *            cloud
+	 * @return A linear layout containing a list view with all the messages
+	 */
 	public static LinearLayout ContructConversation(ChatActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
 
@@ -54,6 +74,14 @@ public class ChatViewConstructor {
 		return view;
 	}
 
+	/**
+	 * Constructs the input edit text and send button for the chat view
+	 * 
+	 * @param main
+	 *            Activity trying to draw the input view
+	 * @return A linear layout containing all the elements for the chat input
+	 *         view
+	 */
 	public static LinearLayout ContructInputChat(final ChatActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
 
@@ -82,8 +110,7 @@ public class ChatViewConstructor {
 		// Set click listener for button
 		btnSend.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				SendMessage(listMessages, adapter, inputChat.getText()
-						.toString());
+				SendMessage(inputChat.getText().toString());
 				inputChat.setText("");
 			}
 		});
@@ -94,8 +121,14 @@ public class ChatViewConstructor {
 		return view;
 	}
 
-	public static void SendMessage(ArrayList<Msg> listMessages,
-			MessagesListAdapter adapter, String message) {
+	/**
+	 * Takes the information and send a new message to the cloud, in this case
+	 * Firebase
+	 * 
+	 * @param message
+	 *            String containing the message to be send to the client
+	 */
+	public static void SendMessage(String message) {
 
 		Calendar c = Calendar.getInstance();
 		int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -110,6 +143,14 @@ public class ChatViewConstructor {
 		conversationRef.push().setValue(msg);
 	}
 
+	/**
+	 * Decides the proper month name in Spanish according to the given Integer,
+	 * i.e. 1 = "Enero"
+	 * 
+	 * @param month
+	 *            number of the current month
+	 * @return The proper name of the month
+	 */
 	private static String DecideMonth(int month) {
 		switch (month) {
 		case 0:

@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 package com.grupoonce.helpers;
 
 import android.content.Intent;
@@ -17,8 +21,23 @@ import com.grupoonce.mensajes.ChatActivity;
 import com.grupoonce.mensajes.MainMenuActivity;
 import com.grupoonce.mensajes.R;
 
+/**
+ * Draws and manages all the interaction for the elements to be displayed in the
+ * MainMenuActivity activity
+ * 
+ * @author erickdario
+ *
+ */
 public class MainMenuViewConstructor {
 
+	/**
+	 * Draws all the visible elements inside the body for the given activity
+	 * This is activity with the main menu for the user after a succeful log in
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the body
+	 */
 	public static LinearLayout ConstructBody(final MainMenuActivity main) {
 		FirebaseManager.role = "client";
 		Point size = SharedViewConstructor.GetScreenSize(main);
@@ -28,7 +47,7 @@ public class MainMenuViewConstructor {
 				(int) (size.y * 0.79));
 
 		LinearLayout btnView = SharedViewConstructor.ConstructBackground(main,
-				size, (int) (size.x * 0.80), (int) (size.y * 0.89));
+				size, (int) (size.x * 0.80), (int) (size.y * 0.79));
 
 		LayoutParams layout = new LinearLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

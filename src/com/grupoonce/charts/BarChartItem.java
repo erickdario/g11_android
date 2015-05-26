@@ -96,7 +96,7 @@ public class BarChartItem extends ChartItem {
 		xAxis.setDrawGridLines(false);
 		xAxis.setDrawAxisLine(true);
 		xAxis.setSpaceBetweenLabels(TYPE_BARCHART);
-		xAxis.setTextSize(8f);
+		xAxis.setTextSize(7f);
 		xAxis.setXOffset(TYPE_BARCHART);
 
 		YAxis leftAxis = holder.chart.getAxisLeft();

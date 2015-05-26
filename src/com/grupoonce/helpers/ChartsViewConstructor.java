@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 package com.grupoonce.helpers;
 
 import java.util.ArrayList;
@@ -22,6 +26,17 @@ import com.grupoonce.charts.FirebaseManagerCharts;
 import com.grupoonce.mensajes.ChartsActivity;
 import com.grupoonce.mensajes.R;
 
+/**
+ * Draws and manages all the interaction for the elements to be displayed in the
+ * ChartsActivity activity
+ * 
+ * This is the activity where the administrator can see the charts with the
+ * information of the current month and send email for the specified email with
+ * all this information
+ * 
+ * @author erickdario
+ *
+ */
 public class ChartsViewConstructor {
 
 	public static ArrayList<ArrayList<BarEntry>> statesCharts = new ArrayList<ArrayList<BarEntry>>();
@@ -29,6 +44,13 @@ public class ChartsViewConstructor {
 	public static ArrayList<Entry> pieEntries = new ArrayList<Entry>();
 	public static ChartDataAdapter cda;
 
+	/**
+	 * Draws all the visible elements for the header of the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the header
+	 */
 	public static LinearLayout ConstructHeader(final ChartsActivity main) {
 		LinearLayout header = SharedViewConstructor.ConstructHeaderG11(main);
 		Point size = SharedViewConstructor.GetScreenSize(main);
@@ -63,6 +85,13 @@ public class ChartsViewConstructor {
 		return header;
 	}
 
+	/**
+	 * Draws all the visible elements inside the body for the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the body
+	 */
 	public static LinearLayout ConstructBody(ChartsActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
 
@@ -74,7 +103,7 @@ public class ChartsViewConstructor {
 
 		chartList = new ArrayList<ChartItem>();
 
-		FirebaseManagerCharts.GetInfoCharts(main);
+		FirebaseManagerCharts.GetInfoCharts();
 
 		cda = new ChartDataAdapter(main, chartList);
 		lv.setAdapter(cda);

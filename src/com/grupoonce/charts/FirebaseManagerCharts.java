@@ -33,6 +33,12 @@ public class FirebaseManagerCharts {
 			"https://glaring-heat-1751.firebaseio.com");
 	static String messageConversations = "";
 
+	/**
+	 * Retrieves the information from "Firebase" to create the email
+	 * 
+	 * @param main
+	 *            Activity from where we are trying to send the email
+	 */
 	public static void SendEmailInfo(final ChartsActivity main) {
 		Firebase closedConversationsRef = ref.child("closed_conversations");
 		closedConversationsRef
@@ -53,14 +59,31 @@ public class FirebaseManagerCharts {
 									+ cityConversation.getKey() + "\n";
 							for (DataSnapshot clientConversation : cityConversation
 									.getChildren()) {
-								messageConversations += "-Cliente: "
-										+ clientConversation.getKey() + "\n";
-								messageConversations += "--Area: "
-										+ clientConversation.child("/area")
-												.getValue().toString() + "\n";
-								messageConversations += "--Comentario de asesor: "
-										+ clientConversation.child("/comment")
-												.getValue().toString() + "\n";
+								String email = clientConversation.getKey()
+										.substring(
+												0,
+												clientConversation.getKey()
+														.indexOf("%"));
+								String company = clientConversation.getKey()
+										.substring(
+												clientConversation.getKey()
+														.indexOf("%") + 1,
+												clientConversation.getKey()
+														.length());
+								messageConversations += "-Cliente: " + email
+										+ " " + company + "\n";
+								for (DataSnapshot conversation : clientConversation
+										.getChildren()) {
+									messageConversations += "--Area: "
+											+ conversation.child("/area")
+													.getValue().toString()
+											+ "\n";
+									messageConversations += "--Comentario de asesor: "
+											+ conversation.child("/comment")
+													.getValue().toString()
+											+ "\n";
+
+								}
 							}
 						}
 						SendEmail(main);
@@ -69,7 +92,11 @@ public class FirebaseManagerCharts {
 				});
 	}
 
-	public static void GetInfoCharts(final ChartsActivity main) {
+	/**
+	 * Gets all the information from the "Firebase" to draw the charts and
+	 * deletes this information if it's the first of each month
+	 */
+	public static void GetInfoCharts() {
 		Firebase statesRef = ref.child("charts");
 
 		Calendar cal = Calendar.getInstance();
@@ -141,8 +168,8 @@ public class FirebaseManagerCharts {
 
 				d.setColors(colors);
 
-				PieData cd = new PieData(getAreas(), d);
-				ChartsViewConstructor.chartList.add(new PieChartItem(cd, main));
+				/*PieData cd = new PieData(getAreas(), d);
+				ChartsViewConstructor.chartList.add(new PieChartItem(cd, main));*/
 
 				ChartsViewConstructor.cda.notifyDataSetChanged();
 			}
@@ -153,6 +180,12 @@ public class FirebaseManagerCharts {
 		});
 	}
 
+	/**
+	 * Creates an intent to send an email containing all the information from
+	 * Firebase
+	 * 
+	 * @param main
+	 */
 	private static void SendEmail(ChartsActivity main) {
 		try {
 			ArrayList<Uri> URIs = new ArrayList<Uri>();
@@ -193,6 +226,13 @@ public class FirebaseManagerCharts {
 		}
 	}
 
+	/**
+	 * Gets all the files starting with G11 inside the specified folder
+	 * 
+	 * @param parentDir
+	 *            Folder to from we will get all the files
+	 * @return the files that were found inside the specified folder
+	 */
 	private static List<File> getListFiles(File parentDir) {
 		ArrayList<File> inFiles = new ArrayList<File>();
 		File[] files = parentDir.listFiles();
@@ -204,6 +244,11 @@ public class FirebaseManagerCharts {
 		return inFiles;
 	}
 
+	/**
+	 * Specifies all the areas for the charts
+	 * 
+	 * @return an ArrayList containing the definition of all the areas
+	 */
 	private static ArrayList<String> getAreas() {
 
 		ArrayList<String> areas = new ArrayList<String>();

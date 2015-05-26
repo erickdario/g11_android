@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 package com.grupoonce.helpers;
 
 import com.grupoonce.chat.FirebaseManager;
@@ -31,11 +32,21 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.LinearLayout;
 
 /**
+ * Draws and manages all the interaction for some shared elements among the
+ * activities
+ * 
  * @author erickdario
- *
  */
 public class SharedViewConstructor {
 
+	/**
+	 * Draws all the visible elements for the header of the given activity this
+	 * is the same header for all the views on the client side
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements to
+	 * @return A linear layout containing all the elements for the header
+	 */
 	public static LinearLayout ConstructHeader(final Activity main) {
 
 		// Create LinearLayout
@@ -75,6 +86,14 @@ public class SharedViewConstructor {
 		return view;
 	}
 
+	/**
+	 * Draws all the visible elements for the header of the given activity based
+	 * of the header for the administrator views
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements to
+	 * @return A linear layout containing all the elements for the header
+	 */
 	public static LinearLayout ConstructHeaderG11(final Activity main) {
 		// Create LinearLayout
 		LinearLayout view = new LinearLayout(main);
@@ -99,6 +118,13 @@ public class SharedViewConstructor {
 		return view;
 	}
 
+	/**
+	 * Gets the size of the current screen size
+	 * 
+	 * @param main
+	 *            Activity that is trying to get the current screen size
+	 * @return A Point element containing the screen details
+	 */
 	public static Point GetScreenSize(Activity main) {
 		WindowManager wm = (WindowManager) main
 				.getSystemService(Context.WINDOW_SERVICE);
@@ -108,6 +134,21 @@ public class SharedViewConstructor {
 		return size;
 	}
 
+	/**
+	 * Draws the gray background which is used in all the views in the
+	 * application
+	 * 
+	 * @param main
+	 *            Activity trying to draw the background
+	 * @param size
+	 *            Point element containing the screen details
+	 * @param width
+	 *            for the background
+	 * @param height
+	 *            for the background
+	 * @return A liner layout with the proper background and the specified
+	 *         measures
+	 */
 	public static LinearLayout ConstructBackground(Activity main, Point size,
 			int width, int height) {
 		LinearLayout view = new LinearLayout(main);
@@ -119,6 +160,33 @@ public class SharedViewConstructor {
 		return view;
 	}
 
+	/**
+	 * Constructs a button with the given information and returns it
+	 * 
+	 * @param main
+	 *            Activity trying to draw the button
+	 * @param size
+	 *            Point element containing the screen details
+	 * @param stringId
+	 *            The resource identifier for the given String
+	 * @param marginLeft
+	 *            the left margin size
+	 * @param marginTop
+	 *            the top margin size
+	 * @param marginRight
+	 *            the right margin size
+	 * @param marginBottom
+	 *            the bottom margin size
+	 * @param width
+	 *            the width of the button
+	 * @param drawableText
+	 *            The resource identifier for the given drawable for the
+	 *            appearance of the text in the button
+	 * @param drawableButton
+	 *            The resource identifier for the given drawable for the
+	 *            appearance of the background of the button
+	 * @return A Button with the all the proper attributes
+	 */
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public static Button ConstructButton(Activity main, Point size,
@@ -144,6 +212,23 @@ public class SharedViewConstructor {
 		return sessionBtn;
 	}
 
+	/**
+	 * Constructs a text view with the given information and returns it
+	 * 
+	 * @param main
+	 *            Activity trying to draw the text view
+	 * @param layout
+	 *            Layout parameters to be assigned to the text view
+	 * @param textSize
+	 *            font size of the text view
+	 * @param text
+	 *            Text to be displayed inside the text view
+	 * @param bold
+	 *            true if the test is not shown as bold, false is not
+	 * @param color
+	 *            for the text view
+	 * @return A text view with the all the proper attributes
+	 */
 	public static TextView ConstructTextView(Activity main,
 			LayoutParams layout, int textSize, String text, Boolean bold,
 			int color) {
@@ -160,6 +245,17 @@ public class SharedViewConstructor {
 		return textView;
 	}
 
+	/**
+	 * Constructs a scroll view with the given information and returns it
+	 * 
+	 * @param main
+	 *            Activity trying to draw the text view
+	 * @param width
+	 *            width of the scroll view
+	 * @param size
+	 *            A Point element containing the screen details
+	 * @return A scroll view with the all the proper attributes
+	 */
 	public static ScrollView ConstructScrollView(Activity main, int width,
 			Point size) {
 		ScrollView scrollView = new ScrollView(main);
@@ -171,6 +267,19 @@ public class SharedViewConstructor {
 		return scrollView;
 	}
 
+	/**
+	 * Constructs a image button with the given information and returns it
+	 * 
+	 * @param main
+	 *            Activity trying to draw the image button
+	 * @param resource
+	 * @param size
+	 *            A Point element containing the screen details
+	 * @param side
+	 *            The button will be draw as a square so we only need to know
+	 *            one side
+	 * @return A image button with the all the proper attributes
+	 */
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public static ImageButton ConstructImageButton(Activity main, int resource,
@@ -193,6 +302,22 @@ public class SharedViewConstructor {
 		return imageBtn;
 	}
 
+	/**
+	 * Constructs a button with the sign out drawable and attach the proper
+	 * click listener
+	 * 
+	 * @param main
+	 *            Activity trying to draw the sign out button
+	 * @param size
+	 *            A Point element containing the screen details
+	 * @param width
+	 *            the width of the button
+	 * @param marginLeft
+	 *            the left margin size
+	 * @param marginTop
+	 *            the top margin size
+	 * @return A image button with the all the proper attributes
+	 */
 	public static Button ConstructSignOut(final Activity main, Point size,
 			int width, int marginLeft, int marginTop) {
 		Button signOut = ConstructButton(main, size, R.string.sign_out,
@@ -209,6 +334,19 @@ public class SharedViewConstructor {
 		return signOut;
 	}
 
+	/**
+	 * Constructs an edit text with the G11 theme
+	 * 
+	 * @param main
+	 *            Activity trying to draw the sign out button
+	 * @param placeholderId
+	 *            the resource identifier for the string to be taken as the
+	 *            placeholder
+	 * @param inputType
+	 *            integer specifying which type of content the text view is
+	 *            going to have
+	 * @return A edit text with the all the proper attributes
+	 */
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public static EditText ContructG11EditText(Activity main,
@@ -233,6 +371,24 @@ public class SharedViewConstructor {
 		return editTextSession;
 	}
 
+	/**
+	 * Constructs a button with one of G11 the social networks for the shared
+	 * header
+	 * 
+	 * @param resource
+	 *            the resource identifier containing the image to be drawn on
+	 *            the button
+	 * @param main
+	 *            Activity trying to draw the media button
+	 * @param width
+	 *            the width of the button
+	 * @param height
+	 *            the height of the button
+	 * @param url
+	 *            string containing the link pointing to the social network
+	 * @return A image button for the social network with the all the proper
+	 *         attributes
+	 */
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	private static ImageButton CreateMediaButton(int resource,
@@ -261,6 +417,14 @@ public class SharedViewConstructor {
 		return btnSocialMedia;
 	}
 
+	/**
+	 * Opens a link using a web browser
+	 * 
+	 * @param main
+	 *            Activity trying to open the given link
+	 * @param url
+	 *            link to be open
+	 */
 	private static void openG11Url(Activity main, String url) {
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 		main.startActivity(browserIntent);

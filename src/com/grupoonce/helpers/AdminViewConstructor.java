@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.grupoonce.helpers;
 
 import com.grupoonce.chat.FirebaseManager;
@@ -20,8 +23,25 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
+/**
+ * Draws and manages all the interaction for the elements to be displayed in the
+ * AdminMenuActivity activity
+ * 
+ * This is the activity where the administrator can see all the adviser that are
+ * registered in the application
+ * 
+ * @author erickdario
+ *
+ */
 public class AdminViewConstructor {
 
+	/**
+	 * Draws all the visible elements for the header of the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the header
+	 */
 	public static LinearLayout ConstructHeader(final AdminMenuActivity main) {
 		FirebaseManager.role = "adviser";
 		LinearLayout header = SharedViewConstructor.ConstructHeaderG11(main);
@@ -71,6 +91,13 @@ public class AdminViewConstructor {
 
 	}
 
+	/**
+	 * Draws all the visible elements inside the body for the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the body
+	 */
 	public static LinearLayout ConstructBody(final AdminMenuActivity main) {
 
 		Point size = SharedViewConstructor.GetScreenSize(main);
@@ -117,8 +144,8 @@ public class AdminViewConstructor {
 				public void onClick(View view) {
 					Intent intent = new Intent(main,
 							MainMenuAdvisorActivity.class);
-					String conversationsUrl = "https://glaring-heat-1751.firebaseio.com/messages/"
-							+ state.getText().toString();
+					String conversationsUrl = FirebaseManager.ref.toString()
+							+ "/messages/" + state.getText().toString();
 					intent.putExtra("conversationsUrl", conversationsUrl);
 					intent.putExtra("city", state.getText().toString());
 					intent.putExtra("role", "admin");
@@ -135,5 +162,4 @@ public class AdminViewConstructor {
 		view.addView(scrollView);
 		return view;
 	}
-
 }

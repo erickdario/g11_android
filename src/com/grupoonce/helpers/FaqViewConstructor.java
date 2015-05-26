@@ -14,11 +14,21 @@ import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
 /**
+ * Draws and manages all the interaction for the elements to be displayed in the
+ * FaqActivity activity
+ * 
  * @author erickdario
  *
  */
 public class FaqViewConstructor {
 
+	/**
+	 * Draws all the visible elements inside the body for the given activity
+	 * This is the activity for the FAQs
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the body
+	 */
 	public static LinearLayout ContructBody(final FaqActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
 

@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 package com.grupoonce.helpers;
 
 import android.graphics.Color;
@@ -12,10 +16,24 @@ import android.widget.LinearLayout.LayoutParams;
 import com.grupoonce.mensajes.R;
 import com.grupoonce.mensajes.ServicesActivity;
 
-;
-
+/**
+ * Draws and manages all the interaction for the elements to be displayed in the
+ * ServicesActivity activity
+ * 
+ * This is the activity where the user has the full list of services from G11
+ * 
+ * @author erickdario
+ *
+ */
 public class ServicesViewConstructor {
 
+	/**
+	 * Draws all the visible elements inside the body for the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the body
+	 */
 	public static LinearLayout ContructBody(final ServicesActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
 
@@ -161,6 +179,16 @@ public class ServicesViewConstructor {
 
 	}
 
+	/**
+	 * Constructs a view for a row in the scroll view containing all the
+	 * services
+	 * 
+	 * @param main
+	 *            Activity trying to draw the new service
+	 * @param size
+	 *            Point element containing the screen details
+	 * @return A linear layout with proper attributes for the service view
+	 */
 	private static LinearLayout ConstructServiceView(ServicesActivity main,
 			Point size) {
 		LinearLayout serviceView = new LinearLayout(main);

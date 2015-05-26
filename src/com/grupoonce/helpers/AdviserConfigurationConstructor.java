@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 package com.grupoonce.helpers;
 
 import android.app.Activity;
@@ -17,6 +21,16 @@ import com.grupoonce.helpers.admin.SharedG11ViewConstructor;
 import com.grupoonce.mensajes.AdviserConfigurationActivity;
 import com.grupoonce.mensajes.R;
 
+/**
+ * Draws and manages all the interaction for the elements to be displayed in the
+ * AdviserConfigurationActivity activity
+ * 
+ * This is the activity where the administrator can change the password of a
+ * specific adviser account
+ * 
+ * @author erickdario
+ *
+ */
 public class AdviserConfigurationConstructor {
 
 	static String city;
@@ -26,6 +40,13 @@ public class AdviserConfigurationConstructor {
 	public static TextView oldPasswordView;
 	public static String userKey;
 
+	/**
+	 * Draws all the visible elements for the header of the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the header
+	 */
 	public static LinearLayout ConstructHeader(AdviserConfigurationActivity main) {
 		FirebaseManager.role = "adviser";
 		LinearLayout header = SharedViewConstructor.ConstructHeaderG11(main);
@@ -45,6 +66,13 @@ public class AdviserConfigurationConstructor {
 		return header;
 	}
 
+	/**
+	 * Draws all the visible elements inside the body for the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the body
+	 */
 	public static LinearLayout ConstructBody(
 			final AdviserConfigurationActivity main) {
 

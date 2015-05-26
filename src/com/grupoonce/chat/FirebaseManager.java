@@ -3,6 +3,7 @@ package com.grupoonce.chat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -312,10 +313,12 @@ public class FirebaseManager {
 
 	public static void CloseConversation(final String state,
 			String conversation, String comment, final String area) {
-		ref.child("/closed_conversations/" + state + "/" + conversation)
-				.child("/area/").setValue(area);
-		ref.child("/closed_conversations/" + state + "/" + conversation)
-				.child("/comment/").setValue(comment);
+
+		Map<String, Object> conversationMap = new HashMap<String, Object>();
+		conversationMap.put("area", area);
+		conversationMap.put("comment", comment);
+		ref.child("/closed_conversations/" + state + "/" + conversation).push()
+				.setValue(conversationMap);
 		ref.child("/charts/").child(state + "/")
 				.addListenerForSingleValueEvent(new ValueEventListener() {
 					@Override

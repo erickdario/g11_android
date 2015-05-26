@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 package com.grupoonce.helpers;
 
 import com.firebase.client.AuthData;
@@ -18,10 +22,26 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+/**
+ * Draws and manages all the interaction for the elements to be displayed in the
+ * MainActivity activity
+ * 
+ * This is the activity where the any user can start a new session
+ * 
+ * @author erickdario
+ *
+ */
 public class SessionViewConstructor {
-	
+
 	public static Button loginBtn;
 
+	/**
+	 * Draws all the visible elements inside the body for the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the body
+	 */
 	public static LinearLayout ContructBody(MainActivity main) {
 		Firebase.setAndroidContext(main);
 		FirebaseManager.main = main;
@@ -46,6 +66,16 @@ public class SessionViewConstructor {
 		return view;
 	}
 
+	/**
+	 * Draws and manages all the interaction between the element in the view for
+	 * the user to log in
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @param size
+	 *            Point element containing the screen details
+	 * @return A linear layout containing all the elements for the view
+	 */
 	@SuppressLint("NewApi")
 	private static LinearLayout ConstructLoginView(final MainActivity main,
 			Point size) {
@@ -62,8 +92,8 @@ public class SessionViewConstructor {
 				.ContructG11EditText(main, R.string.password,
 						InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-		loginBtn = SharedViewConstructor.ConstructButton(main,
-				size, R.string.log_in, 0, 0, 0, 0, LayoutParams.WRAP_CONTENT,
+		loginBtn = SharedViewConstructor.ConstructButton(main, size,
+				R.string.log_in, 0, 0, 0, 0, LayoutParams.WRAP_CONTENT,
 				R.drawable.session_btn_text, R.drawable.session_button);
 		loginBtn.setId(0x33D);
 

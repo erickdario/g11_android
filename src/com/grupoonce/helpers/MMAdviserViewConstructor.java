@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 package com.grupoonce.helpers;
 
 import java.util.ArrayList;
@@ -16,7 +20,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +31,16 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+/**
+ * Draws and manages all the interaction for the elements to be displayed in the
+ * MainMenuAdvisorActivity activity
+ * 
+ * This is the activity for the administrator or the adviser when they have the
+ * list of current active conversations
+ * 
+ * @author erickdario
+ *
+ */
 public class MMAdviserViewConstructor {
 
 	public static ArrayList<Conversation> listConversations;
@@ -37,6 +50,13 @@ public class MMAdviserViewConstructor {
 	public static String city;
 	public static TextView newMessagesCounter;
 
+	/**
+	 * Draws all the visible elements for the header of the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements to
+	 * @return A linear layout containing all the elements for the header
+	 */
 	public static LinearLayout ConstructHeader(
 			final MainMenuAdvisorActivity main) {
 		FirebaseManager.role = "adviser";
@@ -96,9 +116,9 @@ public class MMAdviserViewConstructor {
 			});
 		}
 
-		menu.addView(user);
 		viewMessage.addView(newMessages);
 		viewMessage.addView(newMessagesCounter);
+		menu.addView(user);
 		menu.addView(viewMessage);
 		menu.addView(signOutOrConfiguration);
 		header.addView(menu);
@@ -106,6 +126,13 @@ public class MMAdviserViewConstructor {
 		return header;
 	}
 
+	/**
+	 * Draws all the visible elements inside the body for the given activity
+	 * 
+	 * @param main
+	 *            Activity we are going to draw the elements on
+	 * @return A linear layout containing all the elements for the body
+	 */
 	public static LinearLayout ConstructBody(final MainMenuAdvisorActivity main) {
 		Point size = SharedViewConstructor.GetScreenSize(main);
 
@@ -137,11 +164,9 @@ public class MMAdviserViewConstructor {
 				TextView userName = (TextView) view
 						.findViewById(R.id.lblUserName);
 				Intent intent = new Intent(main, ChatActivity.class);
-				String conversationUrl = "https://glaring-heat-1751.firebaseio.com/messages/"
-						+ city
-						+ "/"
-						+ userName.getText().toString()
-						+ "%"
+				String conversationUrl = FirebaseManager.ref.toString()
+						+ "/messages/" + city + "/"
+						+ userName.getText().toString() + "%"
 						+ companyName.getText().toString();
 				intent.putExtra("conversationUrl", conversationUrl);
 				intent.putExtra("role", "adviser");
@@ -154,7 +179,6 @@ public class MMAdviserViewConstructor {
 		Intent intent = main.getIntent();
 		String conversationsUrl = intent.getStringExtra("conversationsUrl");
 		conversationsRef = new Firebase(conversationsUrl);
-		Log.d("FindConversations", "");
 		FirebaseManager.FindConversations();
 		scrollView.addView(conversationsView);
 		view.addView(scrollView);
