@@ -6,6 +6,7 @@ package com.grupoonce.helpers;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import com.firebase.client.Firebase;
 import com.grupoonce.chat.FirebaseManager;
@@ -13,6 +14,9 @@ import com.grupoonce.chat.MessagesListAdapter;
 import com.grupoonce.chat.Msg;
 import com.grupoonce.mensajes.ChatActivity;
 import com.grupoonce.mensajes.R;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -110,7 +114,7 @@ public class ChatViewConstructor {
 		// Set click listener for button
 		btnSend.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				SendMessage(inputChat.getText().toString());
+				SendMessage(inputChat.getText().toString(), main);
 				inputChat.setText("");
 			}
 		});
@@ -127,8 +131,10 @@ public class ChatViewConstructor {
 	 * 
 	 * @param message
 	 *            String containing the message to be send to the client
+	 * @param main
+	 *            Activity from where the message is being sent
 	 */
-	public static void SendMessage(String message) {
+	public static void SendMessage(String message, ChatActivity main) {
 
 		Calendar c = Calendar.getInstance();
 		int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -141,6 +147,40 @@ public class ChatViewConstructor {
 				+ date, "false");
 
 		conversationRef.push().setValue(msg);
+
+		// Create our Installation query
+		ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
+		// Send push notification to query
+		ParsePush push = new ParsePush();
+
+		String[] conversationRefComponents = conversationRef.getPath()
+				.toString().split("/");
+		String city = conversationRefComponents[2];
+		String[] conversationsName = conversationRefComponents[3].split("%");
+		String companysName = conversationsName[1];
+
+		List<String> cities = new ArrayList<String>();
+		cities.add(city);
+
+		if (role.equals("client")) {
+			cities.add("admin");
+			pushQuery.whereEqualTo("companysName", "grupoonce");
+			push.setMessage(main.getResources().getString(
+					R.string.notification_string)
+					+ " de " + city);
+		} else {
+			pushQuery.whereEqualTo("companysName", companysName);
+			pushQuery.whereEqualTo("userName", conversationsName[0]);
+			push.setMessage(main.getResources().getString(
+					R.string.notification_string)
+					+ " de tu asesor");
+		}
+		pushQuery.whereContainedIn("city", cities);
+		pushQuery.whereEqualTo("session", "open");
+
+		push.setQuery(pushQuery); // Set our Installation query
+
+		push.sendInBackground();
 	}
 
 	/**

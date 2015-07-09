@@ -6,10 +6,13 @@ package com.grupoonce.helpers;
 
 import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.R;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 
 import android.net.Uri;
 import android.os.Build;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -323,10 +326,17 @@ public class SharedViewConstructor {
 		Button signOut = ConstructButton(main, size, R.string.sign_out,
 				marginLeft, marginTop, 0, 0, width,
 				R.drawable.session_btn_text, R.drawable.close_session_button);
-
+		final ParseInstallation installation = ParseInstallation
+				.getCurrentInstallation();
 		// Set click listener for button
 		signOut.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				installation.put("session", "closed");
+				try {
+					ParsePush.unsubscribeInBackground("");
+				} catch (Exception ex) {
+					Log.d("Parse", "App wasn't subscribed to parse");
+				}
 				main.finish();
 				FirebaseManager.ref.unauth();
 			}

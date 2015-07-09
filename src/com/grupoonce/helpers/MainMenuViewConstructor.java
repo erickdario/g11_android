@@ -25,6 +25,9 @@ import com.grupoonce.mensajes.R;
  * Draws and manages all the interaction for the elements to be displayed in the
  * MainMenuActivity activity
  * 
+ * This is the activity where the user can see all the options within the
+ * application
+ * 
  * @author erickdario
  *
  */

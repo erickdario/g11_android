@@ -1,13 +1,21 @@
 package com.grupoonce.chat;
 
+/**
+ * Class to hold all the necessary information to manage the correct behavior of
+ * a conversation within the application and with Firebase
+ * 
+ * @author erickdario
+ *
+ */
 public class Conversation {
 
 	private String companysName;
 	private String userName;
 	private String lastDateMsg;
 	private Boolean read;
-	
-	public Conversation(String companysName, String userName, String lastDateMsg, Boolean read){
+
+	public Conversation(String companysName, String userName,
+			String lastDateMsg, Boolean read) {
 		this.companysName = companysName;
 		this.setUserName(userName);
 		this.setLastDateMsg(lastDateMsg);
@@ -37,7 +45,8 @@ public class Conversation {
 	}
 
 	/**
-	 * @param lastDateMsg the lastDateMsg to set
+	 * @param lastDateMsg
+	 *            the lastDateMsg to set
 	 */
 	public void setLastDateMsg(String lastDateMsg) {
 		this.lastDateMsg = lastDateMsg;
@@ -51,7 +60,8 @@ public class Conversation {
 	}
 
 	/**
-	 * @param read the read to set
+	 * @param read
+	 *            the read to set
 	 */
 	public void setRead(Boolean read) {
 		this.read = read;
@@ -65,7 +75,8 @@ public class Conversation {
 	}
 
 	/**
-	 * @param userName the userName to set
+	 * @param userName
+	 *            the userName to set
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;

@@ -23,6 +23,11 @@ public class ChatActivity extends Activity {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT);
 
+		if (FirebaseManager.childEventListenerConversation != null) {
+			ChatViewConstructor.conversationRef
+					.removeEventListener(FirebaseManager.childEventListenerConversation);
+		}
+
 		LinearLayout chatBody = ChatViewConstructor.ContructConversation(this);
 		LinearLayout chatInput = ChatViewConstructor.ContructInputChat(this);
 		linearLayout.addView(chatBody);
