@@ -43,9 +43,9 @@ public class FirebaseManager {
 	public static Activity main;
 	public static String role;
 
-	// TODO change for deployment URL
+	// TODO change for development URL
 	public static Firebase ref = new Firebase(
-			"https://fiery-torch-6499.firebaseio.com");
+			"https://glaring-heat-1751.firebaseio.com");
 	public static Firebase.AuthResultHandler authResultHandler = new Firebase.AuthResultHandler() {
 		@Override
 		public void onAuthenticated(AuthData authData) {
