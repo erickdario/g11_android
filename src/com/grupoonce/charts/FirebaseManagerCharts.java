@@ -28,9 +28,9 @@ import com.grupoonce.mensajes.ChartsActivity;
 public class FirebaseManagerCharts {
 
 	public static Activity main;
-	// TODO change for deployment URL
+	// TODO change for development URL
 	public static Firebase ref = new Firebase(
-			"https://fiery-torch-6499.firebaseio.com");
+			"https://glaring-heat-1751.firebaseio.com");
 	static String messageConversations = "";
 
 	/**
