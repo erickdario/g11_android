@@ -1,5 +1,8 @@
 package com.grupoonce.mensajes;
 
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.grupoonce.chat.FirebaseManager;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
@@ -37,6 +40,16 @@ public class GrupoOnce extends Application {
 			}
 		});
 		Log.d("onCreate", "Parse init");
+		Firebase.setAndroidContext(this);
+		AuthData authData = FirebaseManager.ref.getAuth();
+		if (authData == null) {
+			// Close the session in parse environment for the queries of the
+			// push up notifications
+			ParseInstallation installation = ParseInstallation
+					.getCurrentInstallation();
+			installation.put("session", "closed");
+			installation.saveInBackground();
+		}
 	}
 
 }

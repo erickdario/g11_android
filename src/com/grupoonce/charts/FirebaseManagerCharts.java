@@ -47,7 +47,6 @@ public class FirebaseManagerCharts {
 					@Override
 					public void onCancelled(FirebaseError arg0) {
 						// TODO Auto-generated method stub
-
 					}
 
 					@Override
@@ -84,7 +83,9 @@ public class FirebaseManagerCharts {
 											+ "\n";
 
 								}
+								messageConversations += "\n\n";
 							}
+							messageConversations += "\n\n----------------------------------------------\n\n";
 						}
 						SendEmail(main);
 					}

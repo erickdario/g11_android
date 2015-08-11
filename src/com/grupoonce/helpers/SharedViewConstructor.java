@@ -332,6 +332,7 @@ public class SharedViewConstructor {
 		signOut.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				installation.put("session", "closed");
+				installation.saveInBackground();
 				try {
 					ParsePush.unsubscribeInBackground("");
 				} catch (Exception ex) {

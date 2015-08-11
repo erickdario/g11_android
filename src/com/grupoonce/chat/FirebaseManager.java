@@ -18,6 +18,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.grupoonce.helpers.AdviserConfigurationConstructor;
 import com.grupoonce.helpers.ChatViewConstructor;
@@ -67,20 +68,17 @@ public class FirebaseManager {
 	 * @param city
 	 *            Name of the city of the employee we are going to retrieved
 	 */
-	public static void FindUser(final String city) {
-		Firebase usersRef = ref.child("users");
-		usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+	public static void FindEmployee(final String city) {
+		Query queryRef = ref.child("users").orderByChild("city").equalTo(city);
+		queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot snapshot) {
 				Iterator<DataSnapshot> iterator = snapshot.getChildren()
 						.iterator();
 				while (iterator.hasNext()) {
 					DataSnapshot userSnapshot = iterator.next();
-
-					if (userSnapshot.child("city").getValue().toString()
-							.equals(city)
-							&& userSnapshot.child("companysName").getValue()
-									.toString().equals("grupoonce")) {
+					if (userSnapshot.child("companysName").getValue()
+							.toString().equals("grupoonce")) {
 						AdviserConfigurationConstructor.userKey = userSnapshot
 								.getKey();
 						AdviserConfigurationConstructor.userName = userSnapshot
@@ -162,6 +160,7 @@ public class FirebaseManager {
 		final ParseInstallation installation = ParseInstallation
 				.getCurrentInstallation();
 		installation.put("session", "open");
+		installation.saveInBackground();
 		Firebase userRef = ref.child("users").child(authData.getUid());
 		valueEventListener = new ValueEventListener() {
 			@Override
@@ -169,7 +168,11 @@ public class FirebaseManager {
 				@SuppressWarnings("unchecked")
 				Map<String, Object> user = (Map<String, Object>) snapshot
 						.getValue();
+				installation.put("city", user.get("city").toString());
 				if (user.get("companysName").equals("grupoonce")) {
+					installation.put("userName", "");
+					installation.put("companysName", "grupoonce");
+					installation.saveInBackground();
 					if (user.get("city").toString().equals("admin")) {
 						Intent intent = new Intent(main,
 								AdminMenuActivity.class);
@@ -183,7 +186,6 @@ public class FirebaseManager {
 								+ "/messages/" + user.get("city"));
 						main.startActivityForResult(intent, 0xe110);
 					}
-					installation.put("companysName", "grupoonce");
 				} else {
 					Intent intent = new Intent(main, MainMenuActivity.class);
 					String userName = user.get("userName").toString();
@@ -193,13 +195,13 @@ public class FirebaseManager {
 
 					installation.put("userName", userName);
 					installation.put("companysName", companysName);
+					installation.saveInBackground();
 
 					intent.putExtra("conversationUrl", ref.toString()
 							+ "/messages/" + user.get("city") + "/" + userName
 							+ "%" + companysName);
 					main.startActivityForResult(intent, 0xe110);
 				}
-				installation.put("city", user.get("city").toString());
 			}
 
 			@Override
@@ -207,7 +209,6 @@ public class FirebaseManager {
 				Log.d("Firebase ", firebaseError.getMessage());
 			}
 		};
-		installation.saveInBackground();
 
 		userRef.addValueEventListener(valueEventListener);
 	}

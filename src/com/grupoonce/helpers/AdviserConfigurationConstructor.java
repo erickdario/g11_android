@@ -59,7 +59,7 @@ public class AdviserConfigurationConstructor {
 		TextView user = SharedG11ViewConstructor.ConstructUserState(
 				(Activity) main, city);
 
-		FirebaseManager.FindUser(city);
+		FirebaseManager.FindEmployee(city);
 
 		menu.addView(user);
 		header.addView(menu);

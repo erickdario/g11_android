@@ -35,7 +35,8 @@ public class MainMenuViewConstructor {
 
 	/**
 	 * Draws all the visible elements inside the body for the given activity
-	 * This is activity with the main menu for the user after a succeful log in
+	 * This is activity with the main menu for the user after a successful log
+	 * in
 	 * 
 	 * @param main
 	 *            Activity we are going to draw the elements on

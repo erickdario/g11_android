@@ -105,7 +105,7 @@
 
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="title_activity_faq">FaqActivity</string>
-    <string name="faq">Preguntas fecuentes</string>
+    <string name="faq">Preguntas frecuentes</string>
     <string name="services">Servicios</string>
     <string name="chat">Chat con un asesor</string>
     <string name="sign_out">Cerrar sesión</string>
