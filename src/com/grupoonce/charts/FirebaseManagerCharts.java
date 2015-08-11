@@ -20,7 +20,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.grupoonce.helpers.ChartsViewConstructor;
@@ -29,6 +28,7 @@ import com.grupoonce.mensajes.ChartsActivity;
 public class FirebaseManagerCharts {
 
 	public static Activity main;
+	// TODO change for development URL
 	public static Firebase ref = new Firebase(
 			"https://glaring-heat-1751.firebaseio.com");
 	static String messageConversations = "";
@@ -47,7 +47,6 @@ public class FirebaseManagerCharts {
 					@Override
 					public void onCancelled(FirebaseError arg0) {
 						// TODO Auto-generated method stub
-
 					}
 
 					@Override
@@ -84,7 +83,9 @@ public class FirebaseManagerCharts {
 											+ "\n";
 
 								}
+								messageConversations += "\n\n";
 							}
+							messageConversations += "\n\n----------------------------------------------\n\n";
 						}
 						SendEmail(main);
 					}
@@ -93,8 +94,8 @@ public class FirebaseManagerCharts {
 	}
 
 	/**
-	 * Gets all the information from the "Firebase" to draw the charts and
-	 * deletes this information if it's the first of each month
+	 * Gets all the information from "Firebase" to draw the charts and deletes
+	 * this information if it's the first of each month
 	 */
 	public static void GetInfoCharts() {
 		Firebase statesRef = ref.child("charts");
@@ -151,7 +152,6 @@ public class FirebaseManagerCharts {
 
 					ChartsViewConstructor.chartList.add(new BarChartItem(cd,
 							main));
-
 					id++;
 				}
 
@@ -168,8 +168,12 @@ public class FirebaseManagerCharts {
 
 				d.setColors(colors);
 
-				/*PieData cd = new PieData(getAreas(), d);
-				ChartsViewConstructor.chartList.add(new PieChartItem(cd, main));*/
+				// TODO memory error
+				/*
+				 * PieData cd = new PieData(getAreas(), d);
+				 * ChartsViewConstructor.chartList.add(new PieChartItem(cd,
+				 * main));
+				 */
 
 				ChartsViewConstructor.cda.notifyDataSetChanged();
 			}

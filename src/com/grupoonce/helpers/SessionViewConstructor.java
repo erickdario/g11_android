@@ -5,10 +5,10 @@
 package com.grupoonce.helpers;
 
 import com.firebase.client.AuthData;
-import com.firebase.client.Firebase;
 import com.grupoonce.chat.FirebaseManager;
 import com.grupoonce.mensajes.MainActivity;
 import com.grupoonce.mensajes.R;
+import com.parse.ParseInstallation;
 
 import android.annotation.SuppressLint;
 import android.graphics.Point;
@@ -43,7 +43,6 @@ public class SessionViewConstructor {
 	 * @return A linear layout containing all the elements for the body
 	 */
 	public static LinearLayout ContructBody(MainActivity main) {
-		Firebase.setAndroidContext(main);
 		FirebaseManager.main = main;
 		AuthData authData = FirebaseManager.ref.getAuth();
 		if (authData != null) {
@@ -51,7 +50,12 @@ public class SessionViewConstructor {
 					Toast.LENGTH_SHORT).show();
 			FirebaseManager.UserWasAuthenticated(authData);
 		} else {
-			// no user authenticated with Firebase
+			// Close the session in parse environment for the queries of the
+			// push up notifications
+			ParseInstallation installation = ParseInstallation
+					.getCurrentInstallation();
+			installation.put("session", "closed");
+			installation.saveInBackground();
 		}
 
 		Point size = SharedViewConstructor.GetScreenSize(main);

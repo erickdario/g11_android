@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Grupo Once</string>
+    <string name="app_name">GrupoOnce</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="log_in">Iniciar sesión</string>
@@ -44,6 +44,7 @@
     <string name="area8">Contabilidad</string>
     <string name="area9">Auditoría</string>
     <string name="send_email_charts">Mandar correo con comentarios</string>
+    <string name="notification_string">Tienes un nuevo mensaje</string>
 
     <string-array name="states_array">
         <item>Aguascalientes</item>
@@ -104,7 +105,7 @@
 
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="title_activity_faq">FaqActivity</string>
-    <string name="faq">Preguntas fecuentes</string>
+    <string name="faq">Preguntas frecuentes</string>
     <string name="services">Servicios</string>
     <string name="chat">Chat con un asesor</string>
     <string name="sign_out">Cerrar sesión</string>

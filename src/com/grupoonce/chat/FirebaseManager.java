@@ -18,6 +18,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.grupoonce.helpers.AdviserConfigurationConstructor;
 import com.grupoonce.helpers.ChatViewConstructor;
@@ -27,7 +28,14 @@ import com.grupoonce.mensajes.AdminMenuActivity;
 import com.grupoonce.mensajes.MainMenuActivity;
 import com.grupoonce.mensajes.MainMenuAdvisorActivity;
 import com.grupoonce.mensajes.R;
+import com.parse.ParseInstallation;
 
+/**
+ * Manages the interaction between the application and Firebase
+ * 
+ * @author erickdario
+ *
+ */
 public class FirebaseManager {
 
 	public static ChildEventListener childEventListenerConversation;
@@ -36,6 +44,7 @@ public class FirebaseManager {
 	public static Activity main;
 	public static String role;
 
+	// TODO change for development URL
 	public static Firebase ref = new Firebase(
 			"https://glaring-heat-1751.firebaseio.com");
 	public static Firebase.AuthResultHandler authResultHandler = new Firebase.AuthResultHandler() {
@@ -53,20 +62,23 @@ public class FirebaseManager {
 		}
 	};
 
-	public static void FindUser(final String city) {
-		Firebase usersRef = ref.child("users");
-		usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+	/**
+	 * Finds one of the grupo once workers according the city
+	 * 
+	 * @param city
+	 *            Name of the city of the employee we are going to retrieved
+	 */
+	public static void FindEmployee(final String city) {
+		Query queryRef = ref.child("users").orderByChild("city").equalTo(city);
+		queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot snapshot) {
 				Iterator<DataSnapshot> iterator = snapshot.getChildren()
 						.iterator();
 				while (iterator.hasNext()) {
 					DataSnapshot userSnapshot = iterator.next();
-
-					if (userSnapshot.child("city").getValue().toString()
-							.equals(city)
-							&& userSnapshot.child("companysName").getValue()
-									.toString().equals("grupoonce")) {
+					if (userSnapshot.child("companysName").getValue()
+							.toString().equals("grupoonce")) {
 						AdviserConfigurationConstructor.userKey = userSnapshot
 								.getKey();
 						AdviserConfigurationConstructor.userName = userSnapshot
@@ -95,6 +107,17 @@ public class FirebaseManager {
 		});
 	}
 
+	/**
+	 * Changes the password of the account on Firebase based on the given
+	 * parameters
+	 * 
+	 * @param email
+	 *            Email of the account to change the password
+	 * @param oldPassword
+	 *            Old password of the account
+	 * @param newPassword
+	 *            New password of the account
+	 */
 	public static void ChangePassword(final String email,
 			final String oldPassword, final String newPassword) {
 		ref.changePassword(email, oldPassword, newPassword,
@@ -125,8 +148,19 @@ public class FirebaseManager {
 				});
 	}
 
+	/**
+	 * Handles the sign in if the user was successfully subscribed
+	 * 
+	 * @param authData
+	 *            Callback information from firebase
+	 */
 	public static void UserWasAuthenticated(final AuthData authData) {
 		// Authenticated successfully with payload authData
+		// Store user's city, email and company
+		final ParseInstallation installation = ParseInstallation
+				.getCurrentInstallation();
+		installation.put("session", "open");
+		installation.saveInBackground();
 		Firebase userRef = ref.child("users").child(authData.getUid());
 		valueEventListener = new ValueEventListener() {
 			@Override
@@ -134,7 +168,11 @@ public class FirebaseManager {
 				@SuppressWarnings("unchecked")
 				Map<String, Object> user = (Map<String, Object>) snapshot
 						.getValue();
+				installation.put("city", user.get("city").toString());
 				if (user.get("companysName").equals("grupoonce")) {
+					installation.put("userName", "");
+					installation.put("companysName", "grupoonce");
+					installation.saveInBackground();
 					if (user.get("city").toString().equals("admin")) {
 						Intent intent = new Intent(main,
 								AdminMenuActivity.class);
@@ -144,23 +182,24 @@ public class FirebaseManager {
 								MainMenuAdvisorActivity.class);
 						intent.putExtra("sessionId", authData.getUid());
 						intent.putExtra("city", user.get("city").toString());
-						intent.putExtra("conversationsUrl",
-								"https://glaring-heat-1751.firebaseio.com/messages/"
-										+ user.get("city"));
+						intent.putExtra("conversationsUrl", ref.toString()
+								+ "/messages/" + user.get("city"));
 						main.startActivityForResult(intent, 0xe110);
 					}
-
 				} else {
 					Intent intent = new Intent(main, MainMenuActivity.class);
 					String userName = user.get("userName").toString();
-					userName = CleanString(userName);
-
 					String companysName = user.get("companysName").toString();
+					userName = CleanString(userName);
 					companysName = CleanString(companysName);
-					intent.putExtra("conversationUrl",
-							"https://glaring-heat-1751.firebaseio.com/messages/"
-									+ user.get("city") + "/" + userName + "%"
-									+ companysName);
+
+					installation.put("userName", userName);
+					installation.put("companysName", companysName);
+					installation.saveInBackground();
+
+					intent.putExtra("conversationUrl", ref.toString()
+							+ "/messages/" + user.get("city") + "/" + userName
+							+ "%" + companysName);
 					main.startActivityForResult(intent, 0xe110);
 				}
 			}
@@ -170,9 +209,13 @@ public class FirebaseManager {
 				Log.d("Firebase ", firebaseError.getMessage());
 			}
 		};
+
 		userRef.addValueEventListener(valueEventListener);
 	}
 
+	/**
+	 * Finds the list of conversations for the given city
+	 */
 	public static void FindConversations() {
 		childEventListenerConversations = new ChildEventListener() {
 			@Override
@@ -198,7 +241,6 @@ public class FirebaseManager {
 			@Override
 			public void onCancelled(FirebaseError arg0) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -233,7 +275,6 @@ public class FirebaseManager {
 			@Override
 			public void onChildMoved(DataSnapshot arg0, String arg1) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -264,7 +305,6 @@ public class FirebaseManager {
 	}
 
 	public static void FindConversation() {
-
 		childEventListenerConversation = new ChildEventListener() {
 			@Override
 			public void onChildAdded(DataSnapshot msgSnapshot,
@@ -289,13 +329,11 @@ public class FirebaseManager {
 			@Override
 			public void onCancelled(FirebaseError arg0) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void onChildChanged(DataSnapshot arg0, String arg1) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -311,6 +349,19 @@ public class FirebaseManager {
 				.addChildEventListener(childEventListenerConversation);
 	}
 
+	/**
+	 * Closes a conversation
+	 * 
+	 * @param state
+	 *            State or city the conversation belongs to
+	 * @param conversation
+	 *            Conversation's name
+	 * @param comment
+	 *            Comment from the adviser after closing the conversation
+	 * @param area
+	 *            Specific area the conversation was about, this helps to
+	 *            generate the charts
+	 */
 	public static void CloseConversation(final String state,
 			String conversation, String comment, final String area) {
 
@@ -341,6 +392,14 @@ public class FirebaseManager {
 		ref.child("/messages/" + state + "/" + conversation).removeValue();
 	}
 
+	/**
+	 * Creates a user in Firebase
+	 * 
+	 * @param userName
+	 * @param city
+	 * @param password
+	 * @param companysName
+	 */
 	public static void CreateUser(final String userName, final String city,
 			final String password, final String companysName) {
 		ref.createUser(userName, password,
@@ -365,6 +424,15 @@ public class FirebaseManager {
 				});
 	}
 
+	/**
+	 * Manages the type of error message the app will display to the user
+	 * 
+	 * @param firebaseError
+	 *            Variable containing the details about the error
+	 * @param defaultMessage
+	 *            If the error is not managed by the app, it will display this
+	 *            default message
+	 */
 	private static void DisplayError(FirebaseError firebaseError,
 			String defaultMessage) {
 		switch (firebaseError.getCode()) {
@@ -402,6 +470,15 @@ public class FirebaseManager {
 		}
 	}
 
+	/**
+	 * Looks if a message has not been read by the receiver
+	 * 
+	 * @param conversationSnapshot
+	 *            Conversation to look for unread messages from
+	 * @param role
+	 *            Role to determine which kind of message we're interested on
+	 * @return if any not read, true, otherwise false
+	 */
 	private static Boolean GetIfAnyNotRead(DataSnapshot conversationSnapshot,
 			String role) {
 		Iterator<DataSnapshot> iterator = conversationSnapshot.getChildren()
@@ -422,6 +499,13 @@ public class FirebaseManager {
 		return true;
 	}
 
+	/**
+	 * Gets the date of the last message on the conversation
+	 * 
+	 * @param conversationSnapshot
+	 *            Conversation to the last message from
+	 * @return The date of the last message on this conversation
+	 */
 	private static String GetLastDate(DataSnapshot conversationSnapshot) {
 		Iterator<DataSnapshot> iterator = conversationSnapshot.getChildren()
 				.iterator();
@@ -442,6 +526,12 @@ public class FirebaseManager {
 		return format.format(maxDate);
 	}
 
+	/**
+	 * Cleans a string to match the rules Firebase has to manage strings
+	 * 
+	 * @param stringToClean
+	 * @return String without the special characters Firebase cannot use
+	 */
 	private static String CleanString(String stringToClean) {
 		stringToClean = stringToClean.replace(".", "");
 		stringToClean = stringToClean.replace("#", "");
